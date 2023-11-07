@@ -11,6 +11,7 @@ import store from "./store/store";
 import {Provider} from "react-redux";
 // import Login from "./components/Login/Login";
 import {useState} from "react";
+import DisplayAddress from "./components/Shop/address/DisplayAddress";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Routes>
             {/* home page route */}
             <Route path = "/" element = {<Home />} />
+            <Route path = "/address" element = {<DisplayAddress />} />
             {/* single product route */}
             <Route path = "/product/:id" element = {<ProductSingle />} />
             {/* category wise product listing route */}
