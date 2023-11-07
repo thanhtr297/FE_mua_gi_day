@@ -3,13 +3,14 @@ import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCar
 // import "./Profile.scss";
 export default function  Profile(){
     return (
+        <div className={'profile'}>
         <section className="vh-100" style={{ backgroundColor: '#f4f5f7' }}>
-            <MDBContainer className="py-5 h-100">
-                <MDBRow className="justify-content-center align-items-center h-100">
-                    <MDBCol lg="6" className="mb-4 mb-lg-0">
-                        <MDBCard className="mb-3" style={{ borderRadius: '.5rem' }}>
+            <MDBContainer className="py-5 h-500">
+                <MDBRow className="justify-content-center  h-100">
+                    <MDBCol lg="12" className="mb-4 mb-lg-0">
+                        <MDBCard className="mb-6" style={{ borderRadius: '.5rem' }}>
                             <MDBRow className="g-0">
-                                <MDBCol md="4" className="gradient-custom text-center text-white"
+                                <MDBCol md="6" className="gradient-custom text-center text-black"
                                         style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
                                     <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                                                   alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
@@ -17,7 +18,7 @@ export default function  Profile(){
                                     <MDBCardText>Web Designer</MDBCardText>
                                     <MDBIcon far icon="edit mb-5" />
                                 </MDBCol>
-                                <MDBCol md="8">
+                                <MDBCol md="6">
                                     <MDBCardBody className="p-4">
                                         <MDBTypography tag="h6">Information</MDBTypography>
                                         <hr className="mt-0 mb-4" />
@@ -45,11 +46,7 @@ export default function  Profile(){
                                             </MDBCol>
                                         </MDBRow>
 
-                                        <div className="d-flex justify-content-start">
-                                            <a href="#!"><MDBIcon fab icon="facebook me-3" size="lg" /></a>
-                                            <a href="#!"><MDBIcon fab icon="twitter me-3" size="lg" /></a>
-                                            <a href="#!"><MDBIcon fab icon="instagram me-3" size="lg" /></a>
-                                        </div>
+
                                     </MDBCardBody>
                                 </MDBCol>
                             </MDBRow>
@@ -58,5 +55,6 @@ export default function  Profile(){
                 </MDBRow>
             </MDBContainer>
         </section>
+        </div>
     );
 }
