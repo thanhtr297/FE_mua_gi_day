@@ -13,6 +13,8 @@ import {Provider} from "react-redux";
 import React, {useState} from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Profile from "./components/Shop/Profile";
+import {useState} from "react";
+import DisplayAddress from "./components/Shop/address/DisplayAddress";
 
 
 function App() {
@@ -37,6 +39,7 @@ function App() {
           <Routes>
             {/* home page route */}
             <Route path = "/" element = {<Home />} />
+            <Route path = "/address" element = {<DisplayAddress />} />
             {/* single product route */}
             <Route path = "/product/:id" element = {<ProductSingle />} />
             {/* category wise product listing route */}

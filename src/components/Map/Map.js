@@ -7,9 +7,9 @@ import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 export const Map = () => {
     const Icon = ({ text }) => <div>{text}</div>;
     const [coords, setCoords] = useState({});
-    const [place, setPlace] = useState("")
+    const [address, setAddress] = useState("")
     const  find = async () => {
-        const result = await geocodeByAddress(place)
+        const result = await geocodeByAddress(address)
         const latLng = await getLatLng(result[0])
         setCoords(latLng)
     }
@@ -23,8 +23,8 @@ export const Map = () => {
     }, [])
     return(
         <>
-            <input type={"text"} value={place} onChange={(e) => {
-                setPlace(e.target.value)
+            <input type={"text"} value={address} onChange={(e) => {
+                setAddress(e.target.value)
             }}/>
             <button onClick={find}>Search</button>
 
