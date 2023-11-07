@@ -47,7 +47,7 @@ const Header = (props) => {
                                       <a href="#" className=" nav-link dropdown-toggle" data-bs-toggle="dropdown"><small className="fa fa-user text-body"></small></a>
                     <div className="dropdown-menu m-0">
                                     <Link to={'/profile'} className="dropdown-item">Hồ sơ</Link>
-                                  <a href="l" className="dropdown-item" >Shop của tôi</a>
+                                  <Link to={'/shop'} className="dropdown-item" >Shop của tôi</Link>
                           <Dropdown.Divider />
                       <a href="" className="dropdown-item">Đăng xuất</a>
                             </div>
@@ -56,13 +56,13 @@ const Header = (props) => {
                 <li className='vert1-line'></li>
                 <li>
                   <Link to = "/">
-                    <span className='top-link-itm-txt'>Register</span>
+                    <span className='top-link-itm-txt'>Đăng ký</span>
                   </Link>
                 </li>
                 <li className='vert1-line'></li>
                 <li>
                   <Link to = "/login">
-                    <span className='top-link-itm-txt' onClick={props.a}>Log in</span>
+                    <span className='top-link-itm-txt' onClick={props.a}>Đăng nhập</span>
                   </Link>
                 </li>
               </ul>
