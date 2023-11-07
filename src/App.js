@@ -10,7 +10,8 @@ import Footer from "./components/Footer/Footer";
 import store from "./store/store";
 import {Provider} from "react-redux";
 // import Login from "./components/Login/Login";
-import {useState} from "react";
+import React, {useState} from "react";
+import Dropdown from "react-bootstrap/Dropdown";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
     <div className="App">
       <Provider store = {store}>
         <BrowserRouter>
+
 
           {/*{check && <Header a={test}/>}*/}
           {/*{!isLoginPage && <Sidebar />}*/}
