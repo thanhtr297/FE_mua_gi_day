@@ -3,13 +3,14 @@ import "./Header.scss";
 import {Link} from 'react-router-dom';
 import Navbar from "../Navbar/Navbar";
 import Dropdown from 'react-bootstrap/Dropdown';
+import Profile from "../../pages/ShopPage/Profile";
 
 
 const Header = (props) => {
   return (
-    <header className='header1 text-white'>
-      <div className='containerr'>
-        <div className='header1-cnt'>
+    <header className='header1 text-white' >
+      <div className='containerr' >
+        <div className='header1-cnt' >
           <div className='header1-cnt-top fs-13 py-2 flex align-center justify-between'>
             <div className='header1-cnt-top-l'>
               <ul className='flex top-links align-center'>
@@ -40,41 +41,16 @@ const Header = (props) => {
                 </li>
               </ul>
             </div>
-            <div className='header1-cnt-top-r'>
-              <ul className='top-links flex align-center'>
-
-                  {/*<Link to = {`/shop/`} className='top-link-itm'>*/}
-                  {/*  <span className='top-link-itm-ico mx-2'>*/}
-                  {/*    /!*<i className='fa-solid fa-circle-question'></i>*!/*/}
-                  {/*  </span>*/}
-                  {/*  <span className='top-link-itm-txt'>Xin chào {}!</span>*/}
-                  {/*</Link>*/}
-                  {/*<ul className={'user'}>*/}
-                  {/*  <li>a</li>*/}
-                  {/*  <li>b</li>*/}
-                  {/*  <li>c</li>*/}
-                  {/*</ul>*/}
+            <div className='header1-cnt-top-r' >
+              <ul className='top-links flex align-center' >
                 <li>
-                {/*<div >*/}
-                {/*  <Dropdown >*/}
-                {/*  <Dropdown.Toggle variant="Danger" id="dropdown-basic" style={{color:'white'}}>*/}
-                {/*    User aaaa*/}
-                {/*  </Dropdown.Toggle>*/}
-
-                {/*  <Dropdown.Menu>*/}
-                {/*    <Dropdown.Item href="#/action-1" >Thông tin</Dropdown.Item>*/}
-                {/*    <Dropdown.Item href="#/action-2" >Shop của tôi</Dropdown.Item>*/}
-                {/*    <Dropdown.Divider />*/}
-                {/*    <Dropdown.Item > Đăng xuất</Dropdown.Item>*/}
-                {/*  </Dropdown.Menu>*/}
-                {/*  </Dropdown>*/}
-                {/*</div>*/}
-                  <div className="nav-item dropdown">
+                  <div className="nav-item dropdown" >
                                       <a href="#" className=" nav-link dropdown-toggle" data-bs-toggle="dropdown"><small className="fa fa-user text-body"></small></a>
                     <div className="dropdown-menu m-0">
-                                    <a href="user.html" className="dropdown-item">Hồ sơ</a>
-                                  <a href="login.html" className="dropdown-item" >Đăng xuất</a>
-                                 <a href="historyBill.html" className="dropdown-item">Lịch sử thuê</a>
+                                    <Link to={'/profile'} className="dropdown-item">Hồ sơ</Link>
+                                  <a href="l" className="dropdown-item" >Shop của tôi</a>
+                          <Dropdown.Divider />
+                      <a href="" className="dropdown-item">Đăng xuất</a>
                             </div>
                       </div>
                 </li>

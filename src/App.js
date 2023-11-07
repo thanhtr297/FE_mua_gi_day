@@ -12,6 +12,7 @@ import {Provider} from "react-redux";
 // import Login from "./components/Login/Login";
 import React, {useState} from "react";
 import Dropdown from "react-bootstrap/Dropdown";
+import Profile from "./pages/ShopPage/Profile";
 
 
 function App() {
@@ -44,7 +45,9 @@ function App() {
             <Route path = "/cart" element = {<Cart />} />
             {/* searched products */}
             <Route path = "/search/:searchTerm" element = {<Search />} />
+            <Route path = "/profile" element = {<Profile />} />
             {/*<Route path={"/login"} element={<Login b={test1}/>}/>*/}
+
           </Routes>
 
           <Footer/>
