@@ -3,7 +3,6 @@ import "./Header.scss";
 import {Link} from 'react-router-dom';
 import Navbar from "../Navbar/Navbar";
 import Dropdown from 'react-bootstrap/Dropdown';
-import Profile from "../../pages/ShopPage/Profile";
 
 
 const Header = (props) => {

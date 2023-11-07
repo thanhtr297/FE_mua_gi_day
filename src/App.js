@@ -12,7 +12,7 @@ import {Provider} from "react-redux";
 // import Login from "./components/Login/Login";
 import React, {useState} from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import Profile from "./pages/ShopPage/Profile";
+import Profile from "./components/Shop/Profile";
 
 
 function App() {
