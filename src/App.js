@@ -10,7 +10,9 @@ import Footer from "./components/Footer/Footer";
 import store from "./store/store";
 import {Provider} from "react-redux";
 // import Login from "./components/Login/Login";
-import {useState} from "react";
+import React, {useState} from "react";
+import Dropdown from "react-bootstrap/Dropdown";
+import Profile from "./pages/ShopPage/Profile";
 
 
 function App() {
@@ -27,6 +29,7 @@ function App() {
       <Provider store = {store}>
         <BrowserRouter>
 
+
           {/*{check && <Header a={test}/>}*/}
           {/*{!isLoginPage && <Sidebar />}*/}
             <Header/>
@@ -42,7 +45,9 @@ function App() {
             <Route path = "/cart" element = {<Cart />} />
             {/* searched products */}
             <Route path = "/search/:searchTerm" element = {<Search />} />
+            <Route path = "/profile" element = {<Profile />} />
             {/*<Route path={"/login"} element={<Login b={test1}/>}/>*/}
+
           </Routes>
 
           <Footer/>

@@ -2,12 +2,15 @@ import React from 'react';
 import "./Header.scss";
 import {Link} from 'react-router-dom';
 import Navbar from "../Navbar/Navbar";
+import Dropdown from 'react-bootstrap/Dropdown';
+import Profile from "../../pages/ShopPage/Profile";
+
 
 const Header = (props) => {
   return (
-    <header className='header1 text-white'>
-      <div className='containerr'>
-        <div className='header1-cnt'>
+    <header className='header1 text-white' >
+      <div className='containerr' >
+        <div className='header1-cnt' >
           <div className='header1-cnt-top fs-13 py-2 flex align-center justify-between'>
             <div className='header1-cnt-top-l'>
               <ul className='flex top-links align-center'>
@@ -38,15 +41,18 @@ const Header = (props) => {
                 </li>
               </ul>
             </div>
-            <div className='header1-cnt-top-r'>
-              <ul className='top-links flex align-center'>
+            <div className='header1-cnt-top-r' >
+              <ul className='top-links flex align-center' >
                 <li>
-                  <Link to = "/" className='top-link-itm'>
-                    <span className='top-link-itm-ico mx-2'>
-                      <i className='fa-solid fa-circle-question'></i>
-                    </span>
-                    <span className='top-link-itm-txt'>Support</span>
-                  </Link>
+                  <div className="nav-item dropdown" >
+                                      <a href="#" className=" nav-link dropdown-toggle" data-bs-toggle="dropdown"><small className="fa fa-user text-body"></small></a>
+                    <div className="dropdown-menu m-0">
+                                    <Link to={'/profile'} className="dropdown-item">Hồ sơ</Link>
+                                  <a href="l" className="dropdown-item" >Shop của tôi</a>
+                          <Dropdown.Divider />
+                      <a href="" className="dropdown-item">Đăng xuất</a>
+                            </div>
+                      </div>
                 </li>
                 <li className='vert1-line'></li>
                 <li>
