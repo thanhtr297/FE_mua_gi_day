@@ -14,6 +14,11 @@ import React from "react";
 
 import Profile from "./components/Shop/Profile";
 import DisplayAddress from "./components/Shop/address/DisplayAddress";
+import DashBoard from "./pages/ShopManagement";
+import ListProduct from "./pages/ShopManagement/ListProduct";
+import OrderManagement from "./pages/ShopManagement/OrderManagement";
+import Report from "./pages/ShopManagement/Report";
+import {Switch} from "@headlessui/react";
 
 
 function App() {
@@ -48,6 +53,15 @@ function App() {
             {/* searched products */}
             <Route path = "/search/:searchTerm" element = {<Search />} />
             <Route path = "/profile" element = {<Profile />} />
+
+              <Route path="/shop-management" element={<DashBoard />}>
+                  <Route index element={<div>Select an option from the dashboard</div>} />
+                  <Route path="/shop-management/list-product" element={<ListProduct />} />
+                  <Route path="/shop-management/order-management" element={<OrderManagement />} />
+                  <Route path="/shop-management/report" element={<Report />} />
+              </Route>
+
+
             {/*<Route path={"/login"} element={<Login b={test1}/>}/>*/}
 
           </Routes>
