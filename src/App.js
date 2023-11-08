@@ -9,16 +9,15 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Footer from "./components/Footer/Footer";
 import store from "./store/store";
 import {Provider} from "react-redux";
-
-import React from "react";
-
-import Profile from "./components/Shop/Profile";
+// import Login from "./components/Login/Login";
+import React, {useState} from "react";
+import Dropdown from "react-bootstrap/Dropdown";
 import DisplayAddress from "./components/Shop/address/DisplayAddress";
 import DashBoard from "./pages/ShopManagement";
 import ListProduct from "./pages/ShopManagement/ListProduct";
 import OrderManagement from "./pages/ShopManagement/OrderManagement";
 import Report from "./pages/ShopManagement/Report";
-import {Switch} from "@headlessui/react";
+import Profile from "./pages/ShopManagement/Profile";
 
 
 function App() {
@@ -43,7 +42,7 @@ function App() {
           <Routes>
             {/* home page route */}
             <Route path = "/" element = {<Home />} />
-            <Route path = "/shop/profile" element = {<DisplayAddress />} />
+            <Route path = "/address" element = {<DisplayAddress />} />
             {/* single product route */}
             <Route path = "/product/:id" element = {<ProductSingle />} />
             {/* category wise product listing route */}
@@ -59,6 +58,7 @@ function App() {
                   <Route path="/shop-management/list-product" element={<ListProduct />} />
                   <Route path="/shop-management/order-management" element={<OrderManagement />} />
                   <Route path="/shop-management/report" element={<Report />} />
+                  <Route path="/shop-management/profile" element={<Profile/>} />
               </Route>
 
 
