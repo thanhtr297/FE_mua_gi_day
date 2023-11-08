@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Button, Modal} from 'react-bootstrap';
 import {useNavigate} from "react-router-dom"
 import {Field, Form, Formik} from "formik";
+import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
+import {storage} from "./fireBase";
+import {v4} from "uuid";
 import {save} from "./service/ProductService";
 import {findAllCategory} from "./service/CategoryService";
 import {findAllBrand} from "./service/BrandService";
@@ -9,6 +12,7 @@ import {findAllBrand} from "./service/BrandService";
 
 function CreateProduct() {
     let navigate = useNavigate();
+    const [path, setPath] = useState([]);
     let [categories, setCategories] = useState([])
     let [brands, setBrands] = useState([])
     const [show, setShow] = useState(false);
@@ -27,9 +31,25 @@ function CreateProduct() {
     )
 
         function createProduct(e) {
-            e.image = []
+            console.log(path)
+            e.image = path;
+            console.log(e)
             save(e,navigate).then()
         }
+    const uploadImage = (files) => {
+        if(!files || files.length === 0) return;
+        const upload = Array.from(files).map((file) => {
+            const imageRef = ref(storage,`image/${file.name +v4()}`);
+            return uploadBytes(imageRef, file)
+                .then((snapshot) => getDownloadURL(snapshot.ref))
+                .then((url) => {
+                    setPath((path) => [
+                        ...path, {name: url}
+                    ])
+                })
+        })
+        Promise.all(upload).then()
+    }
 
 
 
@@ -51,7 +71,6 @@ function CreateProduct() {
                                 name: '',
                                 price: '',
                                 quantity: '',
-                                image: '',
                                 description: '',
                                 category: {
                                     id: ""
@@ -84,8 +103,11 @@ function CreateProduct() {
                                            id="{'description'}"/>
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor={'image'} className="form-label">Ảnh</label>
-                                    <Field type={'text'} name={'image'} className={'form-control'} id="{'image'}"/>
+                                    <label htmlFor={'image'} className="form-label">Image</label>
+                                    <input type={'file'}  multiple name={"image"}  className={'form-control'} id="{'image'}"
+                                           onChange={(e)=> {
+                                               uploadImage(e.target.files)
+                                           }}/>
                                 </div>
                                 <div>
                                     <label htmlFor={'category'} className="form-label">Chọn loại mặt hàng</label>
