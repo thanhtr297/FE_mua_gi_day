@@ -10,8 +10,11 @@ import Footer from "./components/Footer/Footer";
 import store from "./store/store";
 import {Provider} from "react-redux";
 // import Login from "./components/Login/Login";
-import React, {useState} from "react";
-import Dropdown from "react-bootstrap/Dropdown";
+
+import Login from "./components/Login/Login";
+import Register from "./components/Login/Register";
+import React  from "react";
+
 import DisplayAddress from "./components/Shop/address/DisplayAddress";
 import DashBoard from "./pages/ShopManagement";
 import ListProduct from "./pages/ShopManagement/ListProduct";
@@ -51,6 +54,8 @@ function App() {
             <Route path = "/cart" element = {<Cart />} />
             {/* searched products */}
             <Route path = "/search/:searchTerm" element = {<Search />} />
+            <Route path={"/login"} element={<Login/>}/>
+            <Route path={"/register"} element={<Register/>}/>
             <Route path = "/profile" element = {<Profile />} />
 
               <Route path="/shop-management" element={<DashBoard />}>
