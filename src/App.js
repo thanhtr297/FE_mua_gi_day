@@ -9,11 +9,10 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Footer from "./components/Footer/Footer";
 import store from "./store/store";
 import {Provider} from "react-redux";
-// import Login from "./components/Login/Login";
-import React, {useState} from "react";
-import Dropdown from "react-bootstrap/Dropdown";
+
+import React from "react";
+
 import Profile from "./components/Shop/Profile";
-import {useState} from "react";
 import DisplayAddress from "./components/Shop/address/DisplayAddress";
 
 
@@ -39,7 +38,7 @@ function App() {
           <Routes>
             {/* home page route */}
             <Route path = "/" element = {<Home />} />
-            <Route path = "/address" element = {<DisplayAddress />} />
+            <Route path = "/shop/profile" element = {<DisplayAddress />} />
             {/* single product route */}
             <Route path = "/product/:id" element = {<ProductSingle />} />
             {/* category wise product listing route */}
