@@ -2,10 +2,12 @@ import './/Login.scss';
 import {useState} from "react";
 import {toast} from "react-toastify";
 import {loginApi} from "../../service/UserService";
+import {useNavigate} from "react-router-dom";
 export default function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [isShowPassword, setIsShowPassword] = useState(false)
+    const navigate = useNavigate();
     const handleLogin = () => {
         if (!email || !password) {
             toast.error("tài khoản mật khẩu không hợp lệ");
@@ -18,7 +20,12 @@ export default function Login() {
         }).then((res) => {
                 if (res.status === 200) {
                     alert("đăng nhập thành công")
-                    console.log(res)
+                    if(res.data.authorities[0].authority == 'ROLE_ADMIN'){
+                        navigate('/admin')
+                    }else {
+                        localStorage.setItem("account", JSON.stringify(res.data));
+                        navigate('/')
+                    }
                 }
             }
         ).catch(() =>
