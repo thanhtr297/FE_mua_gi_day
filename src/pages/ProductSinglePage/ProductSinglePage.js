@@ -66,7 +66,7 @@ const ProductSinglePage = () => {
             <div className='product-single-l'>
               <div className='product-img'>
                 <div className='product-img-zoom'>
-                  <img src = {product?(product.images ? product.images[0] : "") : ""} alt = "" className='img-cover' />
+                  <img src = {product?(product.images ? product.images[1] : "") : ""} alt = "" className='img-cover' />
                 </div>
 
                 <div className='product-img-thumbs flex align-center my-2'>

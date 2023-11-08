@@ -55,8 +55,7 @@ export const fetchAsyncProductSingle = createAsyncThunk('product-single/fetch', 
     const response = await fetch(`${BASE_URL}products/${id}`);
     const data = await response.json();
     return data;
-});
-
+})
 
 export const getAllProducts = (state) => state.product.products;
 export const getAllProductsStatus = (state) => state.product.productsStatus;

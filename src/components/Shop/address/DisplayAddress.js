@@ -51,10 +51,6 @@ export default function DisplayAddress() {
         })
     }
 
-
-
-
-
     return (
         <>
             <div className={"container"}>
