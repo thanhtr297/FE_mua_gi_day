@@ -59,7 +59,7 @@ export default function DisplayAddress() {
         <>
             <div className={"container"}>
                 <label>Thành phố</label>
-                    <select id={"select-city"} onChange={(e) => {
+                    <select onChange={(e) => {
                         const textCity = e.target.value;
                         setNameCity(textCity.split("-")[1])
                         displayDistrictByIdCity(textCity.split("-")[0])
@@ -72,7 +72,7 @@ export default function DisplayAddress() {
                         })}
                     </select>
                 <label>Quận/huyện</label>
-                <select id={"select-district"} onChange={(e) => {
+                <select  onChange={(e) => {
                     const textDistrict = e.target.value;
                     setNameDistrict(textDistrict.split("-")[1])
                     displayWardsByIdDistrict(textDistrict.split("-")[0])}} className={"form-select"}>
