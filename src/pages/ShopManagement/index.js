@@ -19,6 +19,9 @@ function DashBoard() {
                 <li className="nav__item">
                     <Link to="/shop-management/report">Báo cáo doanh thu</Link>
                 </li>
+                <li className="nav__item">
+                    <Link to="/shop-management/profile">Thông tin</Link>
+                </li>
             </ul>
         </nav>
         <main className="main-content">
