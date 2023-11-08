@@ -12,13 +12,12 @@ import {Provider} from "react-redux";
 // import Login from "./components/Login/Login";
 import React, {useState} from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import Profile from "./components/Shop/Profile";
 import DisplayAddress from "./components/Shop/address/DisplayAddress";
 import DashBoard from "./pages/ShopManagement";
 import ListProduct from "./pages/ShopManagement/ListProduct";
 import OrderManagement from "./pages/ShopManagement/OrderManagement";
 import Report from "./pages/ShopManagement/Report";
-import {Switch} from "@headlessui/react";
+import Profile from "./pages/ShopManagement/Profile";
 
 
 function App() {
@@ -59,6 +58,7 @@ function App() {
                   <Route path="/shop-management/list-product" element={<ListProduct />} />
                   <Route path="/shop-management/order-management" element={<OrderManagement />} />
                   <Route path="/shop-management/report" element={<Report />} />
+                  <Route path="/shop-management/profile" element={<Profile/>} />
               </Route>
 
 
