@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button} from "react-bootstrap";
 import UpdateProfile from "./UpdateProfile";
 import "./Profile.scss";
@@ -6,6 +6,9 @@ import "./Profile.scss";
 export function Profile() {
     const [showCreateModal, setShowCreateModal] = useState(false);
 
+    useEffect(() => {
+
+    }, []);
     const handleShowCreateModal = () => setShowCreateModal(true);
     const handleCloseCreateModal = () => setShowCreateModal(false);
 
