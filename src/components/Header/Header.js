@@ -50,7 +50,7 @@ const Header = (props) => {
                 </li>
                 <li className='vert1-line'></li>
                 <li>
-                  <Link to = "/">
+                  <Link to = "/register">
                     <span className='top-link-itm-txt'>Register</span>
                   </Link>
                 </li>

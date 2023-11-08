@@ -11,6 +11,8 @@ import store from "./store/store";
 import {Provider} from "react-redux";
 // import Login from "./components/Login/Login";
 import {useState} from "react";
+import Login from "./components/Login/Login";
+import Register from "./components/Login/Register";
 
 
 function App() {
@@ -42,7 +44,8 @@ function App() {
             <Route path = "/cart" element = {<Cart />} />
             {/* searched products */}
             <Route path = "/search/:searchTerm" element = {<Search />} />
-            {/*<Route path={"/login"} element={<Login b={test1}/>}/>*/}
+            <Route path={"/login"} element={<Login/>}/>
+            <Route path={"/register"} element={<Register/>}/>
           </Routes>
 
           <Footer/>
