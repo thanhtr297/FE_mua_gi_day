@@ -22,6 +22,7 @@ const HomePage = () => {
   // randomizing the products in the list
   const tempProducts = [];
   if(products.length > 0){
+    console.log(products)
     for(let i in products){
       let randomIndex = Math.floor(Math.random() * products.length);
 
@@ -36,6 +37,8 @@ const HomePage = () => {
   let catProductsTwo = products.filter(product => product.category === categories[1]);
   let catProductsThree = products.filter(product => product.category === categories[2]);
   let catProductsFour = products.filter(product => product.category === categories[3]);
+  console.log('a')
+  console.log( catProductsThree);
 
   return (
     <main>

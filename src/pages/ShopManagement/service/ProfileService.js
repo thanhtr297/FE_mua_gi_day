@@ -12,3 +12,15 @@ export const findShop = () => {
         )
     })
 }
+export const saveShop = (data,navigate) => {
+    return new Promise((resolve) => {
+        resolve(
+            axios.post("http://localhost:8080/api/shops/",data)
+                .then(response => {
+                    return navigate("/shop-management/profile")
+                }).catch(() => {
+
+            })
+        )
+    })
+}
