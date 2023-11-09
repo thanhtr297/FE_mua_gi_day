@@ -14,6 +14,7 @@ import {
 import {geocodeByAddress, getLatLng} from "react-google-places-autocomplete";
 
 export function CreateShop() {
+
     const [idCtity,setIdCity] = useState(0)
     const [idDistrict,setIdDistrict] = useState(0)
     const [idWards,setIdWards] = useState(0)
@@ -78,12 +79,12 @@ export function CreateShop() {
     }
 
     function create(values) {
-        console.log(values)
-        saveShop({
-            name: values.name,
-            phone: values.phone,
-            avatar: avatar,
-            address: values.address,
+        const idAcc = localStorage.getItem("account")
+        const data = {
+            ...values,
+            account: {
+                id: idAcc
+            },
             wards: {
                 id: idWards,
                 district: {
@@ -93,7 +94,12 @@ export function CreateShop() {
                     }
                 }
             }
-        }, navigate).then()
+        }
+        saveShop(data, navigate).then(()=>{
+            console.log(data)
+            console.log(idWards,idDistrict,idCtity)
+            alert("done")
+        })
 }
 
 return (
@@ -105,8 +111,7 @@ return (
                 name: '',
                 phone: '',
                 avatar: '',
-                address: ''
-
+                address: '',
             }} onSubmit={e => {
                 create(e)
             }}>

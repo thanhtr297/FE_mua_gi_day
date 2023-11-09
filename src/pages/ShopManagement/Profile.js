@@ -9,14 +9,14 @@ export function Profile() {
 
     // const [showCreateModal, setShowCreateModal] = useState(false);
     const [shop,setShop] = useState({})
-    const [check,setCheck] = useState(true)
+    const [check,setCheck] = useState(false)
 
     useEffect(() => {
         findShop().then((res)=>{
+            console.log(res)
             setShop(res)
-            console.log(res.data)
-            if (res.data === undefined){
-                setCheck(false)
+            if (res !== ''){
+                setCheck(true)
             }
         })
     }, [check]);
@@ -27,13 +27,11 @@ const handleUpdate= () => {
 
     return (
         <>
-            {/* Modal từ component CreateProduct */}
-            {/*<UpdateProfile show={showCreateModal} handleClose={handleCloseCreateModal}/>*/}
             {check ?
             <div className="container2">
-                <div style={{display: 'flex'}}>
+                <div style={{display: 'flex',justifyContent: 'space-between', alignItems: 'center'}}>
                     <h1>Thông tin</h1>
-                    <Button variant="warning" onClick={handleUpdate}>
+                    <Button style={{fontSize:'14px'}} variant="warning" onClick={handleUpdate}>
                         Sửa thông tin
                     </Button>
                 </div>

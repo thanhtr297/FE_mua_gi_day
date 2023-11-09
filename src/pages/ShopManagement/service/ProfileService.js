@@ -1,9 +1,10 @@
 import axios from "axios";
 
 export const findShop = () => {
+    const idAcc = localStorage.getItem("account")
     return new Promise((resolve) => {
         resolve(
-            axios.get("http://localhost:8080/api/shops/account/"+1)
+            axios.get("http://localhost:8080/api/shops/account/"+idAcc)
                 .then(response => {
                     return response.data
                 }).catch(() => {

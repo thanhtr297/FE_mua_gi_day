@@ -19,7 +19,7 @@ function OrderManagement() {
 
         <div className="orderManagement mt-5">
             <h2>Order Management</h2>
-            <table className="table">
+            <table className="table table-hover'">
                 <thead>
                 <tr>
                     <th scope="col">Mã đơn hàng</th>
@@ -35,12 +35,12 @@ function OrderManagement() {
                 {orders.map((order, index) => (
                     <tr key={index}>
                         <th scope="row">{order.orderId}</th>
-                        <td>{order.productName}</td>
-                        <td>{order.amount}</td>
-                        <td>{order.quantity}</td>
-                        <td>{order.buyer}</td>
-                        <td>{order.address}</td>
-                        <td>{order.phone}</td>
+                        <td scope="row">{order.productName}</td>
+                        <td scope="row">{order.amount}</td>
+                        <td scope="row">{order.quantity}</td>
+                        <td scope="row">{order.buyer}</td>
+                        <td scope="row">{order.address}</td>
+                        <td scope="row">{order.phone}</td>
                     </tr>
                 ))}
                 </tbody>
