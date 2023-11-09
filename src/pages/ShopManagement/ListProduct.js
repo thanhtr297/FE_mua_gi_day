@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Button} from 'react-bootstrap';
-import CreateProduct from './CreateProduct'; // Giả sử CreateProduct và ListProduct cùng folder
+import CreateProduct from './CreateProduct';
 import "bootstrap/dist/css/bootstrap.min.css";
-import {MDBBadge, MDBBtn, MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
+import {MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
 import axios from "axios";
 
 function ListProduct() {
     let [products, setProducts] = useState([]);
-    let count;
     useEffect(() => {
         const id = localStorage.getItem('account')
         findAllById(id)
-    },[])
+    }, [])
+
     function findAllById(id) {
         axios.get("http://localhost:8080/api/products/acc/" + id).then(res => {
             setProducts(res.data)
@@ -29,6 +28,7 @@ function ListProduct() {
                     <tr>
                         <th scope='col'>STT</th>
                         <th scope='col'>Tên</th>
+                        <th scope='col'>Ảnh</th>
                         <th scope='col'>Loại sản phẩm</th>
                         <th scope='col'>Thương hiệu</th>
                         <th scope='col'>Số lượng</th>
@@ -53,6 +53,43 @@ function ListProduct() {
                                         <p className='fw-normal mb-1'>{p.name}</p>
                                     </td>
                                     <td>
+                                        <div id={"carouselExampleIndicators" + count} className="carousel slide"
+                                             style={{width: "130px"}}>
+                                            <div className="carousel-indicators" >
+                                                <button type="button" data-bs-target="#carouselExampleIndicators"
+                                                        data-bs-slide-to="0" className="active" aria-current="true"
+                                                        aria-label="Slide 1"></button>
+                                                <button type="button" data-bs-target="#carouselExampleIndicators"
+                                                        data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                                <button type="button" data-bs-target="#carouselExampleIndicators"
+                                                        data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                            </div>
+                                            <div className="carousel-inner">
+                                                {p.image.map((i) => (
+                                                    <div className="carousel-item active">
+                                                        <img style={{width:"120px", height: "120px", margin: "0 0"}} src={i.name} className="d-block w-100" alt="..."/>
+                                                        <button className="carousel-control-prev" type="button"
+                                                                data-bs-target={"#carouselExampleIndicators"+ count}
+                                                                data-bs-slide="prev">
+                                                            <span className="carousel-control-prev-icon"
+                                                                  aria-hidden="true"></span>
+                                                            <span className="visually-hidden">Previous</span>
+                                                        </button>
+                                                        <button className="carousel-control-next" type="button"
+                                                                data-bs-target={"#carouselExampleIndicators"+ count}
+                                                                data-bs-slide="next">
+                                                            <span className="carousel-control-next-icon"
+                                                                  aria-hidden="true"></span>
+                                                            <span className="visually-hidden">Next</span>
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+                                    <td>
                                         <p className='fw-normal mb-1'>{p.category.name}</p>
                                     </td>
                                     <td>
@@ -74,13 +111,14 @@ function ListProduct() {
                                 </tr>
 
                             </>
-                        )
+                    )
                     })}
-                </MDBTableBody>
-            </MDBTable>
+                    </MDBTableBody>
+                    </MDBTable>
 
-        </>
-    );
-}
+                    </>
+                    )
+                        ;
+                    }
 
-export default ListProduct;
+                        export default ListProduct;
