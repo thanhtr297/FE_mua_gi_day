@@ -21,6 +21,7 @@ import ListProduct from "./pages/ShopManagement/ListProduct";
 import OrderManagement from "./pages/ShopManagement/OrderManagement";
 import Report from "./pages/ShopManagement/Report";
 import Profile from "./pages/ShopManagement/Profile";
+import UpdateProduct from "./pages/ShopManagement/UpdateProduct";
 import Images from "./pages/ShopManagement/Images";
 
 
@@ -67,6 +68,7 @@ function App() {
                   <Route path="/shop-management/order-management" element={<OrderManagement />} />
                   <Route path="/shop-management/report" element={<Report />} />
                   <Route path="/shop-management/profile" element={<Profile/>} />
+                  <Route path="/shop-management/:id" element={<UpdateProduct/>}/>
               </Route>
 
 
