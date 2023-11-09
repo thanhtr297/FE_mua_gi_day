@@ -15,6 +15,7 @@ function CreateProduct() {
     const [path, setPath] = useState([]);
     let [categories, setCategories] = useState([])
     let [brands, setBrands] = useState([])
+
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -55,6 +56,7 @@ function CreateProduct() {
 
         return (
             <>
+
                 <Button variant="primary" onClick={handleShow}>
                     Thêm sản phẩm mới
                 </Button>
@@ -77,7 +79,11 @@ function CreateProduct() {
                                 },
                                 brand: {
                                     id: ""
-                                }
+                                },
+                                account: {
+                                    id: localStorage.getItem('account')
+                            }
+
                             }}
                             onSubmit={(e) => {
                                 console.log(e)
