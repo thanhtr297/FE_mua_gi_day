@@ -8,27 +8,25 @@ import Loader from "../../components/Loader/Loader";
 import {formatPrice} from "../../utils/helpers";
 import { addToCart, getCartMessageStatus, setCartMessageOff, setCartMessageOn } from '../../store/cartSlice';
 import CartMessage from "../../components/CartMessage/CartMessage";
+import {getProductById} from "../../service/ProductService";
 
 const ProductSinglePage = () => {
   const {id} = useParams();
   const dispatch = useDispatch();
-  const product = useSelector(getProductSingle);
+  const [product , setProduct] = useState({});
   const productSingleStatus = useSelector(getSingleProductStatus);
   const [quantity, setQuantity] = useState(1);
   const cartMessageStatus = useSelector(getCartMessageStatus);
 
   // getting single product
   useEffect(() => {
-    dispatch(fetchAsyncProductSingle(id));
+    getProductById(id).then((res) => {
+      setProduct(res.data);
+    })
 
-    if(cartMessageStatus){
-      setTimeout(() => {
-        dispatch(setCartMessageOff());
-      }, 2000);
-    }
   }, [cartMessageStatus]);
 
-  let discountedPrice = (product?.price) - (product?.price * (product?.discountPercentage / 100));
+  let discountedPrice = (product?.price) - (product?.price * (product?.promotion / 100));
   if(productSingleStatus === STATUS.LOADING) {
     return <Loader />
   }
@@ -36,7 +34,7 @@ const ProductSinglePage = () => {
   const increaseQty = () => {
     setQuantity((prevQty) => {
       let tempQty = prevQty + 1;
-      if(tempQty > product?.stock) tempQty = product?.stock;
+      if(tempQty > product?.quantity) tempQty = product?.quantity;
       return tempQty;
     })
   }
@@ -50,7 +48,7 @@ const ProductSinglePage = () => {
   }
 
   const addToCartHandler = (product) => {
-    let discountedPrice = (product?.price) - (product?.price * (product?.discountPercentage / 100));
+    let discountedPrice = (product?.price) - (product?.price * (product?.promotion / 100));
     let totalPrice = quantity * discountedPrice;
 
     dispatch(addToCart({...product, quantity: quantity, totalPrice, discountedPrice}));
@@ -66,92 +64,96 @@ const ProductSinglePage = () => {
             <div className='product-single-l'>
               <div className='product-img'>
                 <div className='product-img-zoom'>
-                  <img src = {product?(product.images ? product.images[1] : "") : ""} alt = "" className='img-cover' />
+                  <img src = {product?(product?.image?.name ? product?.image[1]?.name : "") : ""} alt = "" className='img-cover' />
                 </div>
 
                 <div className='product-img-thumbs flex align-center my-2'>
-                {/*  {product.images.map(p=>{*/}
-                {/*    return (*/}
-                {/*        <div className='thumb-item'>*/}
-                {/*          <img src = {*/}
-                {/*            p*/}
-                {/*          } alt = "" className='img-cover' />*/}
-                {/*        </div>*/}
-                {/*    )*/}
-                {/*  })}*/}
-                  <div className='thumb-item'>
-                    <img src = {
-                      product ? (product.images ? product.images[1] : "") : ""
-                    } alt = "" className='img-cover' />
-                  </div>
-                  <div className='thumb-item'>
-                    <img src = {
-                      product ? (product.images ? product.images[2] : "") : ""
-                    } alt = "" className='img-cover' />
-                  </div>
-                  <div className='thumb-item'>
-                    <img src = {
-                      product ? (product.images ? product.images[3] : "") : ""
-                    } alt = "" className='img-cover' />
-                  </div>
-                  <div className='thumb-item'>
-                    <img src = {
-                      product ? (product.images ? product.images[4] : "") : ""
-                    } alt = "" className='img-cover' />
-                  </div>
+                  {product?.image?.map(p=>{
+                    return (
+                        <div className='thumb-item'>
+                          <img src = {p?.name} alt = "" className='img-cover' />
+                        </div>
+                    )
+                  })}
+                  {/*<div className='thumb-item'>*/}
+                  {/*  <img src = {*/}
+                  {/*    product ? (product.images ? product.images[1] : "") : ""*/}
+                  {/*  } alt = "" className='img-cover' />*/}
+                  {/*</div>*/}
+                  {/*<div className='thumb-item'>*/}
+                  {/*  <img src = {*/}
+                  {/*    product ? (product.images ? product.images[2] : "") : ""*/}
+                  {/*  } alt = "" className='img-cover' />*/}
+                  {/*</div>*/}
+                  {/*<div className='thumb-item'>*/}
+                  {/*  <img src = {*/}
+                  {/*    product ? (product.images ? product.images[3] : "") : ""*/}
+                  {/*  } alt = "" className='img-cover' />*/}
+                  {/*</div>*/}
+                  {/*<div className='thumb-item'>*/}
+                  {/*  <img src = {*/}
+                  {/*    product ? (product.images ? product.images[4] : "") : ""*/}
+                  {/*  } alt = "" className='img-cover' />*/}
+                  {/*</div>*/}
                 </div>
               </div>
             </div>
 
             <div className='product-single-r'>
               <div className='product-details font-manrope'>
-                <div className='title fs-20 fw-5'>{product?.title}</div>
-                <div>
-                  <p className='para fw-3 fs-15'>{product?.description}</p>
-                </div>
+                <div className='title fs-20 fw-5'>{product?.name}</div>
+
                 <div className='info flex align-center flex-wrap fs-14'>
                   <div className='rating'>
-                    <span className='text-orange fw-5'>Rating:</span>
+
                     <span className='mx-1'>
-                      {product?.rating}
+                      {/*{product?.rating}*/}
+                      5 *
                     </span>
+                    <span className='text-orange fw-5' style={{marginRight : '20px'}}>Đánh giá </span>
                   </div>
                   <div className='vert-line'></div>
-                  <div className='brand'>
-                    <span className='text-orange fw-5'>Brand:</span>
-                    <span className='mx-1'>{product?.brand}</span>
-                  </div>
+                  {/*<div className='brand'>*/}
+                    <span className='text-orange fw-5' style={{marginRight : '20px'}}>||</span>
+                  {/*  <span className='mx-1'>{product?.brand?.name}</span>*/}
+                  {/*</div>*/}
                   <div className='vert-line'></div>
                   <div className='brand'>
-                    <span className='text-orange fw-5'>Category:</span>
+
                     <span className='mx-1 text-capitalize'>
-                      {product?.category ? product.category.replace("-", " ") : ""}
-                    </span>
+                      {product?.count}
+                    </span><span className='text-orange fw-5'>Đã bán</span>
+                  </div>
+                  <div>
+                    <p className='para fw-3 fs-15' style={{whiteSpace: 'pre-line'}} >{product?.description}</p>
                   </div>
                 </div>
 
                 <div className = "price">
-                  <div className='flex align-center'>
-                    <div className='old-price text-gray'>
-                      {formatPrice(product?.price)}
-                    </div>
-                    <span className='fs-14 mx-2 text-dark'>
-                      Inclusive of all taxes
-                    </span>
-                  </div>
+                  {/*<div className='flex align-center'>*/}
+                  {/*  <div className='old-price text-gray'>*/}
+                  {/*    {formatPrice(product?.price)}*/}
+                  {/*  </div>*/}
+                  {/*  <span className='fs-14 mx-2 text-dark'>*/}
+
+                  {/*  </span>*/}
+                  {/*</div>*/}
 
                   <div className='flex align-center my-1'>
-                    <div className='new-price fw-5 font-poppins fs-24 text-orange'>
+                    <div className='old-price text-gray' style={{marginRight : '20px'}}>
+                      {formatPrice(product?.price)}
+                    </div>
+                    <div className='new-price fw-5 font-poppins fs-24 text-orange' style={{marginRight : '20px'}}>
                       {formatPrice(discountedPrice)}
                     </div>
-                    <div className='discount bg-orange fs-13 text-white fw-6 font-poppins'>
-                      {product?.discountPercentage}% OFF
+                    <div className='discount bg-orange fs-13 text-white fw-6 font-poppins' >
+                      {product?.promotion}% GIẢM
                     </div>
                   </div>
                 </div>
 
                 <div className='qty flex align-center my-4'>
-                  <div className='qty-text'>Quantity:</div>
+                  <div className='qty-text'>Số lượng:</div>
                   <div className='qty-change flex align-center mx-3'>
                     <button type = "button" className='qty-decrease flex align-center justify-center' onClick={() => decreaseQty()}>
                       <i className='fas fa-minus'></i>
@@ -160,9 +162,10 @@ const ProductSinglePage = () => {
                     <button type = "button" className='qty-increase flex align-center justify-center' onClick={() => increaseQty()}>
                       <i className='fas fa-plus'></i>
                     </button>
+                    <div className='qty-text' style={{marginLeft : '20px'}}>{product.quantity} sản phẩm có sẵn</div>
                   </div>
                   {
-                    (product?.stock === 0) ? <div className ='qty-error text-uppercase bg-danger text-white fs-12 ls-1 mx-2 fw-5'>out of stock</div> : ""
+                    (product?.quantity === 0) ? <div className ='qty-error text-uppercase bg-danger text-white fs-12 ls-1 mx-2 fw-5'>out of stock</div> : ""
                   }
                 </div>
 

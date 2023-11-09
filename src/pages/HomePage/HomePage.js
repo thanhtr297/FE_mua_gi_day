@@ -1,23 +1,24 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./HomePage.scss";
 import HeaderSlider from "../../components/Slider/HeaderSlider";
-import { useSelector, useDispatch } from 'react-redux';
-import { getAllCategories } from '../../store/categorySlice';
 import ProductList from "../../components/ProductList/ProductList";
-import { fetchAsyncProducts, getAllProducts, getAllProductsStatus } from '../../store/productSlice';
 import Loader from "../../components/Loader/Loader";
 import { STATUS } from '../../utils/status';
+import {displayAllCategory, displayAllProduct, displayProductStatus} from "../../service/ProductService";
+import Product from "../../components/Product/Product";
 
 const HomePage = () => {
-  const dispatch = useDispatch();
-  const categories = useSelector(getAllCategories);
-
+  const [products,setProducts] = useState([]) ;
+  const [categories,setCategories] = useState([]) ;
   useEffect(() => {
-    dispatch(fetchAsyncProducts(50));
+    displayProductStatus().then((res) => {
+      setProducts(res.data) ;
+    })
+    displayAllCategory().then((res) => {
+      setCategories(res.data) ;
+    })
   }, []);
 
-  const products = useSelector(getAllProducts);
-  const productStatus = useSelector(getAllProductsStatus);
 
   // randomizing the products in the list
   const tempProducts = [];
@@ -31,11 +32,18 @@ const HomePage = () => {
       tempProducts[i] = products[randomIndex];
     }
   }
-
-  let catProductsOne = products.filter(product => product.category === categories[0]);
-  let catProductsTwo = products.filter(product => product.category === categories[1]);
-  let catProductsThree = products.filter(product => product.category === categories[2]);
-  let catProductsFour = products.filter(product => product.category === categories[3]);
+  const productByCategory = new Array(categories.length).fill(0);
+  if(products.length > 0){
+    for (let i = 0; i < categories.length ; i++) {
+      let product = [];
+      for (let j = 0; j < products.length; j++) {
+          if(products[j]?.category?.name === categories[i].name ){
+            product.push(products[j])
+          }
+      }
+      productByCategory[i]= product;
+    }
+  }
 
   return (
     <main>
@@ -47,38 +55,45 @@ const HomePage = () => {
           <div className='categories py-5'>
             <div className='categories-item'>
               <div className='title-md'>
-                <h3>See our products</h3>
+                <h3>GỢI Ý HÔM NAY </h3>
               </div>
-              { productStatus === STATUS.LOADING ? <Loader /> : <ProductList products = {tempProducts} />}
+              { products === STATUS.LOADING ? <Loader /> : <ProductList products = {tempProducts} />}
             </div>
 
-            <div className='categories-item'>
-              <div className='title-md'>
-                <h3>{categories[0]}</h3>
-              </div>
-              {productStatus === STATUS.LOADING ? <Loader /> : <ProductList products={catProductsOne} />}
-            </div>
+                {productByCategory.map((item) => (
+                     (item.length >0) ?
+                      <div className='categories-item'>
+                        <div className='title-md'>
+                          <h3>{item[0]?.category?.name}</h3>
+                        </div>
+                          {item === STATUS.LOADING ? <Loader /> : <ProductList products={item} />}
+                      </div>
+                    :
+                    <div></div>
+                  ))}
 
-            <div className='categories-item'>
-              <div className='title-md'>
-                <h3>{categories[1]}</h3>
-              </div>
-              {productStatus === STATUS.LOADING ? <Loader /> : <ProductList products={catProductsTwo} />}
-            </div>
 
-            <div className='categories-item'>
-              <div className='title-md'>
-                <h3>{categories[2]}</h3>
-              </div>
-              {productStatus === STATUS.LOADING ? <Loader /> : <ProductList products={catProductsThree} />}
-            </div>
 
-            <div className='categories-item'>
-              <div className='title-md'>
-                <h3>{categories[3]}</h3>
-              </div>
-              {productStatus === STATUS.LOADING ? <Loader /> : <ProductList products={catProductsFour} />}
-            </div>
+            {/*<div className='categories-item'>*/}
+            {/*  <div className='title-md'>*/}
+            {/*    <h3>{categories[1]}</h3>*/}
+            {/*  </div>*/}
+            {/*  {productStatus === STATUS.LOADING ? <Loader /> : <ProductList products={catProductsTwo} />}*/}
+            {/*</div>*/}
+
+            {/*<div className='categories-item'>*/}
+            {/*  <div className='title-md'>*/}
+            {/*    <h3>{categories[2]}</h3>*/}
+            {/*  </div>*/}
+            {/*  {productStatus === STATUS.LOADING ? <Loader /> : <ProductList products={catProductsThree} />}*/}
+            {/*</div>*/}
+
+            {/*<div className='categories-item'>*/}
+            {/*  <div className='title-md'>*/}
+            {/*    <h3>{categories[3]}</h3>*/}
+            {/*  </div>*/}
+            {/*  {productStatus === STATUS.LOADING ? <Loader /> : <ProductList products={catProductsFour} />}*/}
+            {/*</div>*/}
           </div>
         </div>
       </div>

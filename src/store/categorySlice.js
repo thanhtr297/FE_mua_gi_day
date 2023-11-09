@@ -57,5 +57,5 @@ export const fetchAsyncProductsOfCategory = createAsyncThunk('category-products/
 
 export const getAllCategories = (state) => state.category.categories;
 export const getAllProductsByCategory = (state) => state.category.categoryProducts;
-export const getCategoryProductsStatus = (state) => state.category.categoryProductsStatus;
+export const    getCategoryProductsStatus = (state) => state.category.categoryProductsStatus;
 export default categorySlice.reducer;
