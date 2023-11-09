@@ -3,8 +3,10 @@ import {Button} from "react-bootstrap";
 
 import "./Profile.scss";
 import {findShop} from "./service/ProfileService";
+import {CreateShop} from "./CreateShop";
 
 export function Profile() {
+
     // const [showCreateModal, setShowCreateModal] = useState(false);
     const [shop,setShop] = useState({})
     const [check,setCheck] = useState(true)
@@ -45,18 +47,20 @@ const handleUpdate= () => {
                         <div className="profile-name">Tên Shop: {shop.name}</div>
                         <div className="profile-phone">Số điện thoại: {shop.phone}</div>
                         <div className="profile-address">
-                            Địa chỉ: {shop.address?.name} ,
-                            {shop.address?.wards?.name},
-                            {shop.address?.wards?.district?.name} ,
-                            {shop.address?.wards?.district?.city?.name}
+                            Địa chỉ: {shop.address} ,
+                            {shop.wards?.name},
+                            {shop.wards?.district?.name} ,
+                            {shop.wards?.district?.city?.name}
                         </div>
                     </div>
                 </div>
             </div>
             :
             <>
-                <div>
-            <Button>Đăng ký shop</Button>
+                <h2>Bạn chưa đăng ký shop của mình, vui lòng đăng ký!</h2>
+                <div style={{marginLeft:'30%'}}>
+
+            <CreateShop></CreateShop>
                 </div>
             </>
             }

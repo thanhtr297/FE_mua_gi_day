@@ -4,8 +4,7 @@ import HeaderSlider from "../../components/Slider/HeaderSlider";
 import ProductList from "../../components/ProductList/ProductList";
 import Loader from "../../components/Loader/Loader";
 import { STATUS } from '../../utils/status';
-import {displayAllCategory, displayAllProduct, displayProductStatus} from "../../service/ProductService";
-import Product from "../../components/Product/Product";
+import {displayAllCategory, displayProductStatus} from "../../service/ProductService";
 
 const HomePage = () => {
   const [products,setProducts] = useState([]) ;
@@ -23,6 +22,7 @@ const HomePage = () => {
   // randomizing the products in the list
   const tempProducts = [];
   if(products.length > 0){
+    console.log(products)
     for(let i in products){
       let randomIndex = Math.floor(Math.random() * products.length);
 
@@ -44,7 +44,6 @@ const HomePage = () => {
       productByCategory[i]= product;
     }
   }
-
   return (
     <main>
       <div className='slider-wrapper'>
@@ -71,29 +70,6 @@ const HomePage = () => {
                     :
                     <div></div>
                   ))}
-
-
-
-            {/*<div className='categories-item'>*/}
-            {/*  <div className='title-md'>*/}
-            {/*    <h3>{categories[1]}</h3>*/}
-            {/*  </div>*/}
-            {/*  {productStatus === STATUS.LOADING ? <Loader /> : <ProductList products={catProductsTwo} />}*/}
-            {/*</div>*/}
-
-            {/*<div className='categories-item'>*/}
-            {/*  <div className='title-md'>*/}
-            {/*    <h3>{categories[2]}</h3>*/}
-            {/*  </div>*/}
-            {/*  {productStatus === STATUS.LOADING ? <Loader /> : <ProductList products={catProductsThree} />}*/}
-            {/*</div>*/}
-
-            {/*<div className='categories-item'>*/}
-            {/*  <div className='title-md'>*/}
-            {/*    <h3>{categories[3]}</h3>*/}
-            {/*  </div>*/}
-            {/*  {productStatus === STATUS.LOADING ? <Loader /> : <ProductList products={catProductsFour} />}*/}
-            {/*</div>*/}
           </div>
         </div>
       </div>

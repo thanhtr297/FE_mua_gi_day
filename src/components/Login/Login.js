@@ -23,7 +23,7 @@ export default function Login() {
                     if(res.data.authorities[0].authority == 'ROLE_ADMIN'){
                         navigate('/admin')
                     }else {
-                        localStorage.setItem("account", JSON.stringify(res.data));
+                        localStorage.setItem("account", JSON.stringify(res.data.id));
                         navigate('/')
                     }
                 }
