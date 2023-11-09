@@ -21,6 +21,7 @@ import ListProduct from "./pages/ShopManagement/ListProduct";
 import OrderManagement from "./pages/ShopManagement/OrderManagement";
 import Report from "./pages/ShopManagement/Report";
 import Profile from "./pages/ShopManagement/Profile";
+import Images from "./pages/ShopManagement/Images";
 
 
 function App() {
@@ -46,6 +47,8 @@ function App() {
             {/* home page route */}
             <Route path = "/" element = {<Home />} />
             <Route path = "/address" element = {<DisplayAddress />} />
+            <Route path = "/images" element = {<Images />} />
+
             {/* single product route */}
             <Route path = "/product/:id" element = {<ProductSingle />} />
             {/* category wise product listing route */}

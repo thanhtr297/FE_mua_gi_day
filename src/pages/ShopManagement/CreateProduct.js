@@ -4,13 +4,17 @@ import {useNavigate} from "react-router-dom"
 import {Field, Form, Formik} from "formik";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {storage} from "./fireBase";
-import {v4} from "uuid";
+import { v4} from "uuid";
 import {save} from "./service/ProductService";
 import {findAllCategory} from "./service/CategoryService";
 import {findAllBrand} from "./service/BrandService";
 
 
 function CreateProduct() {
+    const idAcc = localStorage.getItem("account")
+    console.log(idAcc)
+    const idA = idAcc.id
+    console.log(idA)
     let navigate = useNavigate();
     const [path, setPath] = useState([]);
     let [categories, setCategories] = useState([])
@@ -77,8 +81,10 @@ function CreateProduct() {
                                 },
                                 brand: {
                                     id: ""
-                                }
-                            }}
+                                },
+                                account: {
+                                    id: idA
+                            }}}
                             onSubmit={(e) => {
                                 console.log(e)
                                 createProduct(e)
