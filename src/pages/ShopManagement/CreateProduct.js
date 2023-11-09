@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Modal} from 'react-bootstrap';
 import {Field, Form, Formik} from "formik";
-import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {storage} from "./fireBase";
-import {v4} from "uuid";
 import {findAllCategory} from "./service/CategoryService";
 import {findAllBrand} from "./service/BrandService";
+import uploadImage from "./service/Upload";
 
 
 function CreateProduct(props) {
@@ -31,19 +30,8 @@ function CreateProduct(props) {
         props.parentCallback(e)
     }
 
-    const uploadImage = (files) => {
-        if (!files || files.length === 0) return;
-        const upload = Array.from(files).map((file) => {
-            const imageRef = ref(storage, `image/${file.name + v4()}`);
-            return uploadBytes(imageRef, file)
-                .then((snapshot) => getDownloadURL(snapshot.ref))
-                .then((url) => {
-                    setPath((path) => [
-                        ...path, {name: url}
-                    ])
-                })
-        })
-        Promise.all(upload).then()
+    const upload = (files) => {
+        uploadImage(storage, files, setPath)
     }
 
 
@@ -104,7 +92,7 @@ function CreateProduct(props) {
                                 <label htmlFor={'image'} className="form-label">Image</label>
                                 <input type={'file'} multiple name={"image"} className={'form-control'} id="{'image'}"
                                        onChange={(e) => {
-                                           uploadImage(e.target.files)
+                                           upload(e.target.files)
                                        }}/>
                             </div>
                             <div>

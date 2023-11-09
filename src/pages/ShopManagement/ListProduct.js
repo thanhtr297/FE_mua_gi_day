@@ -3,12 +3,11 @@ import CreateProduct from './CreateProduct';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
 import axios from "axios";
-import {Link, useNavigate} from "react-router-dom";
-import {save} from "./service/ProductService";
+import {useNavigate} from "react-router-dom";
+import {deleteById, save} from "./service/ProductService";
 
 function ListProduct() {
     let [products, setProducts] = useState([]);
-    let count;
     let navigate = useNavigate()
     let [checkDelete, setCheckDelete] = useState(false)
 
@@ -31,7 +30,7 @@ function ListProduct() {
 
     function deleteP(id) {
         if (window.confirm("Bạn có muốn xóa sản phẩm này không?")) {
-            axios.delete("http://localhost:8080/api/products/" + id)
+            deleteById(id)
                 .then(() => {
                         setCheckDelete(!checkDelete)
                         alert("Xóa thành công!")
@@ -75,7 +74,7 @@ function ListProduct() {
                                     <td>
                                         <div className='d-flex align-items-center'>
                                             <div className='ms-3'>
-                                                <p className='fw-bold mb-1'>{++count}</p>
+                                                <p className='fw-bold mb-1'>{index}</p>
                                             </div>
                                         </div>
                                     </td>
@@ -83,7 +82,7 @@ function ListProduct() {
                                         <p className='fw-normal mb-1'>{p.name}</p>
                                     </td>
                                     <td>
-                                        <div id={"carouselExampleIndicators" + count} className="carousel slide"
+                                        <div id={"carouselExampleIndicators" + index} className="carousel slide"
                                              style={{width: "130px"}}>
                                             <div className="carousel-indicators" >
                                                 <button type="button" data-bs-target="#carouselExampleIndicators"
@@ -95,21 +94,19 @@ function ListProduct() {
                                                         data-bs-slide-to="2" aria-label="Slide 3"></button>
                                             </div>
                                             <div className="carousel-inner">
-                                                {p.image.map((i) => (
-                                                    <div className="carousel-item active">
+                                                {p.image.map((i, imageIndex) => (
+                                                    <div className={`carousel-item ${imageIndex === 0 ? 'active' : ''}`} key={imageIndex}>
                                                         <img style={{width:"120px", height: "120px", margin: "0 0"}} src={i.name} className="d-block w-100" alt="..."/>
                                                         <button className="carousel-control-prev" type="button"
-                                                                data-bs-target={"#carouselExampleIndicators"+ count}
+                                                                data-bs-target={"#carouselExampleIndicators"+ index}
                                                                 data-bs-slide="prev">
-                                                            <span className="carousel-control-prev-icon"
-                                                                  aria-hidden="true"></span>
+                                                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                                                             <span className="visually-hidden">Previous</span>
                                                         </button>
                                                         <button className="carousel-control-next" type="button"
-                                                                data-bs-target={"#carouselExampleIndicators"+ count}
+                                                                data-bs-target={"#carouselExampleIndicators"+ index}
                                                                 data-bs-slide="next">
-                                                            <span className="carousel-control-next-icon"
-                                                                  aria-hidden="true"></span>
+                                                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
                                                             <span className="visually-hidden">Next</span>
                                                         </button>
                                                     </div>
