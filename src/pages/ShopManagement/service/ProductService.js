@@ -30,9 +30,10 @@ export const save = (product, navigate) => {
             axios.post("http://localhost:8080/api/products", product)
                 .then(() => {
                     alert("Thành công !")
-                    return navigate("/")
+                    return navigate("/shop-management/list-product")
                 }).catch(() => {
-                return navigate ("/create")
+                alert("Thất bại !")
+                return navigate ("/shop-management/list-product")
             })
         )
     })
