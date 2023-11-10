@@ -4,7 +4,7 @@ import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {storage} from "./fireBase";
 import {v4} from "uuid";
 import {LoadingButton} from "./LoadingButton";
-import {saveShop} from "./service/ProfileService";
+import {findShop, saveShop} from "./service/ProfileService";
 import {useNavigate} from "react-router-dom";
 import {
     findAllCity,
@@ -12,6 +12,7 @@ import {
     findAllWardsByIdDistrict
 } from "../../components/Shop/address/service/AddressService";
 import {geocodeByAddress, getLatLng} from "react-google-places-autocomplete";
+import {enableDismissTrigger} from "bootstrap/js/src/util/component-functions";
 
 export function CreateShop() {
     const [idCtity,setIdCity] = useState(0)
@@ -29,12 +30,16 @@ export function CreateShop() {
     const [nameCity, setNameCity] = useState("");
     const [nameDistrict, setNameDistrict] = useState("");
     const [nameWards, setNameWards] = useState("");
+    const [shop,setShop] = useState({});
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
             setCoords({lat: latitude, lng: longitude})
         })
         findAllCity().then((result) => {
             setCities(result);
+        })
+        findShop().then((res)=>{
+            setShop((res))
         })
 
 
@@ -94,7 +99,7 @@ export function CreateShop() {
         saveShop(data, navigate).then(()=>{
             console.log(data)
             console.log(idWards,idDistrict,idCtity)
-            alert("done")
+            alert("Sửa thành công!")
         })
     }
 
@@ -102,15 +107,10 @@ export function CreateShop() {
         <>
             <div className={'container3'} style={{width: "500px"}}>
                 {/*<h3>Tạo ngay</h3>*/}
-                <Formik initialValues={{
-                    id: '',
-                    name: '',
-                    phone: '',
-                    avatar: '',
-                    address: '',
-                }} onSubmit={e => {
+                <Formik initialValues={shop} onSubmit={e => {
                     create(e)
-                }}>
+                }}
+                enableReinitialize={true}>
                     <Form>
                         <div className="mb-3" style={{fontSize: '16px'}}>
                             <label htmlFor={'name'} className="form-label">Tên shop: </label>

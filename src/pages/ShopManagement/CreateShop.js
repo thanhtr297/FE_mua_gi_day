@@ -13,12 +13,12 @@ import {
 } from "../../components/Shop/address/service/AddressService";
 import {geocodeByAddress, getLatLng} from "react-google-places-autocomplete";
 
-export function CreateShop() {
+export function CreateShop(props) {
 
     const [idCtity,setIdCity] = useState(0)
     const [idDistrict,setIdDistrict] = useState(0)
     const [idWards,setIdWards] = useState(0)
-    const navigate = useNavigate();
+
     const [avatar, setAvatar] = useState(null);
     const [loading, setLoading] = useState(false);
     const [cities, setCities] = useState([]);
@@ -40,6 +40,7 @@ export function CreateShop() {
 
 
     }, [])
+
     const find = async () => {
         setFullAddress(address + ", " + nameWards + ", " + nameDistrict + ", " + nameCity)
         const result = await geocodeByAddress(fullAddress)
@@ -78,10 +79,11 @@ export function CreateShop() {
         })
     }
 
-    function create(values) {
+    function create(e) {
         const idAcc = localStorage.getItem("account")
-        const data = {
-            ...values,
+        e = {
+            ...e,
+            avatar: avatar,
             account: {
                 id: idAcc
             },
@@ -95,11 +97,8 @@ export function CreateShop() {
                 }
             }
         }
-        saveShop(data, navigate).then(()=>{
-            console.log(data)
-            console.log(idWards,idDistrict,idCtity)
-            alert("done")
-        })
+        props.parentCallback(e)
+
 }
 
 return (
