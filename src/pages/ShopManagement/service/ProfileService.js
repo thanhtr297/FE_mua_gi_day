@@ -18,7 +18,7 @@ export const saveShop = (data,navigate) => {
         resolve(
             axios.post("http://localhost:8080/api/shops/",data)
                 .then(response => {
-                    return navigate("/shop-management/profile")
+                    return navigate("/shop-management/")
                 }).catch(() => {
 
             })

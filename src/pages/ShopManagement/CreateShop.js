@@ -82,6 +82,7 @@ export function CreateShop() {
         const idAcc = localStorage.getItem("account")
         const data = {
             ...values,
+            avatar: avatar,
             account: {
                 id: idAcc
             },

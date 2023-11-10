@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 
 const Header = (props) => {
+  const acc = localStorage.getItem('account');
   return (
     <header className='header1 text-white' >
       <div className='containerr' >
@@ -49,20 +50,20 @@ const Header = (props) => {
                                     <Link to={'/profile'} className="dropdown-item">Hồ sơ</Link>
                                   <Link to={'/shop-management'} className="dropdown-item" >Shop của tôi</Link>
                           <Dropdown.Divider />
-                      <a href="" className="dropdown-item">Đăng xuất</a>
+                      <a href="" className="dropdown-item" >Đăng xuất</a>
                             </div>
                       </div>
                 </li>
                 <li className='vert1-line'></li>
                 <li>
                   <Link to = "/register">
-                    <span className='top-link-itm-txt'>Đăng ký</span>
+                    <span className='top-link-itm-txt' style={acc ? {display : 'none'} : {}}>Đăng ký</span>
                   </Link>
                 </li>
                 <li className='vert1-line'></li>
                 <li>
                   <Link to = "/login">
-                    <span className='top-link-itm-txt' onClick={props.a}>Đăng nhập</span>
+                    <span className='top-link-itm-txt' onClick={props.a} style={acc ? {display : 'none'} : {}}>Đăng nhập</span>
                   </Link>
                 </li>
               </ul>
