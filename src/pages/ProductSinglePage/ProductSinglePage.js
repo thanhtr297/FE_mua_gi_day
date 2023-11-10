@@ -17,6 +17,7 @@ const ProductSinglePage = () => {
   const productSingleStatus = useSelector(getSingleProductStatus);
   const [quantity, setQuantity] = useState(1);
   const cartMessageStatus = useSelector(getCartMessageStatus);
+  const account = localStorage.getItem("account") ;
 
   // getting single product
   useEffect(() => {
@@ -152,7 +153,7 @@ const ProductSinglePage = () => {
                   </div>
                 </div>
 
-                <div className='qty flex align-center my-4'>
+                <div className='qty flex align-center my-4' >
                   <div className='qty-text'>Số lượng:</div>
                   <div className='qty-change flex align-center mx-3'>
                     <button type = "button" className='qty-decrease flex align-center justify-center' onClick={() => decreaseQty()}>
@@ -170,11 +171,11 @@ const ProductSinglePage = () => {
                 </div>
 
                 <div className='btns'>
-                  <button type = "button" className='add-to-cart-btn btn'>
+                  <button type = "button" className='add-to-cart-btn btn' disabled={(account == product?.account?.id)}>
                     <i className='fas fa-shopping-cart'></i>
                     <span className='btn-text mx-2' onClick={() => { addToCartHandler(product)}}>add to cart</span>
                   </button>
-                  <button type = "button" className='buy-now btn mx-3'>
+                  <button type = "button" className='buy-now btn mx-3' disabled={(account == product?.account?.id)}>
                     <span className='btn-text'>buy now</span>
                   </button>
                 </div>

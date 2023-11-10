@@ -27,9 +27,7 @@ export default function Register() {
             register({ username: acc.username,
                 password: acc.password,
                 email: acc.email,}).then((res) => {
-                console.log(res)
             }).then((res) => {
-                console.log(res)
                 alert('Đăng kí thành công vui lòng đăng nhập lại')
                 navigate('/login')
             })
