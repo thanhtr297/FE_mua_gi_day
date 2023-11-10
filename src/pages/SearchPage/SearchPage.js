@@ -1,24 +1,22 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./SearchPage.scss";
-import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { STATUS } from '../../utils/status';
 import Loader from '../../components/Loader/Loader';
 import ProductList from '../../components/ProductList/ProductList';
-import { fetchAsyncSearchProduct, getSearchProducts, setSearchTerm, getSearchProductsStatus, clearSearch } from '../../store/searchSlice';
+import {searchProductByName} from "../../service/ProductService";
 
 const SearchPage = () => {
-  const dispatch = useDispatch();
   const {searchTerm } = useParams();
-  const searchProducts = useSelector(getSearchProducts);
-  const searchProductsStatus = useSelector(getSearchProductsStatus);
+  const [searchProductsStatus , setSearchProductsStatus] = useState([]);
 
   useEffect(() => {
-    dispatch(clearSearch());
-    dispatch(fetchAsyncSearchProduct(searchTerm));
+    searchProductByName(searchTerm).then((res) => {
+      setSearchProductsStatus(res.data);
+    })
   }, [searchTerm]);
 
-  if(searchProducts.length === 0){
+  if(searchProductsStatus.length === 0){
     return (
       <div className='containerr' style = {{
         minHeight: "70vh"
@@ -40,7 +38,7 @@ const SearchPage = () => {
             </div>
             <br />
             {
-              searchProductsStatus === STATUS.LOADING ? <Loader /> : <ProductList products = {searchProducts} />
+              searchProductsStatus === STATUS.LOADING ? <Loader /> : <ProductList products = {searchProductsStatus} />
             }
           </div>
         </div>

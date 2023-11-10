@@ -12,7 +12,10 @@ const getProductById = (id) => {
 const displayAllCategory = () => {
     return axios.get("http://localhost:8080/api/categories" );
 }
+const searchProductByName = (name) => {
+    return axios.get("http://localhost:8080/api/products/search/" + name );
+}
 
 
 
-export {displayAllProduct , displayProductStatus ,displayAllCategory ,getProductById}
+export {displayAllProduct , displayProductStatus ,displayAllCategory ,getProductById , searchProductByName}
