@@ -2,28 +2,31 @@ import React, {useEffect, useState} from 'react';
 import {Button} from "react-bootstrap";
 
 import "./Profile.scss";
-import {findShop} from "./service/ProfileService";
+import {findShop, saveShop} from "./service/ProfileService";
 import {CreateShop} from "./CreateShop";
-
+import {Link, useNavigate} from "react-router-dom";
 export function Profile() {
-
-    // const [showCreateModal, setShowCreateModal] = useState(false);
+    const navigate = useNavigate();
     const [shop,setShop] = useState({})
     const [check,setCheck] = useState(false)
 
     useEffect(() => {
-        findShop().then((res)=>{
-            console.log(res)
+        const idAcc = localStorage.getItem("account")
+        findShop(idAcc).then((res)=>{
             setShop(res)
             if (res !== ''){
                 setCheck(true)
             }
         })
     }, [check]);
-const handleUpdate= () => {
-
+const createNew= (values) => {
+    saveShop(values, navigate).then(()=>{
+        alert("Thêm thành công!")
+    })
 }
+   const handleUpdate = (id) => {
 
+   }
 
     return (
         <>
@@ -31,9 +34,9 @@ const handleUpdate= () => {
             <div className="container2">
                 <div style={{display: 'flex',justifyContent: 'space-between', alignItems: 'center'}}>
                     <h1>Thông tin</h1>
-                    <Button style={{fontSize:'14px'}} variant="warning" onClick={handleUpdate}>
+                    <Link to={'/shop-management/profile/update/'+shop?.id} style={{fontSize:'14px'}} variant="warning" >
                         Sửa thông tin
-                    </Button>
+                    </Link>
                 </div>
                 <div className="profile-info">
                     <div className="profile-avatar">
@@ -58,7 +61,7 @@ const handleUpdate= () => {
                 <h2>Bạn chưa đăng ký shop của mình, vui lòng đăng ký!</h2>
                 <div style={{marginLeft:'30%'}}>
 
-            <CreateShop></CreateShop>
+            <CreateShop parentCallback={createNew}></CreateShop>
                 </div>
             </>
             }

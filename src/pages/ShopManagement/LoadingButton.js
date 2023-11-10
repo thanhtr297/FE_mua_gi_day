@@ -10,8 +10,8 @@ export function LoadingButton({ loading }) {
         );
     } else {
         return (
-            <button className="btn btn-primary"  type={'submit'} >
-                Đăng ký
+            <button className="btn btn-primary"  style={{width:'100px',fontSize:'14px',marginLeft:'100%'}} type={'submit'} >
+                Lưu
             </button>
         );
     }
