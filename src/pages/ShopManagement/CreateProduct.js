@@ -5,9 +5,11 @@ import {storage} from "./fireBase";
 import {findAllCategory} from "./service/CategoryService";
 import {findAllBrand} from "./service/BrandService";
 import uploadImage from "./service/Upload";
+import {LoadingButton} from "./LoadingButton";
 
 
 function CreateProduct(props) {
+    const [loading, setLoading] = useState(false);
     const [path, setPath] = useState([]);
     let [categories, setCategories] = useState([])
     let [brands, setBrands] = useState([])
@@ -31,7 +33,7 @@ function CreateProduct(props) {
     }
 
     const upload = (files) => {
-        uploadImage(storage, files, setPath)
+        uploadImage(storage, files, setPath,setLoading)
     }
 
 
@@ -118,10 +120,14 @@ function CreateProduct(props) {
                                 </Field>
                             </div>
                             <br/>
-                            <div style={{textAlign: "center"}}>
-                                <button className={'btn btn-primary'} type={'submit'} onClick={handleClose}>
-                                    Thêm
-                                </button>
+                            {/*<div style={{textAlign: "center"}}>*/}
+                            {/*    <button className={'btn btn-primary'} type={'submit'} onClick={handleClose}>*/}
+                            {/*        Thêm*/}
+                            {/*    </button>*/}
+                            {/*</div>*/}
+
+                            <div className="mb-3" style={{fontSize: '18px', textAlign: 'center'}}>
+                                <LoadingButton loading={loading}/>
                             </div>
 
                         </Form>
