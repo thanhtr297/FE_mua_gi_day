@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Routes, Route, Link, Outlet} from "react-router-dom";
+import { Link, Outlet} from "react-router-dom";
 import './index.scss';
 
 function DashBoard() {
@@ -21,9 +21,6 @@ function DashBoard() {
                 </li>
                 <li className="nav__item">
                     <Link to="/shop-management/profile">Thông tin</Link>
-                </li>
-                <li className="nav__item">
-                    <Link to="/shop-management/demo">Demo</Link>
                 </li>
             </ul>
         </nav>

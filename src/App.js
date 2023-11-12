@@ -23,9 +23,7 @@ import Report from "./pages/ShopManagement/Report";
 import Profile from "./pages/ShopManagement/Profile";
 import UpdateProduct from "./pages/ShopManagement/UpdateProduct";
 import Images from "./pages/ShopManagement/Images";
-import UpdateProfile from "./pages/ShopManagement/UpdateProfile";
-import Demo from "./pages/ShopManagement/Demo";
-import CreateProduct from "./pages/ShopManagement/CreateProduct";
+
 
 
 function App() {
@@ -66,15 +64,13 @@ function App() {
             <Route path = "/profile" element = {<Profile />} />
 
               <Route path="/shop-management" element={<DashBoard />}>
-                  <Route index element={<div>Select an option from the dashboard</div>} />
+                  <Route index element={<div>Chọn chức năng</div>} />
                   <Route path="/shop-management/list-product" element={<ListProduct />} />
-                  <Route path="/shop-management/create" element={<CreateProduct />} />
                   <Route path="/shop-management/order-management" element={<OrderManagement />} />
                   <Route path="/shop-management/report" element={<Report />} />
                   <Route path="/shop-management/profile" element={<Profile/>} />
                   <Route path="/shop-management/:id" element={<UpdateProduct/>}/>
-                  <Route path="/shop-management/profile/update/:id" element={<UpdateProfile/>}/>
-                  <Route path="/shop-management/demo" element={<Demo/>}/>
+
               </Route>
 
 
