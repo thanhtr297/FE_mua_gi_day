@@ -74,7 +74,7 @@ export default function Register() {
 
         return (
             <div className={'login-container col-12 col-sm-4 '}>
-                <div className={'title'}>Đăng Kí</div>
+                <div className={'title'}>Đăng Ký</div>
                 <Formik
                     initialValues={{
                         username: '',
@@ -107,35 +107,42 @@ export default function Register() {
                     {({isSubmitting}) => (
                         <Form>
                             <div>
-                                <label className={'text'} htmlFor="username">Tên đăng nhập</label>
+                                <label className={'text'} htmlFor="username" style={{fontSize : '16px'}}>Tên đăng nhập</label>
                                 <Field type="text" name="username" />
                                 <ErrorMessage  className={'formik-error-message'} name="username" component="div"/>
                             </div>
 
                             <div>
-                                <label className={'text'} htmlFor="password">Mật khẩu</label>
+                                <label className={'text'} htmlFor="password" style={{fontSize : '16px'}}>Mật khẩu</label>
                                     <Field type="password" name="password" />
                                 <ErrorMessage className={'formik-error-message'} name="password" component="div"/>
                             </div>
                             <div>
-                                <label className={'text'} htmlFor="email">Email</label>
-                                <Field type="text" name="email" />
-                                <ErrorMessage className={'formik-error-message'} name="email" component="div"/>
+                                <label className={'text'} htmlFor="email" style={{fontSize : '16px'}}>Email</label>
+                                <div style={{display : 'flex'}}>
+                                    <div>
+                                        <Field type="text" name="email" style={{width : '410px'}}/>
+                                        <ErrorMessage className={'formik-error-message'} name="email" component="div"/>
+                                    </div>
+                                    <div>
+                                        <button  className={'button-send-email'} disabled={isButtonDisabled}  type={'submit'}>
+                                               {isButtonDisabled ? `Gửi lại ( ${countdown} s)` : "Gửi mã"}
+                                        </button>
+                                    </div>
+                                </div>
+
                             </div>
                             <div>
-                                <label className={'number'} htmlFor="otp">Nhập mã xác nhận</label>
+                                <label className={'number'} htmlFor="otp" style={{fontSize : '16px'}}><b>Nhập mã xác nhận</b></label>
                                 <div style={{display : 'flex' , }}>
                                 <input style={{width : '100px'}} type="text" onChange={(event) => setOtpCheck(event.target.value)}/>
-                                <button className={'button-send-email'} disabled={isButtonDisabled}  type={'submit'}>
-                                    {isButtonDisabled ? `Gửi lại ( ${countdown} s)` : "Gửi mã"}
-                                </button>
                                 </div>
                             </div>
                         </Form>
                     )}
                 </Formik>
-                <button type="button" onClick={handleButtonClick} className={(otp == otpCheck) ? "active" : "" }  disabled={!(otp == otpCheck)}>
-                    Đăng kí
+                <button type="button" onClick={handleButtonClick} style={{fontSize : '16px'}} className={(otp == otpCheck) ? "active" : "" }  disabled={!(otp == otpCheck)}>
+                   <b>Đăng kí</b>
                 </button>
                 <div className={'back'}>
 
