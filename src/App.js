@@ -25,6 +25,7 @@ import UpdateProduct from "./pages/ShopManagement/UpdateProduct";
 import Images from "./pages/ShopManagement/Images";
 import UpdateProfile from "./pages/ShopManagement/UpdateProfile";
 import Demo from "./pages/ShopManagement/Demo";
+import CreateProduct from "./pages/ShopManagement/CreateProduct";
 
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
               <Route path="/shop-management" element={<DashBoard />}>
                   <Route index element={<div>Select an option from the dashboard</div>} />
                   <Route path="/shop-management/list-product" element={<ListProduct />} />
+                  <Route path="/shop-management/create" element={<CreateProduct />} />
                   <Route path="/shop-management/order-management" element={<OrderManagement />} />
                   <Route path="/shop-management/report" element={<Report />} />
                   <Route path="/shop-management/profile" element={<Profile/>} />

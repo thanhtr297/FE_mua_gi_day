@@ -6,6 +6,8 @@ import {findAllCategory} from "./service/CategoryService";
 import {findAllBrand} from "./service/BrandService";
 import uploadImage from "./service/Upload";
 import {LoadingButton} from "./LoadingButton";
+import {useNavigate} from "react-router-dom";
+import {save} from "./service/ProductService";
 
 
 function CreateProduct(props) {
@@ -14,9 +16,8 @@ function CreateProduct(props) {
     let [categories, setCategories] = useState([])
     let [brands, setBrands] = useState([])
     const [show, setShow] = useState(false);
+    let navigate = useNavigate();
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
     useEffect(() => {
             findAllCategory().then(res => {
                 setCategories(res)
@@ -27,116 +28,100 @@ function CreateProduct(props) {
         }, []
     )
 
-    function sendData(e) {
-        e.image = path;
-        props.parentCallback(e)
+    function create(e) {
+        e.image = path
+        save(e, navigate)
     }
 
+
     const upload = (files) => {
-        uploadImage(storage, files, setPath,setLoading)
+        uploadImage(storage, files, setPath, setLoading)
     }
 
 
     return (
         <>
+            <div className={'container'} style={{width: '600px'}}>
+                <h1 style={{textAlign: "center"}}>Thêm sản phẩm mới</h1>
+                <Formik
+                    initialValues={{
+                        name: '',
+                        price: '',
+                        quantity: '',
+                        description: '',
+                        category: {
+                            id: ""
+                        },
+                        brand: {
+                            id: ""
+                        },
+                        account: {
+                            id: localStorage.getItem('account')
+                        },
+                        shop: {
+                            id: localStorage.getItem('account')
+                        }
 
-            <Button variant="primary" onClick={handleShow}>
-                Thêm sản phẩm mới
-            </Button>
-            <Modal show={show}
-                   onHide={handleClose}
-                   backdrop="static"
-                   keyboard={false}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Thêm sản phẩm mới</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Formik
-                        initialValues={{
-                            name: '',
-                            price: '',
-                            quantity: '',
-                            description: '',
-                            category: {
-                                id: ""
-                            },
-                            brand: {
-                                id: ""
-                            },
-                            account: {
-                                id: localStorage.getItem('account')
-                            }
+                    }}
+                    onSubmit={(e) => {
+                        create(e)
+                    }}>
+                    <Form>
+                        <div className="mb-3" style={{fontSize: '16px'}}>
+                            <label htmlFor={'name'} className="form-label">Tên</label>
+                            <Field type={'text'} name={'name'} className={'form-control'} id="{'name'}"/>
+                        </div>
+                        <div className="mb-3" style={{fontSize: '16px'}}>
+                            <label htmlFor={'price'} className="form-label">Giá</label>
+                            <Field type={'number'} name={'price'} className={'form-control'} id="{'price'}"/>
+                        </div>
+                        <div className="mb-3" style={{fontSize: '16px'}}>
+                            <label htmlFor={'quantity'} className="form-label">Số lượng</label>
+                            <Field type={'number'} name={'quantity'} className={'form-control'}
+                                   id="{'quantity'}"/>
+                        </div>
+                        <div className="mb-3" style={{fontSize: '16px'}}>
+                            <label htmlFor={'description'} className="form-label">Mô tả</label>
+                            <Field type={'text'} name={'description'} className={'form-control'}
+                                   id="{'description'}"/>
+                        </div>
+                        <div className="mb-3" style={{fontSize: '16px'}}>
+                            <label htmlFor={'image'} className="form-label">Image</label>
+                            <input type={'file'} multiple name={"image"} className={'form-control'} id="{'image'}"
+                                   onChange={(e) => {
+                                       upload(e.target.files)
+                                   }}/>
+                        </div>
+                        <div style={{fontSize: '16px'}}>
+                            <label htmlFor={'category'} className="form-label">Chọn loại mặt hàng</label>
+                            <Field as="select" name="category.id" class="form-control">
+                                <option style={{fontSize: '13px'}}>--Chọn loại--</option>
+                                {categories.map((d) => {
+                                    return (
+                                        <option value={d.id}>{d.name}</option>
+                                    )
+                                })}
+                            </Field>
+                        </div>
+                        <div style={{fontSize: '16px'}}>
+                            <label htmlFor={'brand'} className="form-label">Chọn thương hiệu</label>
+                            <Field as="select" name="brand.id" class="form-control">
+                                <option style={{fontSize: '13px'}}>--Chọn thương hiệu--</option>
+                                {brands.map((d) => {
+                                    return (
+                                        <option value={d.id}>{d.name}</option>
+                                    )
+                                })}
+                            </Field>
+                        </div>
+                        <br/>
+                        <div className="mb-3" style={{fontSize: '18px', textAlign: 'center'}}>
+                            <LoadingButton loading={loading}/>
+                        </div>
 
-                        }}
-                        onSubmit={(e) => {
-                            sendData(e)
-                        }}>
-                        <Form>
-                            <div className="mb-3">
-                                <label htmlFor={'name'} className="form-label">Tên</label>
-                                <Field type={'text'} name={'name'} className={'form-control'} id="{'name'}"/>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor={'price'} className="form-label">Giá</label>
-                                <Field type={'number'} name={'price'} className={'form-control'} id="{'price'}"/>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor={'quantity'} className="form-label">Số lượng</label>
-                                <Field type={'number'} name={'quantity'} className={'form-control'}
-                                       id="{'quantity'}"/>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor={'description'} className="form-label">Mô tả</label>
-                                <Field type={'text'} name={'description'} className={'form-control'}
-                                       id="{'description'}"/>
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor={'image'} className="form-label">Image</label>
-                                <input type={'file'} multiple name={"image"} className={'form-control'} id="{'image'}"
-                                       onChange={(e) => {
-                                           upload(e.target.files)
-                                       }}/>
-                            </div>
-                            <div>
-                                <label htmlFor={'category'} className="form-label">Chọn loại mặt hàng</label>
-                                <Field as="select" name="category.id" class="form-control">
-                                    <option>--Chọn loại--</option>
-                                    {categories.map((d) => {
-                                        return (
-                                            <option value={d.id}>{d.name}</option>
-                                        )
-                                    })}
-                                </Field>
-                            </div>
-                            <div>
-                                <label htmlFor={'brand'} className="form-label">Chọn thương hiệu</label>
-                                <Field as="select" name="brand.id" class="form-control">
-                                    <option>--Chọn thương hiệu--</option>
-                                    {brands.map((d) => {
-                                        return (
-                                            <option value={d.id}>{d.name}</option>
-                                        )
-                                    })}
-                                </Field>
-                            </div>
-                            <br/>
-                            {/*<div style={{textAlign: "center"}}>*/}
-                            {/*    <button className={'btn btn-primary'} type={'submit'} onClick={handleClose}>*/}
-                            {/*        Thêm*/}
-                            {/*    </button>*/}
-                            {/*</div>*/}
-
-                            <div className="mb-3" style={{fontSize: '18px', textAlign: 'center'}}>
-                                <LoadingButton loading={loading}/>
-                            </div>
-
-                        </Form>
-                    </Formik>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close</Button>
-                </Modal.Footer>
-            </Modal>
+                    </Form>
+                </Formik>
+            </div>
         </>
 
     );

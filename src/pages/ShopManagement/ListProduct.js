@@ -3,7 +3,7 @@ import CreateProduct from './CreateProduct';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {deleteById, save} from "./service/ProductService";
 
 function ListProduct() {
@@ -20,7 +20,6 @@ function ListProduct() {
     function findAllById(id) {
         axios.get("http://localhost:8080/api/products/acc/" + id).then(res => {
             setProducts(res.data)
-            console.log(res.data)
         })
     }
 
@@ -39,15 +38,10 @@ function ListProduct() {
         }
     }
 
-    function createNew(obj) {
-        save(obj, navigate).then(() => {
-            setCheckDelete(!checkDelete)
-        })
-    }
 
     return (
         <>
-            <CreateProduct parentCallback={createNew}/>
+            <Link to={'/shop-management/create'} className={'btn btn-primary'}>Thêm sản phẩm mới</Link>
             <br/>
             <br/>
             <h1>Danh sách sản phẩm hiện có</h1>
@@ -67,14 +61,13 @@ function ListProduct() {
                 </MDBTableHead>
                 <MDBTableBody>
                     {products.map((p,index) => {
-                        if (p.status == null) {
                         return (
                             <>
                                 <tr>
                                     <td>
                                         <div className='d-flex align-items-center'>
                                             <div className='ms-3'>
-                                                <p className='fw-bold mb-1'>{index}</p>
+                                                <p className='fw-bold mb-1'>{++index}</p>
                                             </div>
                                         </div>
                                     </td>
@@ -147,7 +140,7 @@ function ListProduct() {
                             </>
                     )
 
-                        }
+
                     })}
                     </MDBTableBody>
                     </MDBTable>
