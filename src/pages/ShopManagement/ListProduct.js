@@ -41,22 +41,23 @@ function ListProduct() {
 
     return (
         <>
-            <Link to={'/shop-management/create'} className={'btn btn-primary'}>Thêm sản phẩm mới</Link>
+            <Link to={'/shop-management/create'} className={'btn btn-primary'} style={{fontSize: '12px'}}>Thêm sản phẩm mới</Link>
             <br/>
             <br/>
-            <h1>Danh sách sản phẩm hiện có</h1>
-            <MDBTable align='middle'>
-                <MDBTableHead>
-                    <tr>
-                        <th scope='col'>STT</th>
-                        <th scope='col'>Tên</th>
-                        <th scope='col'>Ảnh</th>
-                        <th scope='col'>Loại sản phẩm</th>
-                        <th scope='col'>Thương hiệu</th>
-                        <th scope='col'>Số lượng</th>
-                        <th scope='col'>Giá</th>
-                        <th scope='col'>Mô tả</th>
-                        <th scope='col'>Thao tác</th>
+            <h1  style={{textAlign: "center"}}>Danh sách sản phẩm</h1>
+            <br/>
+            <br/>
+            <MDBTable style={{fontSize: '16px'}}>
+                <MDBTableHead >
+                    <tr style={{textAlign:'center'}}>
+                        <th style={{background:'white',color:'black'}}>STT</th>
+                        <th style={{background:'white',color:'black'}}>Tên</th>
+                        <th style={{background:'white',color:'black'}}>Ảnh</th>
+                        <th style={{background:'white',color:'black'}}>Loại sản phẩm</th>
+                        <th style={{background:'white',color:'black'}}>Thương hiệu</th>
+                        <th style={{background:'white',color:'black'}}>Số lượng</th>
+                        <th style={{background:'white',color:'black'}}>Giá</th>
+                        <th style={{background:'white',color:'black'}}>Thao tác</th>
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
@@ -122,17 +123,15 @@ function ListProduct() {
                                         <p className='fw-normal mb-1'>{p.price}</p>
                                     </td>
                                     <td>
-                                        <p className='fw-normal mb-1'>{p.description}</p>
-                                    </td>
-                                    <td>
                                         <button onClick={() => {
                                             update(p.id)
-                                        }}>Sửa
+                                        }} className={'btn btn-warning'} style={{fontSize: '12px'}}>Sửa
                                         </button>
+                                        <br/>
                                         <br/>
                                         <button onClick={() => {
                                             deleteP(p.id)
-                                        }}>Xóa
+                                        }} className={'btn btn-danger'} style={{fontSize: '12px'}}>Xóa
                                         </button>
                                     </td>
                                 </tr>
