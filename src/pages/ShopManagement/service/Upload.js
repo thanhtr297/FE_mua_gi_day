@@ -1,8 +1,9 @@
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import {v4} from "uuid";
 
-const uploadImage = (storage, files, setPath) => {
+const uploadImage = (storage, files, setPath, setLoading) => {
     if (!files || files.length === 0) return;
+    setLoading(true);
     const upload = Array.from(files).map((file) => {
         const imageRef = ref(storage, `image/${file.name + v4()}`);
         return uploadBytes(imageRef, file)
@@ -14,7 +15,9 @@ const uploadImage = (storage, files, setPath) => {
                 ]);
             });
     });
-    Promise.all(upload).then();
+    Promise.all(upload).then(() => {
+        setLoading(false)
+    })
 };
 
 export default uploadImage;

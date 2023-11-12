@@ -6,9 +6,10 @@ import { fetchAsyncProductSingle, getProductSingle, getSingleProductStatus } fro
 import { STATUS } from '../../utils/status';
 import Loader from "../../components/Loader/Loader";
 import {formatPrice} from "../../utils/helpers";
-import { addToCart, getCartMessageStatus, setCartMessageOff, setCartMessageOn } from '../../store/cartSlice';
+import { getCartMessageStatus, setCartMessageOff, setCartMessageOn } from '../../store/cartSlice';
 import CartMessage from "../../components/CartMessage/CartMessage";
 import {getProductById} from "../../service/ProductService";
+import {addToCart} from "../../service/CartService";
 
 const ProductSinglePage = () => {
   const {id} = useParams();
@@ -17,7 +18,7 @@ const ProductSinglePage = () => {
   const productSingleStatus = useSelector(getSingleProductStatus);
   const [quantity, setQuantity] = useState(1);
   const cartMessageStatus = useSelector(getCartMessageStatus);
-  const account = localStorage.getItem("account") ;
+  const idAccount = localStorage.getItem("account") ;
 
   // getting single product
   useEffect(() => {
@@ -35,7 +36,9 @@ const ProductSinglePage = () => {
   const increaseQty = () => {
     setQuantity((prevQty) => {
       let tempQty = prevQty + 1;
-      if(tempQty > product?.quantity) tempQty = product?.quantity;
+      if(tempQty > product?.quantity) {
+        tempQty = product?.quantity;
+      }
       return tempQty;
     })
   }
@@ -43,17 +46,30 @@ const ProductSinglePage = () => {
   const decreaseQty = () => {
     setQuantity((prevQty) => {
       let tempQty = prevQty - 1;
-      if(tempQty < 1) tempQty = 1;
+      if(tempQty < 1) {
+        tempQty = 1;
+      }
       return tempQty;
     })
   }
 
-  const addToCartHandler = (product) => {
-    let discountedPrice = (product?.price) - (product?.price * (product?.promotion / 100));
-    let totalPrice = quantity * discountedPrice;
+  // const addToCartHandler = (product) => {
+  //   let discountedPrice = (product?.price) - (product?.price * (product?.promotion / 100));
+  //   let totalPrice = quantity * discountedPrice;
+  //
+  //   dispatch(addToCart({...product, quantity: quantity, totalPrice, discountedPrice}));
+  //   dispatch(setCartMessageOn(true));
+  // }
 
-    dispatch(addToCart({...product, quantity: quantity, totalPrice, discountedPrice}));
-    dispatch(setCartMessageOn(true));
+  const addToCartHandler = (product) => {
+      const cart =  {
+        product : {
+          id : product.id
+        },
+        quantity : quantity
+    }
+    addToCart(cart, idAccount).then()
+
   }
 
   console.log(product)
@@ -170,11 +186,11 @@ const ProductSinglePage = () => {
                 </div>
 
                 <div className='btns'>
-                  <button type = "button" className='add-to-cart-btn btn' disabled={(account == product?.account?.id)}>
+                  <button type = "button" className='add-to-cart-btn btn' disabled={(idAccount === product?.account?.id)}>
                     <i className='fas fa-shopping-cart'></i>
                     <span className='btn-text mx-2' onClick={() => { addToCartHandler(product)}}>add to cart</span>
                   </button>
-                  <button type = "button" className='buy-now btn mx-3' disabled={(account == product?.account?.id)}>
+                  <button type = "button" className='buy-now btn mx-3' disabled={(idAccount === product?.account?.id)}>
                     <span className='btn-text'>buy now</span>
                   </button>
                 </div>
