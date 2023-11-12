@@ -56,7 +56,7 @@ const ProductSinglePage = () => {
     dispatch(setCartMessageOn(true));
   }
 
-
+  console.log(product)
   return (
     <main className='py-5 bg-whitesmoke'>
       <div className='product-single'>
@@ -65,9 +65,8 @@ const ProductSinglePage = () => {
             <div className='product-single-l'>
               <div className='product-img'>
                 <div className='product-img-zoom'>
-                  <img src = {product?(product?.image?.name ? product?.image[1]?.name : "") : ""} alt = "" className='img-cover' />
+                  <img src = {product?.image === undefined ? '' : product?.image[0]?.name } alt = "" className='img-cover' />
                 </div>
-
                 <div className='product-img-thumbs flex align-center my-2'>
                   {product?.image?.map(p=>{
                     return (

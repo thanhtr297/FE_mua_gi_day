@@ -54,11 +54,13 @@ export default function Login() {
 
                     ></i>
                 </div>
-                <button className={email && password ? "active" : ""}
-                        disabled={!(email && password)}
-                        onClick={() => handleLogin()}
+                <div>
+                    <button className={email && password ? "active" : ""}
+                             disabled={!(email && password)}
+                             onClick={() => handleLogin()}
                 >Đăng nhập
-                </button>
+                </button></div>
+
                 <div className={'back'}>
 
 
