@@ -160,12 +160,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                         <label htmlFor={'phone'} className="form-label">Số điện thoại: </label>
                                         <Field style={{fontSize: '16px'}} disabled={check} type={'text'} name={'phone'} className={'form-control'} id="{'phone'}"/>
                                     </div>
-                                    <div className="mb-3" style={{fontSize: '16px'}}>
-                                        <label htmlFor={'address'} className="form-label">Số nhà: </label>
-                                        <Field style={{fontSize: '16px'}} disabled={check} type={'text'} name={'address'} className={'form-control'}
-                                               id="{'address'}"
-                                        />
-                                    </div>
+
                                     <div className="mb-3" style={{fontSize: '16px'}}>
                                         <br/>
                                         <LoadingButton loading={loading}/>
@@ -209,7 +204,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                     </div>
                                     <div className="mb-3" style={{fontSize: '16px'}}>
                                         <label htmlFor={'wards'} className="form-label">Phường/xã</label>
-                                        <select style={{fontSize: '16px'}} disabled={check} value={shop?.wards?.name} name={'address.wards.id'} onChange={(e) => {
+                                        <select style={{fontSize: '16px'}} disabled={check} name={'address.wards.id'} onChange={(e) => {
                                             const textWards = e.target.value;
                                             setNameWards(textWards.split("-")[1])
                                             setIdWards(textWards.split("-")[0])

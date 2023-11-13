@@ -24,6 +24,9 @@ import Profile from "./pages/ShopManagement/Profile";
 import UpdateProduct from "./pages/ShopManagement/UpdateProduct";
 import Images from "./pages/ShopManagement/Images";
 import CreateProduct from "./pages/ShopManagement/CreateProduct";
+import UserManagement from "./pages/UserManagement";
+import ProfileUser from "./pages/UserManagement/ProfileUser";
+import ChangePassword from "./pages/UserManagement/ChangePassword";
 
 
 
@@ -72,9 +75,12 @@ function App() {
                   <Route path="/shop-management/report" element={<Report />} />
                   <Route path="/shop-management/profile" element={<Profile/>} />
                   <Route path="/shop-management/:id" element={<UpdateProduct/>}/>
-
               </Route>
-
+              <Route path="/user-management" element={<UserManagement/>}>
+                  <Route index element={<div>Chọn chức năng</div>} />
+                  <Route path="/user-management/profile" element={<ProfileUser/>} />
+                  <Route path="/user-management/change-password" element={<ChangePassword/>} />
+              </Route>
 
             {/*<Route path={"/login"} element={<Login b={test1}/>}/>*/}
 
