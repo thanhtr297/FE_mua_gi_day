@@ -160,6 +160,10 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                         <label htmlFor={'phone'} className="form-label">Số điện thoại: </label>
                                         <Field style={{fontSize: '16px'}} disabled={check} type={'text'} name={'phone'} className={'form-control'} id="{'phone'}"/>
                                     </div>
+                                    <div className="mb-3" style={{fontSize: '16px'}}>
+                                        <label htmlFor={'address'} className="form-label">Số nhà: </label>
+                                        <Field style={{fontSize: '16px'}} disabled={check} type={'text'} name={'address'} className={'form-control'} id="{'phone'}"/>
+                                    </div>
 
                                     <div className="mb-3" style={{fontSize: '16px'}}>
                                         <br/>
