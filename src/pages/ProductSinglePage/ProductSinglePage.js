@@ -13,7 +13,6 @@ import {addToCart} from "../../service/CartService";
 
 const ProductSinglePage = () => {
   const {id} = useParams();
-  const dispatch = useDispatch();
   const [product , setProduct] = useState({});
   const productSingleStatus = useSelector(getSingleProductStatus);
   const [quantity, setQuantity] = useState(1);

@@ -25,3 +25,41 @@ export const showCart = (id) => {
         )
     })
 }
+
+export const deleteProductFromCart = (idCartDetail) => {
+    return new Promise((resolve) => {
+        resolve(
+            axios.delete("http://localhost:8080/api/carts/"+idCartDetail)
+                .then(response => {
+                    return response.data
+                }).catch(() => {
+                    return []
+            })
+        )
+    })
+}
+export const deleteAllProductFromCart = (idCart) => {
+    return new Promise((resolve) => {
+        resolve(
+            axios.delete("http://localhost:8080/api/carts/deleteAll/"+idCart)
+                .then(response => {
+                    return response.data
+                }).catch(() => {
+                return []
+            })
+        )
+    })
+}
+
+export const updateQuantity = (quantity, idProduct, idCart) => {
+    return new Promise((resolve) => {
+        resolve(
+            axios.post("http://localhost:8080/api/carts/update?quantity="+quantity+"&&idProduct="+idProduct+"&&idCart="+idCart)
+                .then(() => {
+                    console.log("Cập nhật số lượng thành công")
+                }).catch(() => {
+                return []
+            })
+        )
+    })
+}
