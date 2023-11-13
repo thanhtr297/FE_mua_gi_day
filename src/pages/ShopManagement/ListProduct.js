@@ -77,7 +77,7 @@ function ListProduct() {
                                     </td>
                                     <td>
                                         <div id={"carouselExampleIndicators" + index} className="carousel slide"
-                                             style={{width: "130px"}}>
+                                             style={{width: "130px", marginLeft: '35px'}}>
                                             <div className="carousel-indicators" >
                                                 <button type="button" data-bs-target="#carouselExampleIndicators"
                                                         data-bs-slide-to="0" className="active" aria-current="true"

@@ -60,7 +60,7 @@ const CartPage = () => {
     }, [carts]);
 
 
-    const increaseQty = (maxQty, index, quantity, idProduct, idCart) => {
+    const increaseQty = (quantity, idProduct, idCart,maxQty, index ) => {
         setQuantitys((prevQty) => {
             const newQtys = [...prevQty];
             let newQty = newQtys[index] + 1;
@@ -71,7 +71,7 @@ const CartPage = () => {
             newQtys[index] = newQty;
             return newQtys;
         });
-        // updateQuantityInDB(quantity, idProduct, idCart);
+        updateQuantityInDB(quantity, idProduct, idCart);
     };
 
     const decreaseQty = (quantity, idProduct, idCart, index) => {
@@ -85,8 +85,7 @@ const CartPage = () => {
             newQtys[index] = newQty;
             return newQtys;
         });
-
-            // updateQuantityInDB(quantity, idProduct, idCart);
+            updateQuantityInDB(quantity, idProduct, idCart);
     };
 
 
@@ -179,7 +178,7 @@ const CartPage = () => {
                                         </div>
                                         <div className='cart-ctd'>
                                             <div className='qty-change flex align-center'>
-                                                <button type = "button" className='qty-decrease flex align-center justify-center' onClick={() => {decreaseQty(index)}}>
+                                                <button type = "button" className='qty-decrease flex align-center justify-center' onClick={() => {decreaseQty(quantitys[index]-1,cart.product.id, cart.cart.id,index)}}>
                                                     <i className='fas fa-minus'></i>
                                                 </button>
                                                 <div className='qty-value flex align-center justify-center'>
@@ -196,7 +195,7 @@ const CartPage = () => {
                                                         }}
                                                     />
                                                 </div>
-                                                <button type = "button" className='qty-increase flex align-center justify-center' onClick={() => {increaseQty(cart.product.quantity, index)}}>
+                                                <button type = "button" className='qty-increase flex align-center justify-center' onClick={() => {increaseQty(quantitys[index]+1,cart.product.id, cart.cart.id,cart.product.quantity, index)}}>
                                                     <i className='fas fa-plus'></i>
                                                 </button>
                                             </div>
