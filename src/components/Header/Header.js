@@ -47,7 +47,7 @@ const Header = (props) => {
                   <div className="nav-item dropdown" >
                                       <a href="#" className=" nav-link dropdown-toggle" data-bs-toggle="dropdown"><small className="fa fa-user text-body"></small></a>
                     <div className="dropdown-menu m-0">
-                                    <Link to={'/profile'} className="dropdown-item">Hồ sơ</Link>
+                                    <Link to={'/user-management'} className="dropdown-item">Hồ sơ</Link>
                                   <Link to={'/shop-management'} className="dropdown-item" >Shop của tôi</Link>
                           <Dropdown.Divider />
                       <a href="" className="dropdown-item" >Đăng xuất</a>
