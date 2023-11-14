@@ -15,7 +15,9 @@ const emailCheck = () => {
 const userCheck = () => {
     return axios.get("http://localhost:8080/api/users/user" );
 }
-
+export const findUser = (id)=>{
+    return axios.get("http://localhost:8080/api/users/"+id)
+}
 
 
 export {loginApi , register ,sendMail , userCheck  ,emailCheck}

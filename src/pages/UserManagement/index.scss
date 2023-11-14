@@ -1,6 +1,6 @@
 // Dashboard.module.scss
 
-$nav-background: #9b1414;
+$nav-background: #323250;
 $nav-item-hover-background: #34495e;
 $nav-text-color: #ecf0f1;
 $nav-hover-text-color: #f1c40f;
@@ -13,16 +13,18 @@ $nav-item-active-background: #2980b9;
 }
 
 .nav {
+
   width: 250px; // Điều chỉnh chiều rộng của nav nếu cần
   background-color: $nav-background;
   min-height: 100%;
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
 
   &__list {
+    margin-left: 15%;
     list-style-type: none;
     padding: 20px;
     >li {
-      font-size: 12px;
+      font-size: 14px;
       margin-bottom: 20px;
     }
     &__item {
