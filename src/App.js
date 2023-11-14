@@ -33,6 +33,9 @@ import Done from "./components/Order/Done";
 import UserManagement from "./pages/UserManagement";
 import ProfileUser from "./pages/UserManagement/ProfileUser";
 import ChangePassword from "./pages/UserManagement/ChangePassword";
+import Info from "./pages/BillPage/Info";
+import Bill from "./pages/BillPage/Bill";
+
 
 
 function App() {
@@ -60,6 +63,20 @@ function App() {
                         <Route path="/address" element={<DisplayAddress/>}/>
                         <Route path="/images" element={<Images/>}/>
 
+            {/* single product route */}
+            <Route path = "/product/:id" element = {<ProductSingle />} />
+            {/* category wise product listing route */}
+            <Route path = "/category/:category" element = {<CategoryProduct />} />
+            {/* cart */}
+            <Route path = "/cart" element = {<Cart />} />
+            <Route path = "/cart/info" element = {<Info/>} />
+            <Route path = "/bill" element = {<Bill />} />
+
+            {/* searched products */}
+            <Route path = "/search/:searchTerm" element = {<Search />} />
+            <Route path={"/login"} element={<Login/>}/>
+            <Route path={"/register"} element={<Register/>}/>
+            <Route path = "/profile" element = {<Profile />} />
                         {/* single product route */}
                         <Route path="/product/:id" element={<ProductSingle/>}/>
                         {/* category wise product listing route */}

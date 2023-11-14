@@ -187,10 +187,10 @@ const ProductSinglePage = () => {
                 <div className='btns'>
                   <button type = "button" className='add-to-cart-btn btn' disabled={(idAccount === product?.account?.id)}>
                     <i className='fas fa-shopping-cart'></i>
-                    <span className='btn-text mx-2' onClick={() => { addToCartHandler(product)}}>add to cart</span>
+                    <span className='btn-text mx-2' onClick={() => { addToCartHandler(product)}}>Thêm vào giỏ hàng</span>
                   </button>
                   <button type = "button" className='buy-now btn mx-3' disabled={(idAccount === product?.account?.id)}>
-                    <span className='btn-text'>buy now</span>
+                    <span className='btn-text'>Mua ngay</span>
                   </button>
                 </div>
               </div>

@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import "./CartPage.scss";
 import {shopping_cart} from '../../utils/images';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {formatPrice} from '../../utils/helpers';
 import {deleteAllProductFromCart, deleteProductFromCart, showCart, updateQuantity} from "../../service/CartService";
+import {saveBill} from "../../service/BillService";
 
 
 const CartPage = () => {
@@ -14,13 +15,15 @@ const CartPage = () => {
     const [totalPrices, setTotalPrices] = useState([]);
     let [idCart, setIdCart] = useState();
     const [quantitys, setQuantitys] = useState([]);
-
+    const navigate = useNavigate();
+    const [isChecked, setIsChecked] = useState([])
 
 
     useEffect(() => {
         showCart(idAccount).then((response) => {
             setCarts(response)
             console.log(response)
+
         })
     }, [checkDelete, idAccount])
 
@@ -43,7 +46,7 @@ const CartPage = () => {
 
     useEffect(() => {
         carts.map((c) => {
-            return(
+            return (
                 setIdCart(c.cart.id)
             )
         })
@@ -60,7 +63,7 @@ const CartPage = () => {
     }, [carts]);
 
 
-    const increaseQty = (quantity, idProduct, idCart,maxQty, index ) => {
+    const increaseQty = (quantity, idProduct, idCart, maxQty, index) => {
         setQuantitys((prevQty) => {
             const newQtys = [...prevQty];
             let newQty = newQtys[index] + 1;
@@ -85,15 +88,15 @@ const CartPage = () => {
             newQtys[index] = newQty;
             return newQtys;
         });
-            updateQuantityInDB(quantity, idProduct, idCart);
+        updateQuantityInDB(quantity, idProduct, idCart);
     };
-
 
 
     const updateQuantityInDB = (idProduct, quantity, idCart) => {
         updateQuantity(idProduct, quantity, idCart).then()
 
     }
+
     function deleteProduct(idCartDetail) {
         if (window.confirm("Bạn có muốn xóa sản phẩm này không?")) {
             deleteProductFromCart(idCartDetail).then(() => {
@@ -110,6 +113,29 @@ const CartPage = () => {
                 alert("Xóa sản phẩm thành công!")
             })
         }
+    }
+
+    function info() {
+        navigate("/cart/info")
+    }
+
+    const saveToBill = () => {
+        saveBill(isChecked, navigate).then(() => {
+            navigate("/bill")
+        })
+    }
+
+    const checked = (e, idCart) => {
+        const check = e.target.checked;
+        setIsChecked(prevChecked => {
+            if (check) {
+                return [...prevChecked, idCart]
+            } else {
+                return prevChecked.filter(id => id !== idCart)
+
+            }
+        } )
+        console.log(isChecked)
     }
 
 
@@ -140,6 +166,9 @@ const CartPage = () => {
                                 <span className='cart-ctxt'>Sản phẩm</span>
                             </div>
                             <div className='cart-cth'>
+                                <span className='cart-ctxt'>Shop</span>
+                            </div>
+                            <div className='cart-cth'>
                                 <span className='cart-ctxt'>Đơn giá</span>
                             </div>
                             <div className='cart-cth'>
@@ -161,15 +190,22 @@ const CartPage = () => {
                                     <div className='cart-ctr py-5' key={cart?.id}>
                                         {/*{setIdCart(cart?.cart.id)}*/}
                                         <div className='cart-ctd'>
-                                            <span className='cart-ctxt'>{index + 1}</span>
+                                            <span className='cart-ctxt'><input type={"checkbox"} style={{
+                                                transform: "scale(1.4)",
+                                                marginLeft: "10px"}}    checked={isChecked.includes(cart.id)} onChange={(e) =>
+                                            {checked(e, cart.id)
+                                            }}/></span>
                                         </div>
-                                        <div className='cart-ctd' style={{ display: 'flex', alignItems: 'center' }}>
+                                        <div className='cart-ctd' style={{display: 'flex', alignItems: 'center'}}>
                                             <img
-                                                style={{ width: "60px", height: "50px", marginRight: "20px" }}
+                                                style={{width: "60px", height: "50px", marginRight: "20px"}}
                                                 src={cart.product.image[0].name}
                                                 alt="..."
                                             />
                                             <span className='cart-ctxt'>{cart.product.name}</span>
+                                        </div>
+                                        <div className='cart-ctd' style={{display: 'flex', alignItems: 'center'}}>
+                                            <span className='cart-ctxt'>{cart.product.shop.name}</span>
                                         </div>
                                         <div className='cart-ctd'>
                                           <span className='cart-ctxt'>
@@ -178,12 +214,16 @@ const CartPage = () => {
                                         </div>
                                         <div className='cart-ctd'>
                                             <div className='qty-change flex align-center'>
-                                                <button type = "button" className='qty-decrease flex align-center justify-center' onClick={() => {decreaseQty(quantitys[index]-1,cart.product.id, cart.cart.id,index)}}>
+                                                <button type="button"
+                                                        className='qty-decrease flex align-center justify-center'
+                                                        onClick={() => {
+                                                            decreaseQty(quantitys[index] - 1, cart.product.id, cart.cart.id, index)
+                                                        }}>
                                                     <i className='fas fa-minus'></i>
                                                 </button>
                                                 <div className='qty-value flex align-center justify-center'>
-                                                    {/*{quantitys[index]}*/}
-                                                    <input style={{width: "15px", fontStyle: "2px", textAlign: "center"}}
+                                                    <input
+                                                        style={{width: "15px", fontStyle: "2px", textAlign: "center"}}
                                                         type="text"
                                                         value={quantitys[index]}
                                                         onChange={(e) => {
@@ -195,7 +235,11 @@ const CartPage = () => {
                                                         }}
                                                     />
                                                 </div>
-                                                <button type = "button" className='qty-increase flex align-center justify-center' onClick={() => {increaseQty(quantitys[index]+1,cart.product.id, cart.cart.id,cart.product.quantity, index)}}>
+                                                <button type="button"
+                                                        className='qty-increase flex align-center justify-center'
+                                                        onClick={() => {
+                                                            increaseQty(quantitys[index] + 1, cart.product.id, cart.cart.id, cart.product.quantity, index)
+                                                        }}>
                                                     <i className='fas fa-plus'></i>
                                                 </button>
                                             </div>
@@ -220,7 +264,9 @@ const CartPage = () => {
                     <div className='cart-cfoot flex align-start justify-between py-3 bg-white'>
                         <div className='cart-cfoot-l'>
                             <button type='button' className='clear-cart-btn text-danger fs-15 text-uppercase fw-4'
-                                    onClick={() => {deleteAll(idCart)}}>
+                                    onClick={() => {
+                                        deleteAll(idCart)
+                                    }}>
                                 <i className='fas fa-trash'></i>
                                 <span className='mx-1'>Xóa tất cả sản phẩm</span>
                             </button>
@@ -229,11 +275,16 @@ const CartPage = () => {
                         <div className='cart-cfoot-r flex flex-column justify-end'>
                             <div className='total-txt flex align-center justify-end'>
                                 {/*<div className='font-manrope fw-5'>Total ({itemsCount}) items:</div>*/}
-                                <div className='font-manrope fw-10' style={{fontSize: "15px", fontStyle: "normal", marginTop: "5px"}}>Tổng tiền:</div>
+                                <div className='font-manrope fw-10'
+                                     style={{fontSize: "15px", fontStyle: "normal", marginTop: "5px"}}>Tổng tiền:
+                                </div>
                                 <span className='text-orange fs-22 mx-2 fw-6'>{formatPrice(totalPrice)}</span>
                             </div>
 
-                            <button type="button" className='checkout-btn text-white bg-orange fs-16'>Thanh toán</button>
+                            <button type="button" className='checkout-btn text-white bg-orange fs-16' onClick={() => {
+                                saveToBill()
+                            }}>Mua ngay
+                            </button>
                         </div>
                     </div>
                 </div>
