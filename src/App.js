@@ -13,7 +13,7 @@ import {Provider} from "react-redux";
 
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
-import React  from "react";
+import React from "react";
 
 import DisplayAddress from "./components/Shop/address/DisplayAddress";
 import DashBoard from "./pages/ShopManagement";
@@ -24,7 +24,12 @@ import Profile from "./pages/ShopManagement/Profile";
 import UpdateProduct from "./pages/ShopManagement/UpdateProduct";
 import Images from "./pages/ShopManagement/Images";
 import CreateProduct from "./pages/ShopManagement/CreateProduct";
-
+import Pending from "./components/Order/Pending";
+import AllOrder from "./components/Order/AllOrder";
+import Shipping from "./components/Order/Shipping";
+import Reject from "./components/Order/Reject";
+import Cancel from "./components/Order/Cancel";
+import Done from "./components/Order/Done";
 
 
 function App() {
@@ -36,55 +41,63 @@ function App() {
     //     setCheck(true)
     // }
 
-  return (
-    <div className="App">
-      <Provider store = {store}>
-        <BrowserRouter>
+    return (
+        <div className="App">
+            <Provider store={store}>
+                <BrowserRouter>
 
 
-          {/*{check && <Header a={test}/>}*/}
-          {/*{!isLoginPage && <Sidebar />}*/}
-            <Header/>
-          <Sidebar />
-          <Routes>
-            {/* home page route */}
-            <Route path = "/" element = {<Home />} />
-            <Route path = "/address" element = {<DisplayAddress />} />
-            <Route path = "/images" element = {<Images />} />
+                    {/*{check && <Header a={test}/>}*/}
+                    {/*{!isLoginPage && <Sidebar />}*/}
+                    <Header/>
+                    <Sidebar/>
+                    <Routes>
+                        {/* home page route */}
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/address" element={<DisplayAddress/>}/>
+                        <Route path="/images" element={<Images/>}/>
 
-            {/* single product route */}
-            <Route path = "/product/:id" element = {<ProductSingle />} />
-            {/* category wise product listing route */}
-            <Route path = "/category/:category" element = {<CategoryProduct />} />
-            {/* cart */}
-            <Route path = "/cart" element = {<Cart />} />
-            {/* searched products */}
-            <Route path = "/search/:searchTerm" element = {<Search />} />
-            <Route path={"/login"} element={<Login/>}/>
-            <Route path={"/register"} element={<Register/>}/>
-            <Route path = "/profile" element = {<Profile />} />
+                        {/* single product route */}
+                        <Route path="/product/:id" element={<ProductSingle/>}/>
+                        {/* category wise product listing route */}
+                        <Route path="/category/:category" element={<CategoryProduct/>}/>
+                        {/* cart */}
+                        <Route path="/cart" element={<Cart/>}/>
+                        {/* searched products */}
+                        <Route path="/search/:searchTerm" element={<Search/>}/>
+                        <Route path={"/login"} element={<Login/>}/>
+                        <Route path={"/register"} element={<Register/>}/>
+                        <Route path="/profile" element={<Profile/>}/>
 
-              <Route path="/shop-management" element={<DashBoard />}>
-                  <Route index element={<div>Chọn chức năng</div>} />
-                  <Route path="/shop-management/list-product" element={<ListProduct />} />
-                  <Route path="/shop-management/create" element={<CreateProduct />} />
-                  <Route path="/shop-management/order-management" element={<OrderManagement />} />
-                  <Route path="/shop-management/report" element={<Report />} />
-                  <Route path="/shop-management/profile" element={<Profile/>} />
-                  <Route path="/shop-management/:id" element={<UpdateProduct/>}/>
+                        <Route path="/shop-management" element={<DashBoard/>}>
+                            <Route index element={<div>Chọn chức năng</div>}/>
+                            <Route path="/shop-management/list-product" element={<ListProduct/>}/>
+                            <Route path="/shop-management/create" element={<CreateProduct/>}/>
+                            <Route path="/shop-management/order-management" element={<OrderManagement/>}>
+                                <Route index  element={<AllOrder/>}/>
+                                <Route  path="/shop-management/order-management/allOrder" element={<AllOrder/>}/>
+                                <Route path="/shop-management/order-management/confirm" element={<Pending/>}/>
+                                <Route path="/shop-management/order-management/shipping" element={<Shipping/>}/>
+                                <Route path="/shop-management/order-management/cancel" element={<Cancel/>}/>
+                                <Route path="/shop-management/order-management/reject" element={<Reject/>}/>
+                                <Route path="/shop-management/order-management/done" element={<Done/>}/>
+                            </Route>
+                            <Route path="/shop-management/report" element={<Report/>}/>
+                            <Route path="/shop-management/profile" element={<Profile/>}/>
+                            <Route path="/shop-management/:id" element={<UpdateProduct/>}/>
 
-              </Route>
+                        </Route>
 
 
-            {/*<Route path={"/login"} element={<Login b={test1}/>}/>*/}
+                        {/*<Route path={"/login"} element={<Login b={test1}/>}/>*/}
 
-          </Routes>
+                    </Routes>
 
-          <Footer/>
-        </BrowserRouter>
-      </Provider>
-    </div>
-  );
+                    <Footer/>
+                </BrowserRouter>
+            </Provider>
+        </div>
+    );
 }
 
 export default App;
