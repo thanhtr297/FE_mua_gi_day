@@ -6,13 +6,20 @@ import { setSidebarOn } from '../../store/sidebarSlice';
 import { getAllCategories } from '../../store/categorySlice';
 import { getAllCarts, getCartItemsCount, getCartTotal } from '../../store/cartSlice';
 import CartModal from "../CartModal/CartModal";
+import {showCart} from "../../service/CartService";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const categories = useSelector(getAllCategories);
-  const carts = useSelector(getAllCarts);
   const itemsCount = useSelector(getCartItemsCount);
   const [searchTerm, setSearchTerm] = useState("");
+  const [carts, setCarts] = useState([]);
+  const idAccount = localStorage.getItem("account");
+  useEffect(() => {
+    showCart(idAccount).then((response) => {
+      setCarts(response)
+    })
+  },[idAccount])
 
   const handleSearchTerm = (e) => {
     e.preventDefault();
@@ -21,7 +28,7 @@ const Navbar = () => {
 
   useEffect(() => {
     dispatch(getCartTotal());
-  }, [carts])
+  }, )
 
   return (
     <nav className='navbar1'>
@@ -65,7 +72,7 @@ const Navbar = () => {
         <div className='navbar1-cart flex align-center'>
           <Link to = "/cart" className='cart-btn'>
             <i className='fa-solid fa-cart-shopping'></i>
-            <div className='cart1-items-value'>{itemsCount}</div>
+            <div className='cart1-items-value'>{carts.length}</div>
             <CartModal carts = {carts} />
           </Link>
         </div>

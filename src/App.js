@@ -24,6 +24,8 @@ import Profile from "./pages/ShopManagement/Profile";
 import UpdateProduct from "./pages/ShopManagement/UpdateProduct";
 import Images from "./pages/ShopManagement/Images";
 import CreateProduct from "./pages/ShopManagement/CreateProduct";
+import Info from "./pages/BillPage/Info";
+import Bill from "./pages/BillPage/Bill";
 
 
 
@@ -58,6 +60,9 @@ function App() {
             <Route path = "/category/:category" element = {<CategoryProduct />} />
             {/* cart */}
             <Route path = "/cart" element = {<Cart />} />
+            <Route path = "/cart/info" element = {<Info/>} />
+            <Route path = "/bill" element = {<Bill />} />
+
             {/* searched products */}
             <Route path = "/search/:searchTerm" element = {<Search />} />
             <Route path={"/login"} element={<Login/>}/>
