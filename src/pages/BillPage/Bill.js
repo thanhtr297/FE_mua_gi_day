@@ -3,7 +3,8 @@ import "./BillPage.scss";
 import {shopping_cart} from '../../utils/images';
 import {Link, useNavigate} from 'react-router-dom';
 import {formatPrice} from '../../utils/helpers';
-import {showBillByAccount} from "../../service/BillService";
+import {saveToBill, showBillByAccount} from "../../service/BillService";
+import {findUserByAccount} from "../UserManagement/Service/UserService";
 
 
 const Bill = () => {
@@ -11,6 +12,8 @@ const Bill = () => {
     const navigate = useNavigate()
     const [bills, setBills] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
+    const [user, setUser] = useState({})
+
 
     useEffect(() => {
         showBillByAccount(idAccount).then((response) => {
@@ -26,8 +29,17 @@ const Bill = () => {
         setTotalPrice(totalPrice);
     }, [bills]);
 
-    function addToBill() {
-        navigate("/bill")
+    useEffect(() => {
+        findUserByAccount(idAccount).then((res) => {
+            setUser(res)
+        })
+    },[idAccount])
+
+    const saveBills = () => {
+        saveToBill(idAccount, bills, navigate).then()
+    }
+    function changeAddress() {
+        navigate(("/user-management/profile"))
     }
 
 
@@ -48,7 +60,17 @@ const Bill = () => {
             <div className='containerr'>
                 <div className='cart-ctable1'>
                     <div className='cart-chead bg-white' style={{height: "50px"}}>
-                        <h3 style={{color: "red", paddingTop: "5px"}}>Địa chỉ nhận hàng :</h3>
+                      <div style={{display: "flex"}}><h3 style={{color: "red", paddingTop: "11px"}}>Địa chỉ nhận hàng :</h3>
+                          <b style={{fontSize: "15px", marginLeft:"10px", marginTop: "10px" }}>{user.name}  ({user.phone})</b>
+                          <p style={{fontSize: "13px", marginLeft: "15px", marginTop: "12px"}}>{user.address} {user?.wards.name}, {user?.wards.district.name}, {user?.wards.district.city.name}</p>
+
+                              <button   style={{marginLeft: "50px", marginTop: "3px"}} type="button" className='delete-btn text-danger' onClick={() =>{
+                                  changeAddress()
+                              }}>Thay đổi
+                              </button>
+
+                      </div>
+
                     </div>
                 </div>
                 <div className='cart-ctable1'>
@@ -134,7 +156,7 @@ const Bill = () => {
                             </div>
 
                             <button style={{marginLeft: "1050px"}} type="button" className='checkout-btn text-white bg-orange fs-16' onClick={() => {
-                                addToBill()
+                                saveBills()
                             }}>Thanh toán
                             </button>
                         </div>
