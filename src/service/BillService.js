@@ -14,7 +14,7 @@ import axios from "axios";
 //     })
 // }
 
-export const saveBill = (idCarts, navigate) => {
+export const addToBill = (idCarts, navigate) => {
     return new Promise((resolve) => {
         resolve(
             axios.post("http://localhost:8080/api/bills/", idCarts)
@@ -36,6 +36,20 @@ export const showBillByAccount = (idAccount) => {
                     return response.data
                 }).catch(() => {
                 return []
+            })
+        )
+    })
+}
+
+export const saveToBill = (idAccount,bills, navigate) => {
+    return new Promise((resolve) => {
+        resolve(
+            axios.post("http://localhost:8080/api/bills/save?idAccount="+idAccount, bills )
+                .then(() => {
+                    alert("Đặt hàng thành công, vui lòng chờ chủ shop xác nhận !")
+                    navigate("/")
+                }).catch(() => {
+                alert("Lỗi không đặt được hàng")
             })
         )
     })
