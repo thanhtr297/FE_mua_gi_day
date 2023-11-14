@@ -15,9 +15,13 @@ const emailCheck = () => {
 const userCheck = () => {
     return axios.get("http://localhost:8080/api/users/user" );
 }
-export const findUser = (id)=>{
-    return axios.get("http://localhost:8080/api/users/"+id)
+export const findUserByAccount = (idAccount)=>{
+    return axios.get("http://localhost:8080/api/users/acc/"+idAccount)
 }
-
-
+export const sendmail = (user) => {
+    return axios.post("http://localhost:8080/api/client/sendMail" , user);
+}
+export const savePass= (user) => {
+    return axios.post("http://localhost:8080/api/users/change",user)
+}
 export {loginApi , register ,sendMail , userCheck  ,emailCheck}

@@ -1,11 +1,13 @@
 import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {findUser} from "../../service/UserService";
+import {findUserByAccount, savePass, sendmail} from "../../service/UserService";
 
 export default function ChangePassword() {
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+    const [otpCheck, setOtpCheck] = useState('1');
+    const [countdown, setCountdown] = useState(30);
     const navigate = useNavigate();
     const [otp, setOtp] = useState('');
-    const id = localStorage.getItem("account")
     const [user, setUser] = useState({});
     const [isShowPassword, setIsShowPassword] = useState(false)
     const [password, setPassword] = useState("");
@@ -13,10 +15,10 @@ export default function ChangePassword() {
     const [isShowPasswordNew, setIsShowPasswordNew] = useState(false);
     const [isShowPasswordConfirm, setIsShowPasswordConfirm] = useState(false);
     const [passwordError,setPasswordError] = useState("")
-    const [passwordConfirm,setPasswordConfirm] = useState("")
 
     useEffect(() => {
-        findUser(id).then((res) => {
+        const id = localStorage.getItem("account")
+        findUserByAccount(id).then((res) => {
             setUser(res.data)
         })
     }, []);
@@ -48,6 +50,57 @@ export default function ChangePassword() {
         }
         setPasswordError(errors)
     }
+
+    const onSubmit = () => {
+        if (!isButtonDisabled) {
+            setIsButtonDisabled(true);
+
+            const timer = setInterval(() => {
+                setCountdown((prevCountdown) => {
+                    if (prevCountdown === 1) {
+                        clearInterval(timer);
+                        setIsButtonDisabled(false);
+                        return 30;
+                    }
+                    return prevCountdown - 1;
+                });
+            }, 1000);
+        }
+        sendmail({
+            name : createRandomFourDigitNumber() ,
+            username : user.id ,
+            email : user.email,
+            password :  password,
+        }).then((res) => {
+            if(res.status === 200) {
+            console.log(res)
+            alert(`Mã xác thực đã được gửi đến email ${user.email}`)
+            setOtp(res.data.name + ''); // Thiết lập giá trị OTP ban đầu
+            localStorage.setItem("acc", JSON.stringify(res.data))
+            const timer = setInterval(() => {
+                localStorage.removeItem("acc")
+                setOtp(createRandomFourDigitNumber()); // Thiết lập giá trị OTP thành 0 sau 10 giây
+                clearInterval(timer); // Huỷ bỏ setInterval
+            }, 40000);
+        } else if (res.status === 202) {
+            alert('Thao tác quá hạn vui lòng thử lại')
+            navigate("/")
+        }
+        }).catch(()=>{
+            const errors = {}
+            errors.check = "Mật khẩu cũ không đúng"
+            setPasswordError(errors)
+        })
+    };
+
+    const savePassword=()=>{
+            const userNew = user;
+            userNew.password = passwordNew
+            console.log(userNew)
+            savePass(userNew).then(()=>{
+                alert("cap nhat thanh cong")
+            })
+    }
     return (
         <>
             <div className={'login-container col-12 col-sm-4 '} style={{fontSize:'14px'}}>
@@ -63,24 +116,23 @@ export default function ChangePassword() {
 
                     ></i>
                 </div>
+                <div style={{color:"red"}}> {passwordError && <div className="error-message">{passwordError.check}</div>}</div>
+
                 <div className={'text'}>Mật khẩu mới</div>
                 <div className={'input-password'}>
                     <input type={isShowPasswordNew === true ? 'text' : 'password'}
                                                          placeholder={'8-15 ký tự có ít nhất 1 ký tự in hoa'}
-                    // value={password}
                                                          onChange={handlePasswordChange}/>
                     <i className={isShowPasswordNew === true ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}
                        onClick={() => setIsShowPasswordNew(!isShowPasswordNew)}
 
                     ></i>
-                    {/*{passwordError && <div className="error-message">{passwordError.password}</div>}*/}
                 </div>
                 <div style={{color:"red"}}> {passwordError && <div className="error-message">{passwordError.password}</div>}</div>
                 <div className={'text'}>Nhập lại mật khẩu</div>
                 <div className={'input-password'}>
                     <input type={isShowPasswordConfirm === true ? 'text' : 'password'}
                            placeholder={'Xác nhận lại mật khẩu'}
-                        // value={password}
                            onChange={handlePasswordConfirmChange}/>
                     <i className={isShowPasswordConfirm === true ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}
                        onClick={() => setIsShowPasswordConfirm(!isShowPasswordConfirm)}
@@ -88,10 +140,22 @@ export default function ChangePassword() {
                     ></i>
                 </div>
                 <div style={{color:"red"}}> {passwordError && <div className="error-message">{passwordError.cfpass}</div>}</div>
-                <div style={{textAlign:"center"}}>
-                    <button className={password ? "active":""}
-                            disabled={!password}
 
+                <div style={{display:'flex'}}>
+                    <div>
+                        <label className={'number'} htmlFor="otp" style={{fontSize : '16px'}}><b>Nhập mã xác nhận</b></label>
+                        <div style={{display : 'flex',width:'100px' }}>
+                            <input style={{width : '100px'}} type="text" onChange={(event) => setOtpCheck(event.target.value)}/>
+                        </div>
+                    </div>
+                    <button  className={'button-send-email'} disabled={isButtonDisabled}  type={'button'} onClick={onSubmit}>
+                        {isButtonDisabled ? `Gửi lại ( ${countdown} s)` : "Gửi mã"}
+                    </button>
+                </div>
+                <div style={{textAlign:"center"}}>
+                    <button className={password && (otp === otpCheck) ? "active":""}
+                            disabled={!password}
+                    onClick={savePassword}
                     >Đổi mật khẩu
                     </button>
                 </div>
