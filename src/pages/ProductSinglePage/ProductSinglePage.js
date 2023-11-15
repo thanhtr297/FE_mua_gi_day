@@ -72,51 +72,93 @@ const ProductSinglePage = () => {
     }
 
     console.log(product)
-    return (
-
-        <main className='py-5 bg-whitesmoke'>
-
-
-            <div className='product-single'>
-                <div className='containerr'>
-                    <div className='product-single-content bg-white grid'>
-                        <div className='product-single-l'>
-                            <div className='product-img'>
-                                <div className='product-img-zoom'>
-                                    <img src={product?.image === undefined ? '' : product?.image[0]?.name} alt=""
-                                         className='img-cover'/>
-                                </div>
-                                <div className='product-img-thumbs flex align-center my-2'>
-                                    {product?.image?.map(p => {
-                                        return (
-                                            <div className='thumb-item'>
-                                                <img src={p?.name} alt="" className='img-cover'/>
-                                            </div>
-                                        )
-                                    })}
-                                    {/*<div className='thumb-item'>*/}
-                                    {/*  <img src = {*/}
-                                    {/*    product ? (product.images ? product.images[1] : "") : ""*/}
-                                    {/*  } alt = "" className='img-cover' />*/}
-                                    {/*</div>*/}
-                                    {/*<div className='thumb-item'>*/}
-                                    {/*  <img src = {*/}
-                                    {/*    product ? (product.images ? product.images[2] : "") : ""*/}
-                                    {/*  } alt = "" className='img-cover' />*/}
-                                    {/*</div>*/}
-                                    {/*<div className='thumb-item'>*/}
-                                    {/*  <img src = {*/}
-                                    {/*    product ? (product.images ? product.images[3] : "") : ""*/}
-                                    {/*  } alt = "" className='img-cover' />*/}
-                                    {/*</div>*/}
-                                    {/*<div className='thumb-item'>*/}
-                                    {/*  <img src = {*/}
-                                    {/*    product ? (product.images ? product.images[4] : "") : ""*/}
-                                    {/*  } alt = "" className='img-cover' />*/}
-                                    {/*</div>*/}
-                                </div>
-                            </div>
+  //   return (
+  //
+  //       <main className='py-5 bg-whitesmoke'>
+  //
+  //
+  //           <div className='product-single'>
+  //               <div className='containerr'>
+  //                   <div className='product-single-content bg-white grid'>
+  //                       <div className='product-single-l'>
+  //                           <div className='product-img'>
+  //                               <div className='product-img-zoom'>
+  //                                   <img src={product?.image === undefined ? '' : product?.image[0]?.name} alt=""
+  //                                        className='img-cover'/>
+  //                               </div>
+  //                               <div className='product-img-thumbs flex align-center my-2'>
+  //                                   {product?.image?.map(p => {
+  //                                       return (
+  //                                           <div className='thumb-item'>
+  //                                               <img src={p?.name} alt="" className='img-cover'/>
+  //                                           </div>
+  //                                       )
+  //                                   })}
+  //                                   {/*<div className='thumb-item'>*/}
+  //                                   {/*  <img src = {*/}
+  //                                   {/*    product ? (product.images ? product.images[1] : "") : ""*/}
+  //                                   {/*  } alt = "" className='img-cover' />*/}
+  //                                   {/*</div>*/}
+  //                                   {/*<div className='thumb-item'>*/}
+  //                                   {/*  <img src = {*/}
+  //                                   {/*    product ? (product.images ? product.images[2] : "") : ""*/}
+  //                                   {/*  } alt = "" className='img-cover' />*/}
+  //                                   {/*</div>*/}
+  //                                   {/*<div className='thumb-item'>*/}
+  //                                   {/*  <img src = {*/}
+  //                                   {/*    product ? (product.images ? product.images[3] : "") : ""*/}
+  //                                   {/*  } alt = "" className='img-cover' />*/}
+  //                                   {/*</div>*/}
+  //                                   {/*<div className='thumb-item'>*/}
+  //                                   {/*  <img src = {*/}
+  //                                   {/*    product ? (product.images ? product.images[4] : "") : ""*/}
+  //                                   {/*  } alt = "" className='img-cover' />*/}
+  //                                   {/*</div>*/}
+  //                               </div>
+  //                           </div>
+  //                       </div>
+  // }
+  return (
+    <main className='py-5 bg-whitesmoke'>
+      <div className='product-single'>
+        <div className='containerr'>
+          <div className='product-single-content bg-white grid'>
+            <div className='product-single-l'>
+              <div className='product-img'>
+                <div className='product-img-zoom'>
+                  <img src = {product?.image === undefined ? '' : product?.image[0]?.name } alt = "" className='img-cover' />
+                </div>
+                <div className='product-img-thumbs flex align-center my-2'>
+                  {product?.image?.map(p=>{
+                    return (
+                        <div className='thumb-item'>
+                          <img src = {p?.name} alt = "" className='img-cover' />
                         </div>
+                    )
+                  })}
+                  {/*<div className='thumb-item'>*/}
+                  {/*  <img src = {*/}
+                  {/*    product ? (product.images ? product.images[1] : "") : ""*/}
+                  {/*  } alt = "" className='img-cover' />*/}
+                  {/*</div>*/}
+                  {/*<div className='thumb-item'>*/}
+                  {/*  <img src = {*/}
+                  {/*    product ? (product.images ? product.images[2] : "") : ""*/}
+                  {/*  } alt = "" className='img-cover' />*/}
+                  {/*</div>*/}
+                  {/*<div className='thumb-item'>*/}
+                  {/*  <img src = {*/}
+                  {/*    product ? (product.images ? product.images[3] : "") : ""*/}
+                  {/*  } alt = "" className='img-cover' />*/}
+                  {/*</div>*/}
+                  {/*<div className='thumb-item'>*/}
+                  {/*  <img src = {*/}
+                  {/*    product ? (product.images ? product.images[4] : "") : ""*/}
+                  {/*  } alt = "" className='img-cover' />*/}
+                  {/*</div>*/}
+                </div>
+              </div>
+            </div>
 
                         <div className='product-single-r'>
                             <div className='product-details font-manrope'>

@@ -24,4 +24,10 @@ export const sendmail = (user) => {
 export const savePass= (user) => {
     return axios.post("http://localhost:8080/api/users/change",user)
 }
+export const findAccountByEmail = (email) => {
+    return axios.get("http://localhost:8080/api/users/email/"+email)
+}
+export const sendMailForgetPass = (form) => {
+    return axios.post("http://localhost:8080/api/users/sendMailPass",form)
+}
 export {loginApi , register ,sendMail , userCheck  ,emailCheck}
