@@ -36,6 +36,12 @@ import ChangePassword from "./pages/UserManagement/ChangePassword";
 import {AppProvider} from "./Context/AppContext";
 import Info from "./pages/BillPage/Info";
 import Bill from "./pages/BillPage/Bill";
+import OrderUser from "./pages/BillPage/OrderUser";
+import PendingUser from "./components/OrderUser/PendingUser";
+import ShippingUser from "./components/OrderUser/ShippingUser";
+import CancelUser from "./components/OrderUser/CancelUser";
+import DoneUser from "./components/OrderUser/DoneUser";
+
 import {ForgotPass} from "./pages/UserManagement/ForgotPass";
 
 
@@ -80,7 +86,6 @@ function App() {
             <Route path={"/login"} element={<Login/>}/>
             <Route path={"/register"} element={<Register/>}/>
             <Route path = "/profile" element = {<Profile />} />
-                        <Route path={"/forgotPass"} element={<ForgotPass/>}/>
                         {/* single product route */}
                         <Route path="/product/:id" element={<ProductSingle/>}/>
                         {/* category wise product listing route */}
@@ -95,9 +100,16 @@ function App() {
 
 
                         <Route path="/user-management" element={<UserManagement/>}>
-                            <Route index element={<ProfileUser/>}/>
+                            <Route index element={<div>Chọn chức năng</div>}/>
                             <Route path="/user-management/profile" element={<ProfileUser/>}/>
                             <Route path="/user-management/change-password" element={<ChangePassword/>}/>
+                            <Route path="/user-management/order" element={<OrderUser/>}>
+                                <Route index element={<PendingUser/>}/>
+                                <Route path="/user-management/order/confirm" element={<PendingUser/>}/>
+                                <Route path="/user-management/order/shipping" element={<ShippingUser/>}/>
+                                <Route path="/user-management/order/cancel" element={<CancelUser/>}/>
+                                <Route path="/user-management/order/done" element={<DoneUser/>}/>
+                            </Route>
                         </Route>
                         <Route path="/shop-management" element={<DashBoard/>}>
                             <Route index element={<div>Chọn chức năng</div>}/>
