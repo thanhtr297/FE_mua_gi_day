@@ -125,9 +125,7 @@ const CartPage = () => {
     }
 
     const saveToBill = () => {
-        addToBill(isChecked, navigate).then(() => {
-            navigate("/bill")
-        })
+        addToBill(isChecked, navigate).then()
     }
 
     const checked = (e, idCart) => {
@@ -317,6 +315,12 @@ const CartPage = () => {
 export default CartPage
 
 
+
+
+
+
+
+
 // import React, {useEffect, useState} from 'react';
 // import "./CartPage.scss";
 // import {shopping_cart} from '../../utils/images';
@@ -370,7 +374,9 @@ export default CartPage
 //
 //     useEffect(() => {
 //         carts.map((c) => {
-//             return (setIdCart(c.cart.id))
+//             return (
+//                 setIdCart(c.cart.id)
+//             )
 //         })
 //     })
 //
@@ -460,18 +466,109 @@ export default CartPage
 //         console.log(isChecked)
 //     }
 //
+//     const test = () => {
+//         let content =''
+//         for (let i = 0; i < shops.length; i++) {
+//             for (let j = 0; j < carts.length; j++) {
+//                 if (shops[i].name === carts[j].product.shop.name){
+//                     content +=
+//                         `<div className='cart-ctr py-5' key={carts[j].id}>
+//                                     {/*{setIdCart(cart?.cart.id)}*/}
+//                                     <div className='cart-ctd'>
+//                                             <span className='cart-ctxt'><input type={"checkbox"} style={{
+//                                                 transform: "scale(1.4)",
+//                                                 marginLeft: "10px"
+//                                             }} checked={isChecked.includes(carts[j].id)} onChange={(e) => {
+//                                                 checked(e, carts[j].id)
+//                                             }}/></span>
+//                                     </div>
+//                                     <div className='cart-ctd'
+//                                          style={{display: 'flex', alignItems: 'center'}}>
+//                                         <img
+//                                             style={{width: "60px", height: "50px", marginRight: "20px"}}
+//                                             src={carts[j].product.image[0].name}
+//                                             alt="..."
+//                                         />
+//                                         <span className='cart-ctxt'>{carts[j].product.name}</span>
+//                                     </div>
+//                                     <div className='cart-ctd'
+//                                          style={{display: 'flex', alignItems: 'center'}}>
+//                                         <span className='cart-ctxt'>{carts[j].product.shop.name}</span>
+//                                     </div>
+//                                     <div className='cart-ctd'>
+//                                           <span className='cart-ctxt'>
+//                                            (<del>{formatPrice(carts[j].product.price)}</del>) / {formatPrice(carts[j].product.price - (carts[j].product.price * carts[j].product.promotion / 100))}
+//                                           </span>
+//                                     </div>
+//                                     <div className='cart-ctd'>
+//                                         <div className='qty-change flex align-center'>
+//                                             <button type="button"
+//                                                     className='qty-decrease flex align-center justify-center'
+//                                                     onClick={() => {
+//                                                         decreaseQty(quantitys[index] - 1, carts[j].product.id, carts[j].cart.id, index)
+//                                                     }}>
+//                                                 <i className='fas fa-minus'></i>
+// </button>
+//                                             <div className='qty-value flex align-center justify-center'>
+//                                                 <input
+//                                                     style={{
+//                                                         width: "15px",
+//                                                         fontStyle: "2px",
+//                                                         textAlign: "center"
+//                                                     }}
+//                                                     type="text"
+//                                                     value={quantitys[index]}
+//                                                     onChange={(e) => {
+//                                                         const newQty = parseInt(e.target.value);
+//                                                         setQuantitys[index](newQty)
+//                                                         if (newQty >= 1 && newQty <= carts[j].product.quantity) {
+//                                                             updateQuantityInDB(newQty, carts[j].product.id, carts[j].cart.id);
+//                                                         }
+//                                                     }}
+//                                                 />
+//                                             </div>
+//                                             <button type="button"
+//                                                     className='qty-increase flex align-center justify-center'
+//                                                     onClick={() => {
+//                                                         increaseQty(quantitys[index] + 1, carts[j].product.id, carts[j].cart.id, carts[j].product.quantity, index)
+//                                                     }}>
+//                                                 <i className='fas fa-plus'></i>
+//                                             </button>
+//                                         </div>
+//                                     </div>
 //
-//     if (carts.length === 0) {
-//         return (<div className='containerr my-5'>
-//             <div className='empty-cart flex justify-center align-center flex-column font-manrope'>
-//                 <img src={shopping_cart} alt=""/>
-//                 <span className='fw-6 fs-15 text-gray'>Your shopping cart is empty.</span>
-//                 <Link to="/" className='shopping-btn bg-orange text-white fw-5'>Go shopping Now</Link>
-//             </div>
-//         </div>)
+//                                     <div className='cart-ctd'>
+//                                             <span
+//                                                 className='cart-ctxt text-orange fw-5'>{formatPrice(totalPrices[index])}</span>
+//                                     </div>
+//
+//                                     <div className='cart-ctd'>
+//                                         <button type="button" className='delete-btn text-dark'
+//                                                 onClick={() => deleteProduct(carts[j].id)}>Delete
+//                                         </button>
+//                                     </div>
+//                                 </div>`
+//                 }
+//             }
+//         }
+//         return content
 //     }
 //
-//     return (<div className='cart bg-whitesmoke'>
+//
+//     if (carts.length === 0) {
+//         return (
+//             <div className='containerr my-5'>
+//                 <div className='empty-cart flex justify-center align-center flex-column font-manrope'>
+//                     <img src={shopping_cart} alt=""/>
+//                     <span className='fw-6 fs-15 text-gray'>Your shopping cart is empty.</span>
+//                     <Link to="/" className='shopping-btn bg-orange text-white fw-5'>Go shopping Now</Link>
+//                 </div>
+//             </div>
+//         )
+//     }
+//
+//     return (
+//         <div className='cart bg-whitesmoke'>
 //             <div className='containerr'>
 //                 <div className='cart-ctable'>
 //                     <div className='cart-chead bg-white'>
@@ -501,82 +598,20 @@ export default CartPage
 //                     </div>
 //
 //                     <div className='cart-cbody bg-white'>
-//                         {shops.map((shop, idx) => (<div key={idx}>
+//
+//                         {shops.map((shop, idx) => (
+//                             <div key={idx}>
 //                                 <div className='shop-name'>{shop.name}</div>
 //                                 <div className='shop-products'>
-//                                     {carts.filter((cart) => cart.product.shop.name === shop.name)
-//                                         .map((cart, index) => (<div className='cart-ctr py-5' key={cart?.id}>
-//                                                 {/*{setIdCart(cart?.cart.id)}*/}
-//                                                 <div className='cart-ctd'>
-//                                             <span className='cart-ctxt'><input type={"checkbox"} style={{
-//                                                 transform: "scale(1.4)", marginLeft: "10px"
-//                                             }} checked={isChecked.includes(cart.id)} onChange={(e) => {
-//                                                 checked(e, cart.id)
-//                                             }}/></span>
-//                                                 </div>
-//                                                 <div className='cart-ctd'
-//                                                      style={{display: 'flex', alignItems: 'center'}}>
-//                                                     <img
-//                                                         style={{width: "60px", height: "50px", marginRight: "20px"}}
-//                                                         src={cart.product.image[0].name}
-//                                                         alt="..."
-//                                                     />
-//                                                     <span className='cart-ctxt'>{cart.product.name}</span>
-//                                                 </div>
-//                                                 <div className='cart-ctd'
-//                                                      style={{display: 'flex', alignItems: 'center'}}>
-//                                                     <span className='cart-ctxt'>{cart.product.shop.name}</span>
-//                                                 </div>
-//                                                 <div className='cart-ctd'>
-//                                           <span className='cart-ctxt'>
-//                                            (<del>{formatPrice(cart.product.price)}</del>) / {formatPrice(cart.product.price - (cart.product.price * cart.product.promotion / 100))}
-//                                           </span>
-//                                                 </div>
-//                                                 <div className='cart-ctd'>
-//                                                     <div className='qty-change flex align-center'>
-//                                                         <button type="button"
-//                                                                 className='qty-decrease flex align-center justify-center'
-//                                                                 onClick={() => {
-//                                                                     decreaseQty(quantitys[index] - 1, cart.product.id, cart.cart.id, index)
-//                                                                 }}>
-//                                                             <i className='fas fa-minus'></i>
-//                                                         </button>
-//                                                         <div className='qty-value flex align-center justify-center'>
-//                                                             <input
-//                                                                 style={{
-//                                                                     width: "15px", fontStyle: "2px", textAlign: "center"
-//                                                                 }}
-//                                                                 type="text"
-//                                                                 value={quantitys[index]}
-//                                                                 onChange={(e) => {
-//                                                                     const newQty = parseInt(e.target.value);
-//                                                                     setQuantitys[index](newQty)
-//                                                                     if (newQty >= 1 && newQty <= cart.product.quantity) {
-//                                                                         updateQuantityInDB(newQty, cart.product.id, cart.cart.id);
-//                                                                     }
-//                                                                 }}
-//                                                             />
-//                                                         </div>
-//                                                         <button type="button"
-//                                                                 className='qty-increase flex align-center justify-center'
-//                                                                 onClick={() => {
-//                                                                     increaseQty(quantitys[index] + 1, cart.product.id, cart.cart.id, cart.product.quantity, index)
-//                                                                 }}>
-//                                                             <i className='fas fa-plus'></i>
-//                                                         </button>
-//                                                     </div>
-//                                                 </div>
-//
-//                                                 <div className='cart-ctd'>
-//                                             <span
-//                                                 className='cart-ctxt text-orange fw-5'>{formatPrice(totalPrices[index])}</span>
-//                                                 </div>
-//
-//                                                 <div className='cart-ctd'>
-//                                                     <button type="button" className='delete-btn text-dark'
-//                                                             onClick={() => deleteProduct(cart.id)}>Delete
-//                                                     </button>
-//                                                 </div>
+//                                     {carts
+//                                         .filter((cart) => cart.product.shop.name === shop.name)
+//                                         .map((cart, index) => (
+//                                             <div className='product' key={index}>
+//                                                 {/* Hiển thị thông tin sản phẩm */}
+//                                                 <img src={cart.product.image[0].name} alt='...' />
+//                                                 <span>{cart.product.name}</span>
+//                                                 {/* Các phần tử khác trong sản phẩm */}
+//                                                 ...
 //                                             </div>
 //                                         ))}
 //                                 </div>
@@ -584,6 +619,8 @@ export default CartPage
 //                         ))}
 //                     </div>
 //
+//
+//                     {/*))}*/}
 //
 //                     <div className='cart-cfoot flex align-start justify-between py-3 bg-white'>
 //                         <div className='cart-cfoot-l'>
@@ -623,3 +660,9 @@ export default CartPage
 // }
 //
 // export default CartPage
+//
+
+
+
+
+

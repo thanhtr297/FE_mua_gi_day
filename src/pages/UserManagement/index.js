@@ -15,6 +15,9 @@ function Index() {
                     <li className="nav__item">
                         <Link to="/user-management/change-password">Đổi mật khẩu</Link>
                     </li>
+                    <li className="nav__item">
+                        <Link to="/user-management/order">Quản lý đơn hàng</Link>
+                    </li>
                 </ul>
             </nav>
             <main className="main-content">
