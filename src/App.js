@@ -36,6 +36,7 @@ import ChangePassword from "./pages/UserManagement/ChangePassword";
 import Info from "./pages/BillPage/Info";
 import Bill from "./pages/BillPage/Bill";
 import {ForgotPass} from "./pages/UserManagement/ForgotPass";
+import {PasswordNew} from "./pages/UserManagement/PasswordNew";
 
 
 
@@ -76,6 +77,7 @@ function App() {
             {/* searched products */}
             <Route path = "/search/:searchTerm" element = {<Search />} />
             <Route path={"/login"} element={<Login/>}/>
+            <Route path={"/password-new"} element={<PasswordNew/>}/>
             <Route path={"/register"} element={<Register/>}/>
             <Route path = "/profile" element = {<Profile />} />
                         <Route path={"/forgotPass"} element={<ForgotPass/>}/>

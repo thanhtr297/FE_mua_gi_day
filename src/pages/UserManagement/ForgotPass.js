@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {emailCheck, findAccountByEmail} from "../../service/UserService";
+import {emailCheck, findAccountByEmail, sendMailForgetPass} from "../../service/UserService";
 
 export function ForgotPass() {
     const [email,setEmail] = useState('')
@@ -41,6 +41,8 @@ export function ForgotPass() {
             password: '',
             email: email
         }
+        sendMailForgetPass(account)
+        alert("Vui lòng kiểm tra hộp thư trong email của bạn!")
     }
 
     return(
