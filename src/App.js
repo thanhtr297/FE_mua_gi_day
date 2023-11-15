@@ -1,5 +1,5 @@
 import './App.scss';
-// react router v6
+
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 // pages
 import {Home, CategoryProduct, ProductSingle, Cart, Search} from "./pages/index";
@@ -9,7 +9,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Footer from "./components/Footer/Footer";
 import store from "./store/store";
 import {Provider} from "react-redux";
-// import Login from "./components/Login/Login";
+
 
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
@@ -35,6 +35,12 @@ import ProfileUser from "./pages/UserManagement/ProfileUser";
 import ChangePassword from "./pages/UserManagement/ChangePassword";
 import Info from "./pages/BillPage/Info";
 import Bill from "./pages/BillPage/Bill";
+import OrderUser from "./pages/BillPage/OrderUser";
+import PendingUser from "./components/OrderUser/PendingUser";
+import ShippingUser from "./components/OrderUser/ShippingUser";
+import CancelUser from "./components/OrderUser/CancelUser";
+import DoneUser from "./components/OrderUser/DoneUser";
+
 
 
 
@@ -88,12 +94,17 @@ function App() {
                         <Route path={"/login"} element={<Login/>}/>
                         <Route path={"/register"} element={<Register/>}/>
                         <Route path="/profile" element={<Profile/>}/>
-
-
                         <Route path="/user-management" element={<UserManagement/>}>
                             <Route index element={<div>Chọn chức năng</div>}/>
                             <Route path="/user-management/profile" element={<ProfileUser/>}/>
                             <Route path="/user-management/change-password" element={<ChangePassword/>}/>
+                            <Route path="/user-management/order" element={<OrderUser/>}>
+                                <Route index element={<PendingUser/>}/>
+                                <Route path="/user-management/order/confirm" element={<PendingUser/>}/>
+                                <Route path="/user-management/order/shipping" element={<ShippingUser/>}/>
+                                <Route path="/user-management/order/cancel" element={<CancelUser/>}/>
+                                <Route path="/user-management/order/done" element={<DoneUser/>}/>
+                            </Route>
                         </Route>
                         <Route path="/shop-management" element={<DashBoard/>}>
                             <Route index element={<div>Chọn chức năng</div>}/>

@@ -1,19 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import "./BillPage.scss";
+import "../../pages/BillPage/BillPage.scss";
 import {shopping_cart} from '../../utils/images';
 import {Link, useNavigate} from 'react-router-dom';
 import {formatPrice} from '../../utils/helpers';
 import {saveToBill, showBillByAccountAndStatus} from "../../service/BillService";
-import {findUserByAccount} from "../UserManagement/Service/UserService";
+import {findUserByAccount} from "../../service/UserService";
 
 
-const Bill = () => {
+
+const ShippingUser = () => {
     const idAccount = localStorage.getItem("account")
     const navigate = useNavigate()
     const [bills, setBills] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
     const [user, setUser] = useState({})
-    const status = "0";
+    const status = "Chờ xác nhận"
 
 
     useEffect(() => {
@@ -61,16 +62,16 @@ const Bill = () => {
             <div className='containerr'>
                 <div className='cart-ctable1'>
                     <div className='cart-chead bg-white' style={{height: "50px"}}>
-                      <div style={{display: "flex"}}><h3 style={{color: "red", paddingTop: "11px"}}>Địa chỉ nhận hàng :</h3>
-                          <b style={{fontSize: "15px", marginLeft:"10px", marginTop: "10px" }}>{user.name}  ({user.phone})</b>
-                          {/*<p style={{fontSize: "13px", marginLeft: "15px", marginTop: "12px"}}>{user.address} {user?.wards.name}, {user?.wards.district.name}, {user?.wards.district.city.name}</p>*/}
+                        <div style={{display: "flex"}}><h3 style={{color: "red", paddingTop: "11px"}}>Địa chỉ nhận hàng :</h3>
+                            <b style={{fontSize: "15px", marginLeft:"10px", marginTop: "10px" }}>{user.name}  ({user.phone})</b>
+                            <p style={{fontSize: "13px", marginLeft: "15px", marginTop: "12px"}}>{user.address} {user?.wards.name}, {user?.wards.district.name}, {user?.wards.district.city.name}</p>
 
-                              <button   style={{marginLeft: "50px", marginTop: "3px"}} type="button" className='delete-btn text-danger' onClick={() =>{
-                                  changeAddress()
-                              }}>Thay đổi
-                              </button>
+                            <button   style={{marginLeft: "50px", marginTop: "3px"}} type="button" className='delete-btn text-danger' onClick={() =>{
+                                changeAddress()
+                            }}>Thay đổi
+                            </button>
 
-                      </div>
+                        </div>
 
                     </div>
                 </div>
@@ -117,7 +118,7 @@ const Bill = () => {
                                           </span>
                                         </div>
                                         <div className='cart-ctd' style={{marginLeft: "27px"}}>
-                                             <span className='cart-ctxt'>{bill.quantity}</span>
+                                            <span className='cart-ctxt'>{bill.quantity}</span>
 
                                         </div>
                                         <div className='cart-ctd'>
@@ -168,4 +169,4 @@ const Bill = () => {
     )
 }
 
-export default Bill
+export default ShippingUser

@@ -17,10 +17,10 @@ import axios from "axios";
 export const addToBill = (idCarts, navigate) => {
     return new Promise((resolve) => {
         resolve(
-            axios.post("http://localhost:8080/api/bills/", idCarts)
+            axios.post("http://localhost:8080/api/bills/" , idCarts)
                 .then(() => {
                     alert("Đặt hàng thành công, vui lòng chờ chủ shop xác nhận !")
-                    navigate("/info")
+                    navigate("/bill")
                 }).catch(() => {
                 alert("Lỗi không đặt được hàng")
             })
@@ -28,10 +28,10 @@ export const addToBill = (idCarts, navigate) => {
     })
 }
 
-export const showBillByAccount = (idAccount) => {
+export const showBillByAccountAndStatus = (idAccount, status) => {
     return new Promise((resolve) => {
         resolve(
-            axios.get("http://localhost:8080/api/bills?idAccount="+idAccount)
+            axios.get("http://localhost:8080/api/bills?idAccount="+idAccount+"&status="+status)
                 .then(response => {
                     return response.data
                 }).catch(() => {
@@ -47,7 +47,7 @@ export const saveToBill = (idAccount,bills, navigate) => {
             axios.post("http://localhost:8080/api/bills/save?idAccount="+idAccount, bills )
                 .then(() => {
                     alert("Đặt hàng thành công, vui lòng chờ chủ shop xác nhận !")
-                    navigate("/")
+                    navigate("/user-management/order/confirm")
                 }).catch(() => {
                 alert("Lỗi không đặt được hàng")
             })
