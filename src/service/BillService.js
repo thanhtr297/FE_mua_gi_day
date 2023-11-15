@@ -14,13 +14,12 @@ import axios from "axios";
 //     })
 // }
 
-export const addToBill = (idCarts, navigate) => {
+export const showCartDetailUserSelect = (idCarts) => {
     return new Promise((resolve) => {
         resolve(
-            axios.post("http://localhost:8080/api/bills/" , idCarts)
-                .then(() => {
-                    alert("Đặt hàng thành công, vui lòng chờ chủ shop xác nhận !")
-                    navigate("/bill")
+            axios.post("http://localhost:8080/api/carts/showProductUserSelect" , idCarts)
+                .then((response) => {
+                    return response.data
                 }).catch(() => {
                 alert("Lỗi không đặt được hàng")
             })

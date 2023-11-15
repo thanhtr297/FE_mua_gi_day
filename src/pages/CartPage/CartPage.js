@@ -4,7 +4,8 @@ import {shopping_cart} from '../../utils/images';
 import {Link, useNavigate} from 'react-router-dom';
 import {formatPrice} from '../../utils/helpers';
 import {deleteAllProductFromCart, deleteProductFromCart, showCart, updateQuantity} from "../../service/CartService";
-import {addToBill} from "../../service/BillService";
+import {addToBill, showCartDetailUserSelect} from "../../service/BillService";
+import { useHistory } from "react-router-dom";
 
 
 const CartPage = () => {
@@ -18,6 +19,7 @@ const CartPage = () => {
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState([])
     const [shops, setShops] = useState([])
+
 
     useEffect(() => {
         showCart(idAccount).then((response) => {
@@ -125,8 +127,9 @@ const CartPage = () => {
     }
 
     const saveToBill = () => {
-        addToBill(isChecked, navigate).then()
-    }
+        localStorage.setItem("isChecked", JSON.stringify(isChecked));
+        navigate("/bill");
+    };
 
     const checked = (e, idCart) => {
         const check = e.target.checked;

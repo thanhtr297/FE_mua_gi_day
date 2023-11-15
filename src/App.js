@@ -42,6 +42,7 @@ import CancelUser from "./components/OrderUser/CancelUser";
 import DoneUser from "./components/OrderUser/DoneUser";
 
 import {ForgotPass} from "./pages/UserManagement/ForgotPass";
+import {CheckedProvider} from "./pages/BillPage/CheckedContext";
 
 
 
@@ -57,6 +58,7 @@ function App() {
     return (
         <div className="App">
             <Provider store={store}>
+                <CheckedProvider>
                 <BrowserRouter>
 
 
@@ -135,6 +137,7 @@ function App() {
 
                     <Footer/>
                 </BrowserRouter>
+                </CheckedProvider>
             </Provider>
         </div>
     );

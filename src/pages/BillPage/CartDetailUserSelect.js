@@ -1,28 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import "./BillPage.scss";
 import {shopping_cart} from '../../utils/images';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {formatPrice} from '../../utils/helpers';
-import {saveToBill, showCartDetailUserSelect} from "../../service/BillService";
+import {saveToBill, showBillByAccountAndStatus, showCartDetailUserSelect} from "../../service/BillService";
 import {findUserByAccount} from "../UserManagement/Service/UserService";
 
 
-const Bill = () => {
+const CartDetailUserSelect = () => {
     const idAccount = localStorage.getItem("account")
     const navigate = useNavigate()
     const [bills, setBills] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
     const [user, setUser] = useState({})
     const status = "0";
-    const isChecked = JSON.parse(localStorage.getItem("isChecked"));
-    const [cartDetails, setCartDetails] = useState([])
 
 
     useEffect(() => {
-        showCartDetailUserSelect(isChecked).then((response) => {
-            setCartDetails(response)
+        showCartDetailUserSelect(idAccount).then((response) => {
+            setBills(response)
         })
-    }, [isChecked])
+    }, [idAccount])
 
     useEffect(() => {
         let totalPrice = 0;
@@ -63,16 +61,16 @@ const Bill = () => {
             <div className='containerr'>
                 <div className='cart-ctable1'>
                     <div className='cart-chead bg-white' style={{height: "50px"}}>
-                      <div style={{display: "flex"}}><h3 style={{color: "red", paddingTop: "11px"}}>Địa chỉ nhận hàng :</h3>
-                          <b style={{fontSize: "15px", marginLeft:"10px", marginTop: "10px" }}>{user.name}  ({user.phone})</b>
-                          <p style={{fontSize: "13px", marginLeft: "15px", marginTop: "12px"}}>{user.address} {user?.wards.name}, {user?.wards.district.name}, {user?.wards.district.city.name}</p>
+                        <div style={{display: "flex"}}><h3 style={{color: "red", paddingTop: "11px"}}>Địa chỉ nhận hàng :</h3>
+                            <b style={{fontSize: "15px", marginLeft:"10px", marginTop: "10px" }}>{user.name}  ({user.phone})</b>
+                            {/*<p style={{fontSize: "13px", marginLeft: "15px", marginTop: "12px"}}>{user.address} {user?.wards.name}, {user?.wards.district.name}, {user?.wards.district.city.name}</p>*/}
 
-                              <button   style={{marginLeft: "50px", marginTop: "3px"}} type="button" className='delete-btn text-danger' onClick={() =>{
-                                  changeAddress()
-                              }}>Thay đổi
-                              </button>
+                            <button   style={{marginLeft: "50px", marginTop: "3px"}} type="button" className='delete-btn text-danger' onClick={() =>{
+                                changeAddress()
+                            }}>Thay đổi
+                            </button>
 
-                      </div>
+                        </div>
 
                     </div>
                 </div>
@@ -99,32 +97,32 @@ const Bill = () => {
 
                     <div className='cart-cbody bg-white'>
                         {
-                            cartDetails.map((cartDetail, index) => {
+                            bills.map((bill, index) => {
                                 return (
-                                    <div className='cart-ctr py-5' key={cartDetail?.id}>
+                                    <div className='cart-ctr py-5' key={bill?.id}>
                                         <div className='cart-ctd'>
                                             <span className='cart-ctxt'>{index + 1}</span>
                                         </div>
                                         <div className='cart-ctd' style={{display: 'flex', alignItems: 'center'}}>
                                             <img
                                                 style={{width: "60px", height: "50px", marginRight: "20px"}}
-                                                src={cartDetail.product.image[0].name}
+                                                src={bill.product.image[0].name}
                                                 alt="..."
                                             />
-                                            <span className='cart-ctxt'>{cartDetail.product.name}</span>
+                                            <span className='cart-ctxt'>{bill.product.name}</span>
                                         </div>
                                         <div className='cart-ctd'>
                                           <span className='cart-ctxt'>
-                                           (<del>{formatPrice(cartDetail.product.price)}</del>) / {formatPrice(cartDetail.product.price)}
+                                           (<del>{formatPrice(bill.product.price)}</del>) / {formatPrice(bill.price)}
                                           </span>
                                         </div>
                                         <div className='cart-ctd' style={{marginLeft: "27px"}}>
-                                             <span className='cart-ctxt'>{cartDetail.quantity}</span>
+                                            <span className='cart-ctxt'>{bill.quantity}</span>
 
                                         </div>
                                         <div className='cart-ctd'>
-                                            {/*<span*/}
-                                            {/*    className='cart-ctxt text-orange fw-5'>{formatPrice(cartDetail.total)}</span>*/}
+                                            <span
+                                                className='cart-ctxt text-orange fw-5'>{formatPrice(bill.total)}</span>
                                         </div>
 
                                         <div className='cart-ctd'>
@@ -170,4 +168,4 @@ const Bill = () => {
     )
 }
 
-export default Bill
+export default CartDetailUserSelect;
