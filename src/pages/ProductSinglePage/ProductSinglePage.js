@@ -70,8 +70,6 @@ const ProductSinglePage = () => {
     addToCart(cart, idAccount).then()
 
   }
-
-  console.log(product)
   return (
     <main className='py-5 bg-whitesmoke'>
       <div className='product-single'>
