@@ -1,5 +1,31 @@
 @import "../../App.scss";
 
+.comic-button {
+    width: 120px;
+    height: 45px;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #d70018;
+    transition: all 0.3s ease;
+}
+
+
+
+.comic-button:active {
+    background-color: #fcf414;
+    box-shadow: none;
+    transform: translateY(4px);
+}
+
+
+
+
+
 .product-single{
     .product-single-content{
         row-gap: 2rem;
