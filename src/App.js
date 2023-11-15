@@ -35,6 +35,7 @@ import ProfileUser from "./pages/UserManagement/ProfileUser";
 import ChangePassword from "./pages/UserManagement/ChangePassword";
 import Info from "./pages/BillPage/Info";
 import Bill from "./pages/BillPage/Bill";
+import {ForgotPass} from "./pages/UserManagement/ForgotPass";
 
 
 
@@ -77,6 +78,7 @@ function App() {
             <Route path={"/login"} element={<Login/>}/>
             <Route path={"/register"} element={<Register/>}/>
             <Route path = "/profile" element = {<Profile />} />
+                        <Route path={"/forgotPass"} element={<ForgotPass/>}/>
                         {/* single product route */}
                         <Route path="/product/:id" element={<ProductSingle/>}/>
                         {/* category wise product listing route */}
@@ -91,7 +93,7 @@ function App() {
 
 
                         <Route path="/user-management" element={<UserManagement/>}>
-                            <Route index element={<div>Chọn chức năng</div>}/>
+                            <Route index element={<ProfileUser/>}/>
                             <Route path="/user-management/profile" element={<ProfileUser/>}/>
                             <Route path="/user-management/change-password" element={<ChangePassword/>}/>
                         </Route>

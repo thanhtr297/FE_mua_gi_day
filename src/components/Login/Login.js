@@ -2,7 +2,8 @@ import './/Login.scss';
 import {useState} from "react";
 import {toast} from "react-toastify";
 import {loginApi} from "../../service/UserService";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+
 export default function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -20,9 +21,9 @@ export default function Login() {
         }).then((res) => {
                 if (res.status === 200) {
                     alert("đăng nhập thành công")
-                    if(res.data.authorities[0].authority == 'ROLE_ADMIN'){
+                    if (res.data.authorities[0].authority == 'ROLE_ADMIN') {
                         navigate('/admin')
-                    }else {
+                    } else {
                         localStorage.setItem("account", JSON.stringify(res.data.id));
                         navigate('/')
                     }
@@ -39,14 +40,14 @@ export default function Login() {
                 <div className={'title'}>Đăng nhập</div>
                 <div className={'text'}>Tên đăng nhập</div>
                 <input type={'text'}
-                       placeholder={'Email or username'}
+                       placeholder={'Tên đăng nhập'}
                        value={email}
                        onChange={(event) => setEmail(event.target.value)}/>
                 <div className={'text'}>Mật khẩu</div>
 
                 <div className={'input-password'}>
                     <input type={isShowPassword === true ? 'text' : 'password'}
-                           placeholder={'Password'}
+                           placeholder={'Mật khẩu'}
                            value={password}
                            onChange={(event) => setPassword(event.target.value)}/>
                     <i className={isShowPassword === true ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}
@@ -54,16 +55,18 @@ export default function Login() {
 
                     ></i>
                 </div>
-                <div>
-                    <button  className={email && password ? "active" : ""}
-                             disabled={!(email && password)}
-                             onClick={() => handleLogin()}
-                >Đăng nhập
-                </button></div>
+                <div  >
+                    <button className={email && password ? "active" : ""}
+                            disabled={!(email && password)}
+                            onClick={() => handleLogin()}
+                    >Đăng nhập
+                    </button>
+                    <Link className={'link'} to={"/"}>Reset mật khẩu</Link>
+                    <Link  className={'link'}  to={"/forgotPass"}>Quên mật khẩu</Link>
+                </div>
 
                 <div className={'back'}>
-
-
+                    <Link className={'link'}  to={"/"}>Trở về</Link>
                 </div>
             </div>
         </>
