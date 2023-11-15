@@ -33,6 +33,7 @@ import Done from "./components/Order/Done";
 import UserManagement from "./pages/UserManagement";
 import ProfileUser from "./pages/UserManagement/ProfileUser";
 import ChangePassword from "./pages/UserManagement/ChangePassword";
+import {AppProvider} from "./Context/AppContext";
 import Info from "./pages/BillPage/Info";
 import Bill from "./pages/BillPage/Bill";
 import {ForgotPass} from "./pages/UserManagement/ForgotPass";
@@ -51,6 +52,7 @@ function App() {
     return (
         <div className="App">
             <Provider store={store}>
+                <AppProvider>
                 <BrowserRouter>
 
 
@@ -122,7 +124,7 @@ function App() {
                     </Routes>
 
                     <Footer/>
-                </BrowserRouter>
+                </BrowserRouter></AppProvider>
             </Provider>
         </div>
     );

@@ -2,58 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link, Outlet, useLocation} from "react-router-dom";
 import "./Order.scss"
 function OrderManagement() {
-    // const idAcc = localStorage.getItem("account")
-    // const [listPending , setListPending] = useState([]) ;
-    // const [listReject , setListReject] = useState([]) ;
-    // const [listCancel , setListCancel] = useState([]) ;
-    // const [listSuccess , setListSuccess] = useState([]) ;
-    //
-    // const orders = [
-    //     {
-    //         orderId: 'OD1234',
-    //         productName: 'Product 1',
-    //         amount: '$150',
-    //         quantity: '2',
-    //         buyer: 'John Doe',
-    //         address: '123 Main St, Anytown',
-    //         phone: '123-456-7890'
-    //     },
-    //     // ... more orders
-    // ];
-    // useEffect(() => {
-    //     listOrder({
-    //         confirm : '1'  ,
-    //         account :  {
-    //             id : idAcc
-    //         }
-    //     }).then(res => {
-    //         setListPending(res.data)
-    //     })
-    //     listOrder({
-    //         confirm : '3'  ,
-    //         account :  {
-    //             id : idAcc
-    //         }
-    //     }).then(res => {
-    //         setListReject(res.data)
-    //     })
-    //     listOrder({
-    //         confirm : '4'  ,
-    //         account :  {
-    //             id : idAcc
-    //         }
-    //     }).then(res => {
-    //         setListSuccess(res.data)
-    //     })
-    //     listOrder({
-    //         confirm : '5'  ,
-    //         account :  {
-    //             id : idAcc
-    //         }
-    //     }).then(res => {
-    //         setListCancel(res.data)
-    //     })
-    // }, [listCancel ,listReject ,listPending ,listSuccess]);
+
     const location = useLocation();
     const [selectedLink, setSelectedLink] = useState(null);
     const [initialLink, setInitialLink] = useState(null);
@@ -113,7 +62,7 @@ function OrderManagement() {
 //     };
 
     return (
-        <div style={{}} >
+        <div  >
             <nav className={'naV'}>
                 <ul className="nav-list" style={{}} >
                     {links.map((link, index) => (
@@ -128,7 +77,7 @@ function OrderManagement() {
             </nav>
 
 
-            <main className="main-content">
+            <main className="main-content" style={{backgroundColor : 'white'}}>
                 {/* Outlet will render the nested route as the main content */}
                 <Outlet  />
             </main>
