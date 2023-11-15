@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import "./ProductSinglePage.scss";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
 import {fetchAsyncProductSingle, getProductSingle, getSingleProductStatus} from '../../store/productSlice';
 import {STATUS} from '../../utils/status';
@@ -18,6 +18,7 @@ const ProductSinglePage = () => {
     const [quantity, setQuantity] = useState(1);
     const cartMessageStatus = useSelector(getCartMessageStatus);
     const idAccount = localStorage.getItem("account");
+    let navigate = useNavigate()
 
     // getting single product
     useEffect(() => {
@@ -69,6 +70,10 @@ const ProductSinglePage = () => {
         }
         addToCart(cart, idAccount).then()
 
+    }
+
+    function shopProfile (id) {
+        return navigate("/shop-management/shop-profile/" + id)
     }
 
     console.log(product)
@@ -220,35 +225,39 @@ const ProductSinglePage = () => {
             <br/>
             <br/>
             <br/>
-
             <div className='product-single-r'>
                 <div className='product-single'>
                     <div className='containerr'>
                         <div className='product-single-content bg-white grid'>
                             <div style={{display: 'flex'}}>
                                 <img src={product?.shop?.avatar} alt=""
-                                     style={{height: '50px', width: '50px', borderRadius: '50px'}}/>
-                                <div style={{marginLeft:'20px'}}>
-                                <h3 >
-                                    {product?.shop?.name}
-                                </h3>
-                                    <div className='btns'>
-                                    <button  onClick={() => {
-                                        addToCartHandler(product)
-                                    }} type="button" className="comic-button">
-                                        Chat ngay
-                                    </button>
-                                <button>Xem Shop</button>
+                                     style={{height: '80px', width: '80px', borderRadius: '50px'}}/>
+                                <div style={{marginLeft: '20px'}}>
+                                    <h3>
+                                        {product?.shop?.name}
+                                    </h3>
+                                    <div>
+                                        <button style={{padding: '10px', border: '1px solid #d70018'}}
+                                                type="button" className="comic-button">
+                                            Chat ngay
+                                        </button>
+
+                                        <button onClick={() => {
+                                            shopProfile(product?.shop?.id)
+                                        }}
+                                                style={{padding: '10px', border: '1px solid #d70018', marginLeft: '10px'}}
+                                            className="comic-button">Xem Shop
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <div>
 
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
         </main>
     )
 }

@@ -222,8 +222,6 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                             })}
                                         </select>
                                     </div>
-
-
                                 </div>
                             </div>
                         </Form>

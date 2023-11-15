@@ -1,7 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {Button, Modal} from "react-bootstrap";
 import {Field, Form, Formik} from "formik";
 import {findAllCategory} from "./service/CategoryService";
 import {findAllBrand} from "./service/BrandService";

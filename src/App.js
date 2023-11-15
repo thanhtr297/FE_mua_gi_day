@@ -35,6 +35,8 @@ import ProfileUser from "./pages/UserManagement/ProfileUser";
 import ChangePassword from "./pages/UserManagement/ChangePassword";
 import Info from "./pages/BillPage/Info";
 import Bill from "./pages/BillPage/Bill";
+import ShopProfile from "./pages/ShopManagement/ShopProfile";
+
 
 
 
@@ -111,6 +113,7 @@ function App() {
                             <Route path="/shop-management/report" element={<Report/>}/>
                             <Route path="/shop-management/profile" element={<Profile/>}/>
                             <Route path="/shop-management/:id" element={<UpdateProduct/>}/>
+                            <Route path="/shop-management/shop-profile/:id" element={<ShopProfile/>}/>
 
                         </Route>
 
