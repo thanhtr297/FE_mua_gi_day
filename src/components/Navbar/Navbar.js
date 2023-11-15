@@ -69,7 +69,12 @@ const Navbar = () => {
             <CartModal carts = {carts} />
           </Link>
         </div>
+
+
       </div>
+
+
+
     </nav>
   )
 }
