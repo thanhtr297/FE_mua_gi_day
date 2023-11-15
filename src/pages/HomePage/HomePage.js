@@ -5,6 +5,7 @@ import ProductList from "../../components/ProductList/ProductList";
 import Loader from "../../components/Loader/Loader";
 import { STATUS } from '../../utils/status';
 import {displayAllCategory, displayProductStatus} from "../../service/ProductService";
+import Filter from "./Filter";
 
 const HomePage = () => {
   const [products,setProducts] = useState([]) ;
@@ -51,6 +52,13 @@ const HomePage = () => {
       </div>
       <div className='main-content bg-whitesmoke'>
         <div className='containerr'>
+          <div>
+          <Filter />
+          </div>
+
+
+
+
           <div className='categories py-5'>
             <div className='categories-item'>
               <div className='title-md'>

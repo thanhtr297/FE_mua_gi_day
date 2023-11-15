@@ -45,5 +45,4 @@ const CartModal = () => {
     </div>
   )
 }
-
 export default CartModal
