@@ -1,6 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {findUserByAccount, savePass, sendmail} from "../../service/UserService";
+import async from "async";
 
 export default function ChangePassword() {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -23,7 +24,7 @@ export default function ChangePassword() {
         })
     }, []);
     // Hàm để validate mật khẩu
-    function validatePassword(pass) {
+    function validatePassword(pass,passOld) {
         const errors = {};
         if (!pass) {
             errors.password = 'Bắt buộc phải nhập mật khẩu mới';
@@ -31,15 +32,18 @@ export default function ChangePassword() {
             errors.password = 'Mật khẩu mới phải có ít nhất 8 ký tự';
         } else if (!/\d/.test(pass) || !/[a-zA-Z]/.test(pass)) {
             errors.password = 'Mật khẩu mới phải bao gồm cả chữ và số';
+        } else if (pass===passOld) {
+            errors.password = 'Mật khẩu mới trùng mật khẩu cũ!'
+            return errors
         }
         return errors;
     }
 
 
     const handlePasswordChange = (event) => {
-        const newPassword = event.target.value;
-        setPasswordNew(newPassword);
-        const errors = validatePassword(newPassword);
+        const newPassword =   event.target.value;
+         setPasswordNew(newPassword);
+        const errors = validatePassword(newPassword,password);
         setPasswordError(errors)
     }
     const handlePasswordConfirmChange = (event) => {
