@@ -8,6 +8,7 @@ import uploadImage from "./service/Upload";
 import {LoadingButton} from "./LoadingButton";
 import {useNavigate} from "react-router-dom";
 import {save} from "./service/ProductService";
+import {findShop} from "./service/ProfileService";
 
 
 function CreateProduct(props) {
@@ -15,9 +16,9 @@ function CreateProduct(props) {
     const [path, setPath] = useState([]);
     let [categories, setCategories] = useState([])
     let [brands, setBrands] = useState([])
-    const [show, setShow] = useState(false);
+    const [shop, setShop] = useState({});
     let navigate = useNavigate();
-
+    let id = localStorage.getItem('account');
 
     useEffect(() => {
             findAllCategory().then(res => {
@@ -28,6 +29,15 @@ function CreateProduct(props) {
             })
         }, []
     )
+    useEffect(() => {
+        findShop(id).then((res) => {
+            if (res === '') {
+                setShop({})
+            } else {
+                setShop(res)
+            }
+        })
+    })
 
     function create(e) {
         e.image = path
@@ -60,10 +70,7 @@ function CreateProduct(props) {
                         account: {
                             id: localStorage.getItem('account')
                         },
-                        shop: {
-                            id: localStorage.getItem('account')
-                        }
-
+                        shop: shop
                     }}
                     onSubmit={(e) => {
                         create(e)
