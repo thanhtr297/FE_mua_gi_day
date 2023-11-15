@@ -37,11 +37,13 @@ const BillList = (props) => {
             <div style={{marginTop : '10px'}}>
                 {listBillByUser.map((item , index) => (
                     (item.length >0) ?
+
                             <div className=''>
+
                                 <div style={{backgroundColor: 'rgb(232, 232, 232)' , height : '50px' }}>
                                     <div style={{padding: '10px'}} >Mã đơn hàng 2903VDC02{item[0]?.bill?.id}</div>
                                 </div>
-                                {item === STATUS.LOADING ? <Loader /> : <BillDetails bill={item} a={props}/>}
+                                {item === STATUS.LOADING ? <Loader /> : <BillDetails bill={item}/>}
                             </div>
                         :
                         <div></div>

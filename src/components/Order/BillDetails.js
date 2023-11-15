@@ -1,29 +1,36 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {formatPrice} from "../../utils/helpers";
 import {Field, Form, Formik} from "formik";
-import {rejectionOrder} from "../../service/OrderService";
+import {acceptOrder, rejectionOrder} from "../../service/OrderService";
 import {useNavigate} from "react-router-dom";
+import {AppContext} from "../../Context/AppContext";
 
 const BillDetails = (props) => {
-    const navigate = useNavigate();
     const [total, setTotal] = useState(0);
-    const [check, setCheck] = useState(true);
+    const {toggleFlag } = useContext(AppContext);
     useEffect(() => {
         let sum = 0;
         for (let i = 0; i < props.bill?.length; i++) {
             sum += total + props.bill[i]?.quantity * props.bill[i]?.price
         }
         setTotal(sum)
-    }, [check]);
+    }, []);
 
     const onSubmit = (values) => {
         rejectionOrder(props.bill, values.reason).then((res) => {
             alert("Hủy thành công !")
-            navigate('/shop-management/order-management/allOrder')
-            setCheck(!check)
+
+            toggleFlag()
 
         })
     };
+    const acp = () => {
+        acceptOrder(props.bill).then((res) => {
+            alert("Xác nhận thành công")
+            toggleFlag()
+
+        })
+    }
     return (
         <>
             <div style={{display: 'flex', fontSize: '15px', marginTop: '5px', marginLeft: '15px'}}>
@@ -37,13 +44,13 @@ const BillDetails = (props) => {
                                         style={{width: "65px", height: "65px"}}
                                         src={item?.product?.image[0]?.name} className="d-block w-100"
                                         alt="..."/></td>
-                                    <td style={{width: '350px', textAlign: 'left'}}>
+                                    <td style={{width: '330px', textAlign: 'left'}}>
                                         <p className='fw-normal mb-1' style={{
                                             overflow: 'hidden',
                                             maxHeight: '3em'
                                         }}>{item?.product?.name}</p>
                                     </td>
-                                    <td style={{marginLeft: '15px'}}><p className='fw-normal mb-1'>x{item?.quantity}</p>
+                                    <td style={{marginLeft: '25px'}}><p className='fw-normal mb-1'>x{item?.quantity}</p>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -69,7 +76,7 @@ const BillDetails = (props) => {
                 <div style={{marginTop: '26px', marginLeft: '70px'}}>
                     {(props.bill[0]?.bill?.status === "Chờ xác nhận") ?
                         <div>
-                            <div>Chấp nhận</div>
+                            <button onClick={acp}>Chấp nhận</button>
                             <div>
                                 <Formik
                                     initialValues={{}}
@@ -77,7 +84,7 @@ const BillDetails = (props) => {
                                 >
                                     <Form>
                                         <div>
-                                            <button type="submit" onClick={props.a.test}>Hủy</button>
+                                            <button type="submit">Hủy</button>
                                             <Field type="text" id="firstName" name="reason" style={
                                                 {marginLeft: '10px', marginTop: '10px', width: '250px', height: '50px',}
                                             } placeholder="Lý do  "/>
