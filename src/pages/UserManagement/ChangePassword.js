@@ -5,7 +5,7 @@ import {findUserByAccount, savePass, sendmail} from "../../service/UserService";
 export default function ChangePassword() {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [otpCheck, setOtpCheck] = useState('1');
-    const [countdown, setCountdown] = useState(30);
+    const [countdown, setCountdown] = useState(3);
     const navigate = useNavigate();
     const [otp, setOtp] = useState('');
     const [user, setUser] = useState({});
@@ -60,7 +60,7 @@ export default function ChangePassword() {
                     if (prevCountdown === 1) {
                         clearInterval(timer);
                         setIsButtonDisabled(false);
-                        return 30;
+                        return 3;
                     }
                     return prevCountdown - 1;
                 });
@@ -75,6 +75,7 @@ export default function ChangePassword() {
             if(res.status === 200) {
             console.log(res)
             alert(`Mã xác thực đã được gửi đến email ${user.email}`)
+                setPasswordError('')
             setOtp(res.data.name + ''); // Thiết lập giá trị OTP ban đầu
             localStorage.setItem("acc", JSON.stringify(res.data))
             const timer = setInterval(() => {
@@ -84,7 +85,7 @@ export default function ChangePassword() {
             }, 40000);
         } else if (res.status === 202) {
             alert('Thao tác quá hạn vui lòng thử lại')
-            navigate("/")
+            navigate("//user-management/change-password")
         }
         }).catch(()=>{
             const errors = {}
@@ -96,9 +97,9 @@ export default function ChangePassword() {
     const savePassword=()=>{
             const userNew = user;
             userNew.password = passwordNew
-            console.log(userNew)
             savePass(userNew).then(()=>{
-                alert("cap nhat thanh cong")
+                alert("Cập nhật mật khẩu thành công!")
+                navigate("/")
             })
     }
     return (
@@ -153,8 +154,8 @@ export default function ChangePassword() {
                     </button>
                 </div>
                 <div style={{textAlign:"center"}}>
-                    <button className={password && (otp === otpCheck) ? "active":""}
-                            disabled={!password}
+                    <button className={password && (otp == otpCheck) ? "active":""}
+                            disabled={!(password && (otp == otpCheck))}
                     onClick={savePassword}
                     >Đổi mật khẩu
                     </button>
