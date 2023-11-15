@@ -43,6 +43,7 @@ import CancelUser from "./components/OrderUser/CancelUser";
 import DoneUser from "./components/OrderUser/DoneUser";
 
 import {ForgotPass} from "./pages/UserManagement/ForgotPass";
+import {PasswordNew} from "./pages/UserManagement/PasswordNew";
 
 
 
@@ -84,6 +85,7 @@ function App() {
             {/* searched products */}
             <Route path = "/search/:searchTerm" element = {<Search />} />
             <Route path={"/login"} element={<Login/>}/>
+            <Route path={"/password-new"} element={<PasswordNew/>}/>
             <Route path={"/register"} element={<Register/>}/>
             <Route path = "/profile" element = {<Profile />} />
                         {/* single product route */}
