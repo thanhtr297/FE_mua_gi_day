@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import "./Header.scss";
 import {Link} from 'react-router-dom';
 import Navbar from "../Navbar/Navbar";
 import Dropdown from 'react-bootstrap/Dropdown';
+import {AppContext} from "../../Context/AppContext";
 
 
 const Header = (props) => {
-    const acc = localStorage.getItem('account');
+    const {checkLogin } = useContext(AppContext);
+    const {logout } = useContext(AppContext);
     return (
         <header className='header1 text-white'>
             <div className='containerr'>
@@ -16,16 +18,16 @@ const Header = (props) => {
                             <ul className='flex top-links align-center'>
                                 <li>
                                     {/* dummy links */}
-                                    <Link to="/seller">Seller Center</Link>
+                                    <Link to="/seller">Kênh người bán</Link>
                                 </li>
                                 <li className='vert1-line'></li>
                                 <li>
                                     {/* dummy links */}
-                                    <Link to="/download">Download</Link>
+                                    <Link to="/download">Tải xuống</Link>
                                 </li>
                                 <li className='vert1-line'></li>
                                 <li className='flex align-center'>
-                                    <span className='fs-13'>Follow us on</span>
+                                    <span className='fs-13'>Kết nỗi</span>
                                     <ul className='social-links flex align-center'>
                                         <li className='mx-2'>
                                             <a href="www.facebook.com" className='fs-15'>
@@ -43,7 +45,8 @@ const Header = (props) => {
                         </div>
                         <div className='header1-cnt-top-r'>
                             <ul className='top-links flex align-center'>
-                                <li style={!acc ? {display: 'none'} : {}}>
+                                <li style={!checkLogin
+                                    ? {display: 'none'} : {}}>
                                     <div className="nav-item dropdown">
                                         <a href="#" className=" nav-link dropdown-toggle"
                                            data-bs-toggle="dropdown"><small
@@ -52,25 +55,26 @@ const Header = (props) => {
                                             <Link to={'/user-management'} className="dropdown-item">Hồ sơ</Link>
                                             <Link to={'/shop-management'} className="dropdown-item">Shop của tôi</Link>
                                             <Dropdown.Divider/>
-                                            <a href="/" className="dropdown-item" onClick={() => {
+                                            <Link to="/" className="dropdown-item" onClick={() => {
+                                                logout()
                                                 alert("Bạn đã đăng xuất!");
                                                 localStorage.clear()
-                                            }} >Đăng xuất</a>
+                                            }} >Đăng xuất</Link>
                                         </div>
                                     </div>
                                 </li>
-                                <li className='vert1-line' style={acc ? {display: 'none'} : {}}></li>
+                                <li className='vert1-line' style={checkLogin ? {display: 'none'} : {}}></li>
                                 <li>
                                     <Link to="/register">
                                         <span className='top-link-itm-txt'
-                                              style={acc ? {display: 'none'} : {}}>Đăng ký</span>
+                                              style={checkLogin ? {display: 'none'} : {}}>Đăng ký</span>
                                     </Link>
                                 </li>
-                                <li className='vert1-line' style={acc ? {display: 'none'} : {}}></li>
+                                <li className='vert1-line' style={checkLogin ? {display: 'none'} : {}}></li>
                                 <li>
                                     <Link to="/login">
                                         <span className='top-link-itm-txt' onClick={props.a}
-                                              style={acc ? {display: 'none'} : {}}>Đăng nhập</span>
+                                              style={checkLogin ? {display: 'none'} : {}}>Đăng nhập</span>
                                     </Link>
                                 </li>
 

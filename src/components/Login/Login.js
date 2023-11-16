@@ -1,13 +1,15 @@
 import './/Login.scss';
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {toast} from "react-toastify";
 import {loginApi} from "../../service/UserService";
 import {Link, useNavigate} from "react-router-dom";
+import {AppContext} from "../../Context/AppContext";
 
 export default function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [isShowPassword, setIsShowPassword] = useState(false)
+    const {login } = useContext(AppContext);
     const navigate = useNavigate();
     const handleLogin = () => {
         if (!email || !password) {
@@ -20,6 +22,7 @@ export default function Login() {
 
         }).then((res) => {
                 if (res.status === 200) {
+                    login()
                     alert("đăng nhập thành công")
                     if (res.data.authorities[0].authority == 'ROLE_ADMIN') {
                         navigate('/admin')
