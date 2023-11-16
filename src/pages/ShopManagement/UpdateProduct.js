@@ -41,7 +41,7 @@ export default function UpdateProduct() {
 
 
     const upload = (files) => {
-        uploadImage(storage, files, setPath)
+        uploadImage(storage, files, setPath, setLoading)
     }
 
     function update(product) {

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {allOrderByShop, listOrder} from "../../service/OrderService";
+import { listOrder} from "../../service/OrderService";
 import {MDBTable, MDBTableBody, MDBTableHead} from "mdb-react-ui-kit";
 
 export default function Shipping() {

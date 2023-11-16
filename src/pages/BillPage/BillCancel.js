@@ -3,7 +3,7 @@ import "./BillPage.scss";
 import {shopping_cart} from '../../utils/images';
 import {Link, useNavigate} from 'react-router-dom';
 import {formatPrice} from '../../utils/helpers';
-import {saveToBill, showBillByAccountAndStatus} from "../../service/BillService";
+import {saveBill, showBillByAccountAndStatus} from "../../service/BillService";
 import {findUserByAccount} from "../UserManagement/Service/UserService";
 
 
@@ -37,7 +37,7 @@ const BillCancel = () => {
     },[idAccount])
 
     const saveBills = () => {
-        saveToBill(idAccount, bills, navigate).then()
+        saveBill(idAccount, bills, navigate).then()
     }
     function changeAddress() {
         navigate(("/user-management/profile"))

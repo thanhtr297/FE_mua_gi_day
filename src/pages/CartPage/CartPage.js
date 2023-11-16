@@ -4,8 +4,6 @@ import {shopping_cart} from '../../utils/images';
 import {Link, useNavigate} from 'react-router-dom';
 import {formatPrice} from '../../utils/helpers';
 import {deleteAllProductFromCart, deleteProductFromCart, showCart, updateQuantity} from "../../service/CartService";
-import {addToBill, showCartDetailUserSelect} from "../../service/BillService";
-import { useHistory } from "react-router-dom";
 
 
 const CartPage = () => {
@@ -19,20 +17,29 @@ const CartPage = () => {
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState([])
     const [shops, setShops] = useState([])
-
-
+    const [check, setCheck] = useState(true)
     useEffect(() => {
         showCart(idAccount).then((response) => {
             setCarts(response);
-            const demoShop = [];
-            response.forEach((cart) => {
-                if (!demoShop.includes(cart.product.shop.name)) {
-                    demoShop.push(cart.product.shop.name);
-                }
-            });
-            setShops(demoShop);
+            // const demoShop = [];
+            // response.forEach((cart) => {
+            //     if (!demoShop.includes(cart.product.shop.name)) {
+            //         demoShop.push(cart.product.shop.name);
+            //     }
+            // });
+            // setShops(demoShop);
         });
-    }, [checkDelete, idAccount]);
+    }, [check])
+
+
+    useEffect(() => {
+        const sumQuantity = (cart) => {
+            const qty = cart.quantity;
+            return qty;
+        };
+        const singleQuantity = carts.map((cart) => sumQuantity(cart));
+        setQuantitys(singleQuantity)
+    },[carts])
 
     useEffect(() => {
         const singleSumPrice = (cart) => {
@@ -48,8 +55,8 @@ const CartPage = () => {
             totalPrice += sumPrice[i];
         }
         setTotalPrice(totalPrice);
-    }, [carts]);
 
+    },[carts]);
 
     useEffect(() => {
         carts.map((c) => {
@@ -57,17 +64,7 @@ const CartPage = () => {
                 setIdCart(c.cart.id)
             )
         })
-    })
-
-    useEffect(() => {
-        const sumQuantity = (cart) => {
-            const qty = cart.quantity;
-            return qty;
-        };
-        const singleQuantity = carts.map((cart) => sumQuantity(cart));
-        setQuantitys(singleQuantity)
-
-    }, [carts]);
+    },[])
 
 
     const increaseQty = (quantity, idProduct, idCart, maxQty, index) => {
@@ -81,7 +78,9 @@ const CartPage = () => {
             newQtys[index] = newQty;
             return newQtys;
         });
-        updateQuantityInDB(quantity, idProduct, idCart);
+        if (quantity <= maxQty) {
+            updateQuantityInDB(quantity, idProduct, idCart);
+        }
     };
 
     const decreaseQty = (quantity, idProduct, idCart, index) => {
@@ -95,12 +94,16 @@ const CartPage = () => {
             newQtys[index] = newQty;
             return newQtys;
         });
-        updateQuantityInDB(quantity, idProduct, idCart);
+        if (quantity >= 1) {
+            updateQuantityInDB(quantity, idProduct, idCart);
+        }
     };
 
 
     const updateQuantityInDB = (idProduct, quantity, idCart) => {
-        updateQuantity(idProduct, quantity, idCart).then()
+        updateQuantity(idProduct, quantity, idCart).then(() => {
+            setCheck(!check)
+        })
 
     }
 
@@ -194,83 +197,85 @@ const CartPage = () => {
                             return (
                                 <>
 
-                                <div className='cart-ctr py-5' key={cart?.id}>
-                                    {/*{setIdCart(cart?.cart.id)}*/}
-                                    <div className='cart-ctd'>
+                                    <div className='cart-ctr py-5' key={cart?.id}>
+                                        {/*{setIdCart(cart?.cart.id)}*/}
+                                        <div className='cart-ctd'>
                                             <span className='cart-ctxt'><input type={"checkbox"} style={{
                                                 transform: "scale(1.4)",
                                                 marginLeft: "10px"
                                             }} checked={isChecked.includes(cart.id)} onChange={(e) => {
                                                 checked(e, cart.id)
                                             }}/></span>
-                                    </div>
-                                    <div className='cart-ctd'
-                                         style={{display: 'flex', alignItems: 'center'}}>
-                                        <img
-                                            style={{width: "60px", height: "50px", marginRight: "20px"}}
-                                            src={cart.product.image[0].name}
-                                            alt="..."
-                                        />
-                                        <span className='cart-ctxt'>{cart.product.name}</span>
-                                    </div>
-                                    <div className='cart-ctd'
-                                         style={{display: 'flex', alignItems: 'center'}}>
-                                        <span className='cart-ctxt'>{cart.product.shop.name}</span>
-                                    </div>
-                                    <div className='cart-ctd'>
+                                        </div>
+                                        <div className='cart-ctd'
+                                             style={{display: 'flex', alignItems: 'center'}}>
+                                            <img
+                                                style={{width: "60px", height: "50px", marginRight: "20px"}}
+                                                src={cart.product.image[0].name}
+                                                alt="..."
+                                            />
+                                            <span className='cart-ctxt'>{cart.product.name}</span>
+                                        </div>
+                                        <div className='cart-ctd'
+                                             style={{display: 'flex', alignItems: 'center'}}>
+                                            <span className='cart-ctxt'>{cart.product.shop.name}</span>
+                                        </div>
+                                        <div className='cart-ctd'>
                                           <span className='cart-ctxt'>
-                                           (<del>{formatPrice(cart.product.price)}</del>) / {formatPrice(cart.product.price - (cart.product.price * cart.product.promotion / 100))}
+                                           (<del>{formatPrice(cart.product.price)}</del>) / {formatPrice(cart.product.price - (cart.product.price * cart.product.promotion / 100)
+
+                                          )}
                                           </span>
-                                    </div>
-                                    <div className='cart-ctd'>
-                                        <div className='qty-change flex align-center'>
-                                            <button type="button"
-                                                    className='qty-decrease flex align-center justify-center'
-                                                    onClick={() => {
-                                                        decreaseQty(quantitys[index] - 1, cart.product.id, cart.cart.id, index)
-                                                    }}>
-                                                <i className='fas fa-minus'></i>
-                                            </button>
-                                            <div className='qty-value flex align-center justify-center'>
-                                                <input
-                                                    style={{
-                                                        width: "15px",
-                                                        fontStyle: "2px",
-                                                        textAlign: "center"
-                                                    }}
-                                                    type="text"
-                                                    value={quantitys[index]}
-                                                    onChange={(e) => {
-                                                        const newQty = parseInt(e.target.value);
-                                                        setQuantitys[index](newQty)
-                                                        if (newQty >= 1 && newQty <= cart.product.quantity) {
-                                                            updateQuantityInDB(newQty, cart.product.id, cart.cart.id);
-                                                        }
-                                                    }}
-                                                />
+                                        </div>
+                                        <div className='cart-ctd'>
+                                            <div className='qty-change flex align-center'>
+                                                <button type="button"
+                                                        className='qty-decrease flex align-center justify-center'
+                                                        onClick={() => {
+                                                            decreaseQty(quantitys[index] - 1, cart.product.id, cart.cart.id, index)
+                                                        }}>
+                                                    <i className='fas fa-minus'></i>
+                                                </button>
+                                                <div className='qty-value flex align-center justify-center'>
+                                                    <input max={cart.product.quantity} min={1}
+                                                           style={{
+                                                               width: "15px",
+                                                               fontStyle: "2px",
+                                                               textAlign: "center"
+                                                           }}
+                                                           type="text"
+                                                           value={quantitys[index]}
+                                                           onChange={(e) => {
+                                                               const newQty = parseInt(e.target.value);
+                                                               setQuantitys[index](newQty)
+                                                               if (newQty >= 1 && newQty <= cart.product.quantity) {
+                                                                   updateQuantityInDB(newQty, cart.product.id, cart.cart.id);
+                                                               }
+                                                           }}
+                                                    />
+                                                </div>
+                                                <button type="button"
+                                                        className='qty-increase flex align-center justify-center'
+                                                        onClick={() => {
+                                                            increaseQty(quantitys[index] + 1, cart.product.id, cart.cart.id, cart.product.quantity, index)
+                                                        }}>
+                                                    <i className='fas fa-plus'></i>
+                                                </button>
                                             </div>
-                                            <button type="button"
-                                                    className='qty-increase flex align-center justify-center'
-                                                    onClick={() => {
-                                                        increaseQty(quantitys[index] + 1, cart.product.id, cart.cart.id, cart.product.quantity, index)
-                                                    }}>
-                                                <i className='fas fa-plus'></i>
+                                        </div>
+
+                                        <div className='cart-ctd'>
+                                            <span
+                                                className='cart-ctxt text-orange fw-5'>{formatPrice(totalPrices[index])}</span>
+                                        </div>
+
+                                        <div className='cart-ctd'>
+                                            <button type="button" className='delete-btn text-dark'
+                                                    onClick={() => deleteProduct(cart.id)}>Delete
                                             </button>
                                         </div>
                                     </div>
-
-                                    <div className='cart-ctd'>
-                                            <span
-                                                className='cart-ctxt text-orange fw-5'>{formatPrice(totalPrices[index])}</span>
-                                    </div>
-
-                                    <div className='cart-ctd'>
-                                        <button type="button" className='delete-btn text-dark'
-                                                onClick={() => deleteProduct(cart.id)}>Delete
-                                        </button>
-                                    </div>
-                                </div>
-                            </>)
+                                </>)
                         })}
 
                     </div>
@@ -316,12 +321,6 @@ const CartPage = () => {
 }
 
 export default CartPage
-
-
-
-
-
-
 
 
 // import React, {useEffect, useState} from 'react';
