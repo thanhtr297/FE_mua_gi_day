@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {emailCheck, findAccountByEmail, sendMailForgetPass} from "../../service/UserService";
+import {useNavigate} from "react-router-dom";
 
 export function ForgotPass() {
+    const navigate = useNavigate()
     const [email,setEmail] = useState('')
     const [emailError,setEmailError] = useState("")
     const [listEmail, setListEmail] = useState([]);
@@ -23,6 +25,9 @@ export function ForgotPass() {
                 errors.email = ''
                 setEmailError(errors)
                 setEmail(emailCheck)
+                findAccountByEmail(emailCheck).then((res)=>{
+                    setAccount(res.data)
+                })
                 return
             } else {
                 setCheck(false)
@@ -35,14 +40,18 @@ export function ForgotPass() {
 
     }
     function submitEmail() {
-        let account = {
+        let user = {
             name: 'http://localhost:3000/password-new',
-            username: '',
+            username: account.id,
             password: '',
             email: email
         }
-        sendMailForgetPass(account)
-        alert("Vui lòng kiểm tra hộp thư trong email của bạn!")
+        sendMailForgetPass(user).then(()=>{
+            alert("Vui lòng kiểm tra hộp thư trong email của bạn!")
+            localStorage.setItem('acc',account.id)
+            navigate("/")
+        })
+
     }
 
     return(
@@ -56,7 +65,7 @@ export function ForgotPass() {
 
                 </div>
                 <div style={{color:"red"}}> {emailError && <div className="error-message">{emailError.email}</div>}</div>
-                <div style={{marginLeft:'25%'}}>
+                <div style={{marginLeft:'15%'}}>
                     <button className={check ? "active":""}
                             disabled={!check}
                             onClick={submitEmail}
