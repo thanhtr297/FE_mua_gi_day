@@ -36,7 +36,7 @@ import ChangePassword from "./pages/UserManagement/ChangePassword";
 import {AppProvider} from "./Context/AppContext";
 import Info from "./pages/BillPage/Info";
 import Bill from "./pages/BillPage/Bill";
-import ShopProfile from "./pages/ShopManagement/ShopProfile";
+
 
 import OrderUser from "./pages/BillPage/OrderUser";
 import PendingUser from "./components/OrderUser/PendingUser";
@@ -46,6 +46,7 @@ import DoneUser from "./components/OrderUser/DoneUser";
 
 import {ForgotPass} from "./pages/UserManagement/ForgotPass";
 import {PasswordNew} from "./pages/UserManagement/PasswordNew";
+
 
 
 
@@ -132,7 +133,6 @@ function App() {
                             <Route path="/shop-management/report" element={<Report/>}/>
                             <Route path="/shop-management/profile" element={<Profile/>}/>
                             <Route path="/shop-management/:id" element={<UpdateProduct/>}/>
-                            <Route path="/shop-management/shop-profile/:id" element={<ShopProfile/>}/>
 
                         </Route>
 

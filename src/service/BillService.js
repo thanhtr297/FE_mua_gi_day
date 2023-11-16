@@ -14,13 +14,12 @@ import axios from "axios";
 //     })
 // }
 
-export const addToBill = (idCarts, navigate) => {
+ const showCartDetailUserSelect = (idCarts) => {
     return new Promise((resolve) => {
         resolve(
-            axios.post("http://localhost:8080/api/bills/" , idCarts)
-                .then(() => {
-                    alert("Đặt hàng thành công, vui lòng chờ chủ shop xác nhận !")
-                    navigate("/bill")
+            axios.post("http://localhost:8080/api/carts/showProductUserSelect" , idCarts)
+                .then((response) => {
+                    return response.data
                 }).catch(() => {
                 alert("Lỗi không đặt được hàng")
             })
@@ -28,7 +27,7 @@ export const addToBill = (idCarts, navigate) => {
     })
 }
 
-export const showBillByAccountAndStatus = (idAccount, status) => {
+ const showBillByAccountAndStatus = (idAccount, status) => {
     return new Promise((resolve) => {
         resolve(
             axios.get("http://localhost:8080/api/bills?idAccount="+idAccount+"&status="+status)
@@ -41,10 +40,10 @@ export const showBillByAccountAndStatus = (idAccount, status) => {
     })
 }
 
-export const saveToBill = (idAccount,bills, navigate) => {
+ const saveBill = (idAccount,idCartDetails, navigate) => {
     return new Promise((resolve) => {
         resolve(
-            axios.post("http://localhost:8080/api/bills/save?idAccount="+idAccount, bills )
+            axios.post("http://localhost:8080/api/bills/save/bill?idAccount="+idAccount,idCartDetails)
                 .then(() => {
                     alert("Đặt hàng thành công, vui lòng chờ chủ shop xác nhận !")
                     navigate("/user-management/order/confirm")
@@ -54,3 +53,4 @@ export const saveToBill = (idAccount,bills, navigate) => {
         )
     })
 }
+export {showCartDetailUserSelect, showBillByAccountAndStatus,saveBill}

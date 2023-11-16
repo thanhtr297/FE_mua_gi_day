@@ -1,24 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import "../../pages/BillPage/BillPage.scss";
+import "./BillPage.scss";
 import {shopping_cart} from '../../utils/images';
 import {Link, useNavigate} from 'react-router-dom';
 import {formatPrice} from '../../utils/helpers';
-import {saveBill, showBillByAccountAndStatus} from "../../service/BillService";
-import {findUserByAccount} from "../../service/UserService";
+import {saveBill, showCartDetailUserSelect} from "../../service/BillService";
+import {findUserByAccount} from "../UserManagement/Service/UserService";
 
 
-
-const ShippingUser = () => {
+const CartDetailUserSelect = () => {
     const idAccount = localStorage.getItem("account")
     const navigate = useNavigate()
     const [bills, setBills] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
     const [user, setUser] = useState({})
-    const status = "Chờ xác nhận"
+    const status = "0";
 
 
     useEffect(() => {
-        showBillByAccountAndStatus(idAccount, status).then((response) => {
+        showCartDetailUserSelect(idAccount).then((response) => {
             setBills(response)
         })
     }, [idAccount])
@@ -64,7 +63,7 @@ const ShippingUser = () => {
                     <div className='cart-chead bg-white' style={{height: "50px"}}>
                         <div style={{display: "flex"}}><h3 style={{color: "red", paddingTop: "11px"}}>Địa chỉ nhận hàng :</h3>
                             <b style={{fontSize: "15px", marginLeft:"10px", marginTop: "10px" }}>{user.name}  ({user.phone})</b>
-                            <p style={{fontSize: "13px", marginLeft: "15px", marginTop: "12px"}}>{user.address} {user?.wards.name}, {user?.wards.district.name}, {user?.wards.district.city.name}</p>
+                            {/*<p style={{fontSize: "13px", marginLeft: "15px", marginTop: "12px"}}>{user.address} {user?.wards.name}, {user?.wards.district.name}, {user?.wards.district.city.name}</p>*/}
 
                             <button   style={{marginLeft: "50px", marginTop: "3px"}} type="button" className='delete-btn text-danger' onClick={() =>{
                                 changeAddress()
@@ -169,4 +168,4 @@ const ShippingUser = () => {
     )
 }
 
-export default ShippingUser
+export default CartDetailUserSelect;

@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
 import {listBillDetailByShop} from "../../service/OrderService";
+import {AppContext} from "../../Context/AppContext";
+import {userCheck} from "../../service/UserService";
 import {STATUS} from "../../utils/status";
 import Loader from "../Loader/Loader";
 import BillList from "./BillList";
-import {userCheck} from "../../service/UserService";
-import {AppContext} from "../../Context/AppContext";
 
 export default function Shipping() {
     const idAcc = localStorage.getItem("account")
