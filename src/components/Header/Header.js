@@ -45,7 +45,7 @@ const Header = (props) => {
                         </div>
                         <div className='header1-cnt-top-r'>
                             <ul className='top-links flex align-center'>
-                                <li style={!checkLogin
+                                <li style={checkLogin
                                     ? {display: 'none'} : {}}>
                                     <div className="nav-item dropdown">
                                         <a href="#" className=" nav-link dropdown-toggle"
@@ -63,18 +63,18 @@ const Header = (props) => {
                                         </div>
                                     </div>
                                 </li>
-                                <li className='vert1-line' style={checkLogin ? {display: 'none'} : {}}></li>
+                                <li className='vert1-line' style={!checkLogin ? {display: 'none'} : {}}></li>
                                 <li>
                                     <Link to="/register">
                                         <span className='top-link-itm-txt'
-                                              style={checkLogin ? {display: 'none'} : {}}>Đăng ký</span>
+                                              style={!checkLogin ? {display: 'none'} : {}}>Đăng ký</span>
                                     </Link>
                                 </li>
-                                <li className='vert1-line' style={checkLogin ? {display: 'none'} : {}}></li>
+                                <li className='vert1-line' style={!checkLogin ? {display: 'none'} : {}}></li>
                                 <li>
                                     <Link to="/login">
                                         <span className='top-link-itm-txt' onClick={props.a}
-                                              style={checkLogin ? {display: 'none'} : {}}>Đăng nhập</span>
+                                              style={!checkLogin ? {display: 'none'} : {}}>Đăng nhập</span>
                                     </Link>
                                 </li>
 
