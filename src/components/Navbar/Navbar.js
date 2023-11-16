@@ -41,7 +41,7 @@ const Navbar = () => {
             <span className='navbar1-brand-ico'>
               <i className='fa-solid fa-bag-shopping'></i>
             </span>
-            <span className='navbar1-brand-txt mx-2' style={{fontSize : '18px' ,width : '100px'}}>
+            <span className='navbar1-brand-txt mx-2' style={{fontSize : '18px' ,width : '110px'}}>
               <span className='fw-7' >Mua Gì Đây</span>
             </span>
           </Link>
