@@ -9,7 +9,7 @@ const Product = ({product}) => {
       <div className='product-item bg-white'>
         <div className='category'>- {product?.promotion} %</div>
         <div className='product-item-img'>
-          <img className='img-cover' src = {product?.image[0]?.name} alt = {product.name} />
+          <img  className='img-cover' src = {product?.image[0]?.name} alt = {product.name}  style={{width : '200px',height : '200px' ,marginLeft: '16px', marginTop : '40px' }}/>
         </div>
         <div className='product-item-info fs-14'>
           {/*<div className='brand'>*/}
@@ -21,17 +21,29 @@ const Product = ({product}) => {
             maxHeight: '3.8em'}}>
             {product?.name}
           </div>
-          <div className='price flex align-center justify-center'>
-            <span className='old-price'>
-              {formatPrice(product?.price)}
-            </span>
-            <span className='discount fw-6' style={{fontSize : '20px' , marginLeft : '15px'}}>
+          <div className=''>
+            <div>
+            {/*   <span className='old-price'>*/}
+            {/*  {formatPrice(product?.price)}*/}
+            {/*</span>*/}
+              <span className='discount fw-6' style={{fontSize : '20px', color :'red' }}>
               {formatPrice(product?.price/100 *(100 - product?.promotion))}
             </span>
-            <span style={{marginLeft : '15px'}} >
-                Đã bán {product?.count}
-            </span>
+            </div>
+              <div style={{display : 'flex' , marginTop: '15px'}}>
+                  <div>
+                      <span>Đánh giá : 1</span>
+                  </div>
+                  <div style={{}}>
+                    <span style={{marginLeft : '80px'}} >
+                    Đã bán {product?.count}
+                    </span>
+                    </div>
+              </div>
+
+
           </div>
+
         </div>
       </div>
     </Link>

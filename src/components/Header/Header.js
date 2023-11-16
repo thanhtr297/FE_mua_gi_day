@@ -27,7 +27,7 @@ const Header = (props) => {
                                 </li>
                                 <li className='vert1-line'></li>
                                 <li className='flex align-center'>
-                                    <span className='fs-13'>Kết nỗi</span>
+                                    <span className='fs-13'>Kết nối</span>
                                     <ul className='social-links flex align-center'>
                                         <li className='mx-2'>
                                             <a href="www.facebook.com" className='fs-15'>
