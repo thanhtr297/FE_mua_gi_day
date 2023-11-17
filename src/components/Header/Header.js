@@ -1,14 +1,22 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import "./Header.scss";
 import {Link} from 'react-router-dom';
 import Navbar from "../Navbar/Navbar";
 import Dropdown from 'react-bootstrap/Dropdown';
 import {AppContext} from "../../Context/AppContext";
+import {findAccountById} from "../../service/UserService";
 
 
 const Header = (props) => {
     const {checkLogin } = useContext(AppContext);
     const {logout } = useContext(AppContext);
+    const [username , setUsername] = useState(null) ;
+    let acc = localStorage.getItem('account');
+    useEffect(() => {
+        findAccountById(acc).then((res) => {
+            setUsername(res.data.username) ;
+        }).catch()
+    }, []);
     return (
         <header className='header1 text-white'>
             <div className='containerr'>
@@ -47,10 +55,12 @@ const Header = (props) => {
                             <ul className='top-links flex align-center'>
                                 <li style={checkLogin
                                     ? {display: 'none'} : {}}>
-                                    <div className="nav-item dropdown">
+                                    <div style={{display : 'flex' , marginTop : '-6px' , marginBottom : '-10px'}}>
+                                    <div style={{marginTop : '15px' ,fontSize : '15px' }}>{username}</div>
+                                    <div className="nav-item dropdown" style={{borderBottom : 'none' ,backgroundColor :'white' ,borderRadius : '50%' ,width :'30px' ,height :'30px' , marginLeft :'5px'}}>
                                         <a href="#" className=" nav-link dropdown-toggle"
-                                           data-bs-toggle="dropdown"><small
-                                            className="fa fa-user text-body"></small></a>
+                                           data-bs-toggle="dropdown">                                        <i className="fa-regular fa-user" style={{color: '#bcc5d7' ,fontSize : '20px', marginLeft : '6px' ,marginTop :'3px'}}></i>
+                                        </a>
                                         <div className="dropdown-menu m-0">
                                             <Link to={'/user-management'} className="dropdown-item">Hồ sơ</Link>
                                             <Link to={'/shop-management'} className="dropdown-item">Shop của tôi</Link>
@@ -61,6 +71,7 @@ const Header = (props) => {
                                                 localStorage.clear()
                                             }} >Đăng xuất</Link>
                                         </div>
+                                    </div>
                                     </div>
                                 </li>
                                 <li className='vert1-line' style={!checkLogin ? {display: 'none'} : {}}></li>

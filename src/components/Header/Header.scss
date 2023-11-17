@@ -26,3 +26,7 @@ a {
     color: black !important;
     font-size: 14px;
 }
+.dropdown-toggle::after {
+    color : #ecf0f1;
+    margin: -500px;
+}

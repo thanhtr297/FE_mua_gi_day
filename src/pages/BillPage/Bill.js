@@ -61,7 +61,6 @@ const Bill = () => {
 
 
     const saveBills = () => {
-        console.log(cartDetails)
         saveBill(idAccount, cartDetails, navigate).then()
     }
     function changeAddress() {
