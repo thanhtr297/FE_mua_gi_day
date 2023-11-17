@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from "react";
 import {formatPrice} from "../../utils/helpers";
 import {Field, Form, Formik} from "formik";
 import {acceptOrder, rejectionOrder} from "../../service/OrderService";
-import {useNavigate} from "react-router-dom";
 import {AppContext} from "../../Context/AppContext";
 
 const BillDetails = (props) => {

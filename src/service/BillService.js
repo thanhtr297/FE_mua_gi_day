@@ -53,4 +53,17 @@ import axios from "axios";
         )
     })
 }
-export {showCartDetailUserSelect, showBillByAccountAndStatus,saveBill}
+
+ const cancelBill = (idBillDetail) => {
+    return new Promise((resolve) => {
+        resolve(
+            axios.delete("http://localhost:8080/api/billDetails/delete/"+idBillDetail)
+                .then(response => {
+                    return response.data
+                }).catch(() => {
+                return []
+            })
+        )
+    })
+}
+export {showCartDetailUserSelect, showBillByAccountAndStatus,saveBill, cancelBill}

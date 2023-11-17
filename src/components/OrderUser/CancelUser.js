@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import "../../pages/BillPage/BillPage.scss";
+import "./BillUser.scss";
 import {shopping_cart} from '../../utils/images';
 import {Link, useNavigate} from 'react-router-dom';
 import {formatPrice} from '../../utils/helpers';
-import {saveBill, showBillByAccountAndStatus} from "../../service/BillService";
-import {findUserByAccount} from "../../service/UserService";
+import {cancelBill, showBillByAccountAndStatus} from "../../service/BillService";
+import {findUserByAccount} from "../../pages/UserManagement/Service/UserService";
+import { GiCancel } from "react-icons/gi";
+
+
 
 
 
@@ -14,14 +17,15 @@ const CancelUser = () => {
     const [bills, setBills] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
     const [user, setUser] = useState({})
-    const status = "Chờ xác nhận"
+    const status = "Đơn hủy"
+    const [check, setCheck] = useState(true)
 
 
     useEffect(() => {
         showBillByAccountAndStatus(idAccount, status).then((response) => {
             setBills(response)
         })
-    }, [idAccount])
+    }, [check])
 
     useEffect(() => {
         let totalPrice = 0;
@@ -32,14 +36,23 @@ const CancelUser = () => {
     }, [bills]);
 
     useEffect(() => {
+        console.log(idAccount)
         findUserByAccount(idAccount).then((res) => {
             setUser(res)
         })
-    },[idAccount])
+    },[])
 
-    const saveBills = () => {
-        saveBill(idAccount, bills, navigate).then()
+    function cancelBillDetail(idBillDetail) {
+        if (window.confirm("Bạn có muốn hủy sản phẩm không ?")) {
+            cancelBill(idBillDetail).then(() => {
+                setCheck(!check);
+                alert("Hủy sản phẩm thành công!")
+            })
+        }
     }
+
+
+
     function changeAddress() {
         navigate(("/user-management/profile"))
     }
@@ -50,8 +63,8 @@ const CancelUser = () => {
             <div className='containerr my-5'>
                 <div className='empty-cart flex justify-center align-center flex-column font-manrope'>
                     <img src={shopping_cart} alt=""/>
-                    <span className='fw-6 fs-15 text-gray'>Your shopping cart is empty.</span>
-                    <Link to="/" className='shopping-btn bg-orange text-white fw-5'>Go shopping Now</Link>
+                    <span className='fw-6 fs-15 text-gray'>Đơn hàng trống</span>
+                    <Link to="/" className='shopping-btn bg-orange text-white fw-5'>Mua hàng ngay!</Link>
                 </div>
             </div>
         )
@@ -63,8 +76,8 @@ const CancelUser = () => {
                 <div className='cart-ctable1'>
                     <div className='cart-chead bg-white' style={{height: "50px"}}>
                         <div style={{display: "flex"}}><h3 style={{color: "red", paddingTop: "11px"}}>Địa chỉ nhận hàng :</h3>
-                            <b style={{fontSize: "15px", marginLeft:"10px", marginTop: "10px" }}>{user.name}  ({user.phone})</b>
-                            <p style={{fontSize: "13px", marginLeft: "15px", marginTop: "12px"}}>{user.address} {user?.wards.name}, {user?.wards.district.name}, {user?.wards.district.city.name}</p>
+                            <b style={{fontSize: "15px", marginLeft:"10px", marginTop: "10px" }}>{user?.name}  ({user?.phone})</b>
+                            <p style={{fontSize: "13px", marginLeft: "15px", marginTop: "12px"}}>{user?.address} {user?.wards?.name}, {user?.wards?.district?.name}, {user?.wards?.district?.city?.name}</p>
 
                             <button   style={{marginLeft: "50px", marginTop: "3px"}} type="button" className='delete-btn text-danger' onClick={() =>{
                                 changeAddress()
@@ -92,6 +105,9 @@ const CancelUser = () => {
                             </div>
                             <div className='cart-cth'>
                                 <span className='cart-ctxt'>Thành tiền</span>
+                            </div>
+                            <div className='cart-cth'>
+                                <span className='cart-ctxt'>Thao tác </span>
                             </div>
                         </div>
                     </div>
@@ -127,9 +143,14 @@ const CancelUser = () => {
                                         </div>
 
                                         <div className='cart-ctd'>
-                                            {/*<button type="button" className='delete-btn text-dark'*/}
-                                            {/*        onClick={() => deleteProduct(cart.id)}>Delete*/}
-                                            {/*</button>*/}
+                                            <GiCancel style={{scale: "1.5", color: "D70018"}} onClick={() => {
+                                                cancelBillDetail(bill.id)
+                                            }}/>
+                                            <button style={{marginLeft: "15px", marginTop: "2px"}} type="button" className='delete-btn text-dark'
+                                                    onClick={() => {
+                                                        cancelBillDetail(bill.id)
+                                                    }}>Hủy đơn
+                                            </button>
                                         </div>
                                     </div>
                                 )
@@ -149,18 +170,13 @@ const CancelUser = () => {
                         {/*</div>*/}
 
                         <div className='cart-cfoot-r flex flex-column justify-end'>
-                            <div className='total-txt flex align-center justify-end'>
+                            <div  style={{marginLeft: "900px"}} className='total-txt flex align-center justify-end'>
                                 {/*<div className='font-manrope fw-5'>Total ({itemsCount}) items:</div>*/}
                                 <div className='font-manrope fw-10'
                                      style={{fontSize: "15px", fontStyle: "normal", marginTop: "5px"}}>Tổng tiền:
                                 </div>
-                                <span className='text-orange fs-22 mx-2 fw-6'>{formatPrice(totalPrice)}</span>
+                                <span  className='text-orange fs-22 mx-2 fw-6'>{formatPrice(totalPrice)}</span>
                             </div>
-
-                            <button style={{marginLeft: "1050px"}} type="button" className='checkout-btn text-white bg-orange fs-16' onClick={() => {
-                                saveBills()
-                            }}>Thanh toán
-                            </button>
                         </div>
                     </div>
                 </div>

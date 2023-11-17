@@ -153,8 +153,8 @@ const CartPage = () => {
             <div className='containerr my-5'>
                 <div className='empty-cart flex justify-center align-center flex-column font-manrope'>
                     <img src={shopping_cart} alt=""/>
-                    <span className='fw-6 fs-15 text-gray'>Your shopping cart is empty.</span>
-                    <Link to="/" className='shopping-btn bg-orange text-white fw-5'>Go shopping Now</Link>
+                    <span className='fw-6 fs-15 text-gray'>Giỏ hàng trống</span>
+                    <Link to="/" className='shopping-btn bg-orange text-white fw-5'>Mua hàng ngay!</Link>
                 </div>
             </div>
         )
