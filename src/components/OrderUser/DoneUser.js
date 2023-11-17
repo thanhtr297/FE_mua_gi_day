@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import "../../pages/BillPage/BillPage.scss";
+import "./BillUser.scss";
 import {shopping_cart} from '../../utils/images';
 import {Link, useNavigate} from 'react-router-dom';
 import {formatPrice} from '../../utils/helpers';

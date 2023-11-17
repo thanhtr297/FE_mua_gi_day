@@ -5,7 +5,6 @@ import {Link, useNavigate} from 'react-router-dom';
 import {formatPrice} from '../../utils/helpers';
 import {saveBill, showCartDetailUserSelect} from "../../service/BillService";
 import {findUserByAccount} from "../UserManagement/Service/UserService";
-import axios from "axios";
 
 
 const Bill = () => {
@@ -28,8 +27,10 @@ const Bill = () => {
     }, [idAccount])
 
     useEffect(() => {
+        console.log(idAccount)
         findUserByAccount(idAccount).then((res) => {
             setUser(res)
+            console.log(res)
         })
     },[])
 
@@ -73,8 +74,8 @@ const Bill = () => {
             <div className='containerr my-5'>
                 <div className='empty-cart flex justify-center align-center flex-column font-manrope'>
                     <img src={shopping_cart} alt=""/>
-                    <span className='fw-6 fs-15 text-gray'>Your shopping cart is empty.</span>
-                    <Link to="/" className='shopping-btn bg-orange text-white fw-5'>Go shopping Now</Link>
+                    <span className='fw-6 fs-15 text-gray'>Đơn hàng trống</span>
+                    <Link to="/" className='shopping-btn bg-orange text-white fw-5'>Mua hàng ngay!</Link>
                 </div>
             </div>
         )
