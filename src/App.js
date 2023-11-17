@@ -89,7 +89,7 @@ function App() {
             <Route path = "/search/:searchTerm" element = {<Search />} />
             <Route path={"/login"} element={<Login/>}/>
             <Route path={"/forgotPass"} element={<ForgotPass/>}/>
-            <Route path={"/password-new"} element={<PasswordNew/>}/>
+            <Route path={"/password-new/:id"} element={<PasswordNew/>}/>
             <Route path={"/register"} element={<Register/>}/>
             <Route path = "/profile" element = {<Profile />} />
                         {/* single product route */}

@@ -1,22 +1,23 @@
 
 import React, {useEffect, useState} from "react";
 import {findAccountById, savePass} from "../../service/UserService";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export function PasswordNew() {
     const [passwordNew, setPasswordNew] = useState("");
     const [passwordError,setPasswordError] = useState("");
+    const [passwordConfirm,setPasswordConfirm] = useState('')
     const [isShowPasswordNew, setIsShowPasswordNew] = useState(false);
     const [isShowPasswordConfirm, setIsShowPasswordConfirm] = useState(false);
     let [user,setUser] = useState({});
     const navigate = useNavigate()
+    const {id}= useParams()
     useEffect(() => {
-        const id = localStorage.getItem('acc')
         findAccountById(id).then((res)=>{
             setUser(res.data)
             console.log(res.data)
         })
-    }, []);
+    }, [id]);
     function validatePassword(pass) {
         const errors = {};
         if (!pass) {
@@ -40,6 +41,7 @@ export function PasswordNew() {
     }
     const handlePasswordConfirmChange = (event) => {
         const passwordconfirm = event.target.value;
+        setPasswordConfirm(passwordconfirm)
         const errors = {}
         if (passwordconfirm!==passwordNew){
             errors.cfpass = ("Xác thực mật khẩu không đúng, vui lòng nhập lại!")
@@ -84,8 +86,8 @@ export function PasswordNew() {
                 <div style={{color:"red"}}> {passwordError && <div className="error-message">{passwordError.cfpass}</div>}</div>
 
                 <div style={{}}>
-                    <button className={ (isShowPasswordNew && isShowPasswordConfirm)  ? "active":""}
-                            disabled={!(isShowPasswordNew && isShowPasswordConfirm)}
+                    <button className={ (passwordNew && passwordConfirm)  ? "active":""}
+                            disabled={!(passwordNew && passwordConfirm)}
                             onClick={savePassword}
                     >Cập nhật
                     </button>

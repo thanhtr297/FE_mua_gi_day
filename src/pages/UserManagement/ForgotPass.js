@@ -41,7 +41,7 @@ export function ForgotPass() {
     }
     function submitEmail() {
         let user = {
-            name: 'http://localhost:3000/password-new',
+            name: 'http://localhost:3000/password-new/'+account.id,
             username: account.id,
             password: '',
             email: email
