@@ -5,18 +5,25 @@ import Navbar from "../Navbar/Navbar";
 import Dropdown from 'react-bootstrap/Dropdown';
 import {AppContext} from "../../Context/AppContext";
 import {findAccountById} from "../../service/UserService";
+import {findUserByAccount} from "../../pages/UserManagement/Service/UserService";
 
 
 const Header = (props) => {
     const {checkLogin } = useContext(AppContext);
     const {logout } = useContext(AppContext);
+    const{isFlag}  = useContext(AppContext) ;
     const [username , setUsername] = useState(null) ;
+    const [avatar , setAvatar] = useState(null) ;
     let acc = localStorage.getItem('account');
     useEffect(() => {
+        if (acc !== null) {
         findAccountById(acc).then((res) => {
             setUsername(res.data.username) ;
-        }).catch()
-    }, []);
+        }).catch(null)
+        findUserByAccount(acc).then((res) => {
+            setAvatar(res.avatar)
+        }).catch(null) }
+    }, [isFlag ,checkLogin]);
     return (
         <header className='header1 text-white'>
             <div className='containerr'>
@@ -26,7 +33,7 @@ const Header = (props) => {
                             <ul className='flex top-links align-center'>
                                 <li>
                                     {/* dummy links */}
-                                    <Link to="/seller">Kênh người bán</Link>
+                                    <Link to="/seller" style={{}}>Kênh người bán</Link>
                                 </li>
                                 <li className='vert1-line'></li>
                                 <li>
@@ -55,12 +62,17 @@ const Header = (props) => {
                             <ul className='top-links flex align-center'>
                                 <li style={checkLogin
                                     ? {display: 'none'} : {}}>
-                                    <div style={{display : 'flex' , marginTop : '-6px' , marginBottom : '-10px'}}>
-                                    <div style={{marginTop : '15px' ,fontSize : '15px' }}>{username}</div>
+                                    <div style={{display : 'flex' , marginTop : '-15px' , marginBottom : '-20px' ,marginRight : '-25px'}}>
+                                        {username !== null ?  <div style={{marginTop : '20px' ,fontSize : '15px' }}>{username}</div> : ''}
+
                                     <div className="nav-item dropdown" style={{borderBottom : 'none' ,backgroundColor :'white' ,borderRadius : '50%' ,width :'30px' ,height :'30px' , marginLeft :'5px'}}>
-                                        <a href="#" className=" nav-link dropdown-toggle"
-                                           data-bs-toggle="dropdown">                                        <i className="fa-regular fa-user" style={{color: '#bcc5d7' ,fontSize : '20px', marginLeft : '6px' ,marginTop :'3px'}}></i>
+                                        <a href="#" className=" nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                            {avatar === null ?
+                                                <i className="fa-regular fa-user" style={{color: '#bcc5d7' ,fontSize : '19px', marginLeft : '7px' ,marginTop :'5px'}}></i>
+                                                : <img src={avatar} alt="" style={{borderRadius : '50%' ,width :'30px' ,height :'30px'}}  />
+                                            }
                                         </a>
+                                        {acc !== null ?
                                         <div className="dropdown-menu m-0">
                                             <Link to={'/user-management'} className="dropdown-item">Hồ sơ</Link>
                                             <Link to={'/shop-management'} className="dropdown-item">Shop của tôi</Link>
@@ -70,7 +82,13 @@ const Header = (props) => {
                                                 alert("Bạn đã đăng xuất!");
                                                 localStorage.clear()
                                             }} >Đăng xuất</Link>
-                                        </div>
+                                        </div> :
+                                            <div className="dropdown-menu m-0">
+                                                <Link to={'/login'} className="dropdown-item" onClick={() => {
+                                                    logout()
+                                                }}>Đăng nhập</Link>
+                                            </div>
+                                        }
                                     </div>
                                     </div>
                                 </li>

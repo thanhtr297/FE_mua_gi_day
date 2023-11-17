@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     findAllCity,
     findAllDistrictByIdCity,
@@ -11,6 +11,7 @@ import {Field, Form, Formik} from "formik";
 import {LoadingButton} from "../ShopManagement/LoadingButton";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {v4} from "uuid";
+import {AppContext} from "../../Context/AppContext";
 export default function ProfileUser() {
     const [idCity, setIdCity] = useState(0)
     const [idDistrict, setIdDistrict] = useState(0)
@@ -23,6 +24,9 @@ export default function ProfileUser() {
     const [check, setCheck] = useState(true)
     const [avatar, setAvatar] = useState(null);
     const [loading, setLoading] = useState(false);
+    const{isFlag , toggleFlag}  = useContext(AppContext) ;
+
+
     useEffect(() => {
         findAllCity().then((res)=>{
             setCities(res)
@@ -32,7 +36,7 @@ export default function ProfileUser() {
             setUser(res)
             console.log(res)
         })
-    }, [check]);
+    }, [check ,isFlag]);
     function displayDistrictByIdCity(id) {
         findAllDistrictByIdCity(id).then((result) => {
             setDistricts(result);
@@ -51,7 +55,6 @@ export default function ProfileUser() {
         uploadBytes(imageRef, file).then(snapshot => {
             getDownloadURL(snapshot.ref).then(url => {
                 setAvatar(url)
-                console.log(url)
                 setLoading(false);
             })
         })
@@ -78,6 +81,7 @@ export default function ProfileUser() {
         console.log(e)
         saveUser(e, navigate).then(()=>{
             alert("Lưu thành công!")
+            toggleFlag()
             setCheck(true)
         })
     }
