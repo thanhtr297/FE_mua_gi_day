@@ -10,6 +10,7 @@ import {getCartMessageStatus, setCartMessageOff, setCartMessageOn} from '../../s
 import CartMessage from "../../components/CartMessage/CartMessage";
 import {getProductById} from "../../service/ProductService";
 import {addToCart} from "../../service/CartService";
+import {findShop} from "../ShopManagement/service/ProfileService";
 
 const ProductSinglePage = () => {
     const {id} = useParams();
@@ -17,11 +18,17 @@ const ProductSinglePage = () => {
     const productSingleStatus = useSelector(getSingleProductStatus);
     const [quantity, setQuantity] = useState(1);
     const cartMessageStatus = useSelector(getCartMessageStatus);
-    const idAccount = localStorage.getItem("account");
+    let idAccount = localStorage.getItem("account");
     let navigate = useNavigate()
+    const [idShop , setIdShop] = useState(0);
 
     // getting single product
     useEffect(() => {
+        findShop(idAccount).then((res) => {
+            setIdShop(res.id) ;
+        }).catch( () =>{
+
+        })
         getProductById(id).then((res) => {
             setProduct(res.data);
         })
@@ -52,15 +59,6 @@ const ProductSinglePage = () => {
             return tempQty;
         })
     }
-
-    // const addToCartHandler = (product) => {
-    //   let discountedPrice = (product?.price) - (product?.price * (product?.promotion / 100));
-    //   let totalPrice = quantity * discountedPrice;
-    //
-    //   dispatch(addToCart({...product, quantity: quantity, totalPrice, discountedPrice}));
-    //   dispatch(setCartMessageOn(true));
-    // }
-
     const addToCartHandler = (product) => {
         const cart = {
             product: {
@@ -72,98 +70,34 @@ const ProductSinglePage = () => {
 
     }
 
-    function shopProfile (id) {
+    function shopProfile(id) {
         return navigate("/shop-management/shop-profile/" + id)
     }
 
-    console.log(product)
-  //   return (
-  //
-  //       <main className='py-5 bg-whitesmoke'>
-  //
-  //
-  //           <div className='product-single'>
-  //               <div className='containerr'>
-  //                   <div className='product-single-content bg-white grid'>
-  //                       <div className='product-single-l'>
-  //                           <div className='product-img'>
-  //                               <div className='product-img-zoom'>
-  //                                   <img src={product?.image === undefined ? '' : product?.image[0]?.name} alt=""
-  //                                        className='img-cover'/>
-  //                               </div>
-  //                               <div className='product-img-thumbs flex align-center my-2'>
-  //                                   {product?.image?.map(p => {
-  //                                       return (
-  //                                           <div className='thumb-item'>
-  //                                               <img src={p?.name} alt="" className='img-cover'/>
-  //                                           </div>
-  //                                       )
-  //                                   })}
-  //                                   {/*<div className='thumb-item'>*/}
-  //                                   {/*  <img src = {*/}
-  //                                   {/*    product ? (product.images ? product.images[1] : "") : ""*/}
-  //                                   {/*  } alt = "" className='img-cover' />*/}
-  //                                   {/*</div>*/}
-  //                                   {/*<div className='thumb-item'>*/}
-  //                                   {/*  <img src = {*/}
-  //                                   {/*    product ? (product.images ? product.images[2] : "") : ""*/}
-  //                                   {/*  } alt = "" className='img-cover' />*/}
-  //                                   {/*</div>*/}
-  //                                   {/*<div className='thumb-item'>*/}
-  //                                   {/*  <img src = {*/}
-  //                                   {/*    product ? (product.images ? product.images[3] : "") : ""*/}
-  //                                   {/*  } alt = "" className='img-cover' />*/}
-  //                                   {/*</div>*/}
-  //                                   {/*<div className='thumb-item'>*/}
-  //                                   {/*  <img src = {*/}
-  //                                   {/*    product ? (product.images ? product.images[4] : "") : ""*/}
-  //                                   {/*  } alt = "" className='img-cover' />*/}
-  //                                   {/*</div>*/}
-  //                               </div>
-  //                           </div>
-  //                       </div>
-  // }
-  return (
-    <main className='py-5 bg-whitesmoke'>
-      <div className='product-single'>
-        <div className='containerr'>
-          <div className='product-single-content bg-white grid'>
-            <div className='product-single-l'>
-              <div className='product-img'>
-                <div className='product-img-zoom'>
-                  <img src = {product?.image === undefined ? '' : product?.image[0]?.name } alt = "" className='img-cover' />
-                </div>
-                <div className='product-img-thumbs flex align-center my-2'>
-                  {product?.image?.map(p=>{
-                    return (
-                        <div className='thumb-item'>
-                          <img src = {p?.name} alt = "" className='img-cover' />
+    return (
+        <main className='py-5 bg-whitesmoke'>
+            <div className='product-single'>
+                <div className='containerr'>
+                    <div className='product-single-content bg-white grid'>
+                        <div className='product-single-l'>
+                            <div className='product-img'>
+                                <div className='product-img-zoom'  style={{border : '1px solid black'}}>
+                                    <img style={{width: '350px', height: '350px', marginLeft: '100px' ,marginTop: '10px'}}
+                                         src={product?.image === undefined ? '' : product?.image[0]?.name} alt=""
+                                         className='img-cover'/>
+                                </div>
+                                <div className='product-img-thumbs flex align-center my-2'>
+                                    {product?.image?.map(p => {
+                                        return (
+                                            <div className='thumb-item'>
+                                                <img src={p?.name} alt="" className='img-cover'/>
+                                            </div>
+                                        )
+                                    })}
+
+                                </div>
+                            </div>
                         </div>
-                    )
-                  })}
-                  {/*<div className='thumb-item'>*/}
-                  {/*  <img src = {*/}
-                  {/*    product ? (product.images ? product.images[1] : "") : ""*/}
-                  {/*  } alt = "" className='img-cover' />*/}
-                  {/*</div>*/}
-                  {/*<div className='thumb-item'>*/}
-                  {/*  <img src = {*/}
-                  {/*    product ? (product.images ? product.images[2] : "") : ""*/}
-                  {/*  } alt = "" className='img-cover' />*/}
-                  {/*</div>*/}
-                  {/*<div className='thumb-item'>*/}
-                  {/*  <img src = {*/}
-                  {/*    product ? (product.images ? product.images[3] : "") : ""*/}
-                  {/*  } alt = "" className='img-cover' />*/}
-                  {/*</div>*/}
-                  {/*<div className='thumb-item'>*/}
-                  {/*  <img src = {*/}
-                  {/*    product ? (product.images ? product.images[4] : "") : ""*/}
-                  {/*  } alt = "" className='img-cover' />*/}
-                  {/*</div>*/}
-                </div>
-              </div>
-            </div>
 
                         <div className='product-single-r'>
                             <div className='product-details font-manrope'>
@@ -198,15 +132,6 @@ const ProductSinglePage = () => {
                                 </div>
 
                                 <div className="price">
-                                    {/*<div className='flex align-center'>*/}
-                                    {/*  <div className='old-price text-gray'>*/}
-                                    {/*    {formatPrice(product?.price)}*/}
-                                    {/*  </div>*/}
-                                    {/*  <span className='fs-14 mx-2 text-dark'>*/}
-
-                                    {/*  </span>*/}
-                                    {/*</div>*/}
-
                                     <div className='flex align-center my-1'>
                                         <div className='old-price text-gray' style={{marginRight: '20px'}}>
                                             {formatPrice(product?.price)}
@@ -246,14 +171,14 @@ const ProductSinglePage = () => {
 
                                 <div className='btns'>
                                     <button type="button" className='add-to-cart-btn btn'
-                                            disabled={(idAccount === product?.account?.id)}>
+                                            disabled={idShop === product?.shop?.id}>
                                         <i className='fas fa-shopping-cart'></i>
                                         <span className='btn-text mx-2' onClick={() => {
                                             addToCartHandler(product)
                                         }}>Thêm vào giỏ hàng</span>
                                     </button>
                                     <button type="button" className='buy-now btn mx-3'
-                                            disabled={(idAccount === product?.account?.id)}>
+                                            disabled={idShop === product?.shop?.id}>
                                         <span className='btn-text'>Mua ngay</span>
                                     </button>
                                 </div>
@@ -287,8 +212,12 @@ const ProductSinglePage = () => {
                                         <button onClick={() => {
                                             shopProfile(product?.shop?.id)
                                         }}
-                                                style={{padding: '10px', border: '1px solid #d70018', marginLeft: '10px'}}
-                                            className="comic-button">Xem Shop
+                                                style={{
+                                                    padding: '10px',
+                                                    border: '1px solid #d70018',
+                                                    marginLeft: '10px'
+                                                }}
+                                                className="comic-button">Xem Shop
                                         </button>
                                     </div>
                                 </div>

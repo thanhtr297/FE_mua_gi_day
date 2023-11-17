@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import "./Header.scss";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Navbar from "../Navbar/Navbar";
 import Dropdown from 'react-bootstrap/Dropdown';
 import {AppContext} from "../../Context/AppContext";
@@ -9,6 +9,7 @@ import {findUserByAccount} from "../../pages/UserManagement/Service/UserService"
 
 
 const Header = (props) => {
+    const navigate = useNavigate();
     const {checkLogin } = useContext(AppContext);
     const {logout } = useContext(AppContext);
     const{isFlag}  = useContext(AppContext) ;
@@ -19,10 +20,14 @@ const Header = (props) => {
         if (acc !== null) {
         findAccountById(acc).then((res) => {
             setUsername(res.data.username) ;
-        }).catch(null)
+        }).catch( () =>{
+            navigate('/')
+        })
         findUserByAccount(acc).then((res) => {
             setAvatar(res.avatar)
-        }).catch(null) }
+        }).catch( () =>{
+            navigate('/')
+        }) }
     }, [isFlag ,checkLogin]);
     return (
         <header className='header1 text-white'>
