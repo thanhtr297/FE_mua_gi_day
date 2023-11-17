@@ -67,7 +67,10 @@ const BillDetails = (props) => {
                             <div><p style={{fontWeight: 'bold'}}> {props.bill[0]?.bill?.status}</p>
                                 <p>Lý do :{props.bill[0]?.bill?.reason}</p>
                             </div> :
-                            <p style={{fontWeight: 'bold'}}> {props.bill[0]?.bill?.status}</p>
+                            <div>
+                                <p style={{fontWeight: 'bold'}}> {props.bill[0]?.bill?.status}</p>
+                            </div>
+
                         }
 
 
@@ -76,7 +79,7 @@ const BillDetails = (props) => {
                 <div style={{marginTop: '26px', marginLeft: '70px'}}>
                     {(props.bill[0]?.bill?.status === "Chờ xác nhận") ?
                         <div>
-                            <button onClick={acp}>Chấp nhận</button>
+                            <button onClick={acp} style={{fontWeight: 'bold' , color : 'green'}}>Chấp nhận <i className="fa-solid fa-check" style={{color: '#17b563'}}></i></button>
                             <div>
                                 <Formik
                                     initialValues={{}}
@@ -84,10 +87,10 @@ const BillDetails = (props) => {
                                 >
                                     <Form>
                                         <div>
-                                            <button type="submit">Hủy</button>
+                                            <button type="submit" >Hủy</button>
                                             <Field type="text" id="firstName" name="reason" style={
-                                                {marginLeft: '10px', marginTop: '10px', width: '250px', height: '50px',}
-                                            } placeholder="Lý do  "/>
+                                                {marginLeft: '10px', marginTop: '10px', width: '200px', height: '50px',}
+                                            } placeholder="Lý do " title={"Vui lòng nhập đầy đủ thông tin"} required/>
                                         </div>
 
                                     </Form>
