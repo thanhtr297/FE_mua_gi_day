@@ -10,6 +10,7 @@ import {getCartMessageStatus, setCartMessageOff, setCartMessageOn} from '../../s
 import CartMessage from "../../components/CartMessage/CartMessage";
 import {getProductById} from "../../service/ProductService";
 import {addToCart} from "../../service/CartService";
+import {findOneShop} from "../ShopManagement/service/ShopService";
 
 const ProductSinglePage = () => {
     const {id} = useParams();
@@ -19,6 +20,8 @@ const ProductSinglePage = () => {
     const cartMessageStatus = useSelector(getCartMessageStatus);
     const idAccount = localStorage.getItem("account");
     let navigate = useNavigate()
+    let [shop, setShop] = useState({});
+
 
     // getting single product
     useEffect(() => {
@@ -76,7 +79,6 @@ const ProductSinglePage = () => {
         return navigate("/shop-management/shop-profile/" + id)
     }
 
-    console.log(product)
   //   return (
   //
   //       <main className='py-5 bg-whitesmoke'>
