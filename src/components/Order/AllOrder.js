@@ -25,17 +25,24 @@ export default function AllOrder() {
         for (let i = 0; i < user.length; i++) {
             let product = [];
             for (let j = 0; j < billDetail.length; j++) {
-                if (billDetail[j]?.bill?.account?.username === user[i]) {
+                if (billDetail[j]?.bill?.account?.username === user[i] ) {
                     product.push(billDetail[j])
                 }
             }
-            listBillByUser[i] = product;
+                listBillByUser[i] = product;
+        }
+    }
+    const checkEmpty = (list) => {
+        for (let i = 0; i < list.length; i++) {
+            if(list[i].length > 0) {
+                return true ;
+            }
         }
     }
 
     return (
         <div>
-            {listBillByUser[0]?.length > 0 ?
+            {checkEmpty(listBillByUser)?
                 <div style={{backgroundColor: '#f6f6f6', fontSize: '15px' ,marginLeft: '2%' , marginRight : '2%'}}>
                     <div style={{
                         display: 'flex',

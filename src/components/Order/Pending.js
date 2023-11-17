@@ -34,10 +34,17 @@ export default function Pending() {
         }
     }
 
+    const checkEmpty = (list) => {
+        for (let i = 0; i < list.length; i++) {
+            if(list[i].length > 0) {
+                return true ;
+            }
+        }
+    }
 
     return (
         <div>
-            {listBillByUser[0]?.length > 0 ?
+            {checkEmpty(listBillByUser)?
                 <div style={{backgroundColor: '#f6f6f6', fontSize: '15px' ,marginLeft: '2%' , marginRight : '2%'}}>
                     <div style={{
                         display: 'flex',
