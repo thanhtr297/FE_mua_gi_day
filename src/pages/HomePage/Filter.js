@@ -149,7 +149,6 @@ export default function Filter() {
                                     marginRight: '40px',
                                     width: '10%',
                                     height: '35px',
-                                    borderRadius: '20%',
                                     color: 'white'
                                 }}>
                             Tìm kiếm
@@ -160,7 +159,17 @@ export default function Filter() {
             <div>
                 {products === STATUS.LOADING ? <Loader/> : (products === null ? ""
                     : (products.length === 0 ?
-                        <h3 style={{textAlign: 'center'}}>Không có sản phẩm phù hợp tiêu chí tìm kiếm</h3>
+                        <div className='categories-item'>
+                            <div className='title-md'>
+                                <h3>KẾT QUẢ TÌM KIẾM </h3>
+                            </div>
+                            <br/>
+                            <img style={{height:'150px',width:'150px',marginLeft:'550px'}}
+                                src="https://static.vecteezy.com/system/resources/thumbnails/006/208/684/small/search-no-result-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg" alt=""/>
+                            <br/>
+                            <h3 style={{textAlign: 'center'}}>Không có sản phẩm phù hợp tiêu chí tìm kiếm</h3>
+
+                        </div>
                         :
                         <div className='categories-item'>
                             <div className='title-md'>
