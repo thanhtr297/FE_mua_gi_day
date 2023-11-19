@@ -5,18 +5,18 @@ import './index.scss';
 function Index() {
     return (
 
-        <div className="dashboard">
-            <nav className="nav">
+        <div className="dashboard" >
+            <nav className="nav" >
                 {/* ... navigation links ... */}
                 <ul className="nav__list">
                     <li className="nav__item">
-                        <Link to="/user-management/profile" >Thông tin</Link>
+                        <Link className={'cekkonn'} to="/user-management/profile" >Thông tin</Link>
                     </li>
                     <li className="nav__item">
-                        <Link to="/user-management/change-password">Đổi mật khẩu</Link>
+                        <Link className={'cekkonn'} to="/user-management/change-password">Đổi mật khẩu</Link>
                     </li>
                     <li className="nav__item">
-                        <Link to="/user-management/order">Quản lý đơn hàng</Link>
+                        <Link className={'cekkonn'} to="/user-management/order">Quản lý đơn hàng</Link>
                     </li>
                 </ul>
             </nav>
