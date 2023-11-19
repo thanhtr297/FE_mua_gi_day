@@ -5,7 +5,6 @@ import BillDetails from "./BillDetails";
 
 const BillList = (props) => {
     const uniqueArray =  [];
-
     for (let i = 0; i < props.items.length; i++) {
         let isUnique = true;
 

@@ -54,10 +54,10 @@ import axios from "axios";
     })
 }
 
- const cancelBill = (idBillDetail) => {
+ const cancelBill = (idBill) => {
     return new Promise((resolve) => {
         resolve(
-            axios.delete("http://localhost:8080/api/billDetails/delete/"+idBillDetail)
+            axios.delete("http://localhost:8080/api/bills/"+idBill)
                 .then(response => {
                     return response.data
                 }).catch(() => {
@@ -66,4 +66,30 @@ import axios from "axios";
         )
     })
 }
-export {showCartDetailUserSelect, showBillByAccountAndStatus,saveBill, cancelBill}
+
+const receive = (idBill) => {
+    return new Promise((resolve) => {
+        resolve(
+            axios.post("http://localhost:8080/api/bills/receive?idBill="+idBill)
+                .then(() => {
+                    alert("Bạn đã nhận hàng thành công!")
+                }).catch(() => {
+                alert("Lỗi")
+            })
+        )
+    })
+}
+const cancelBillByReason = (idBill, reason) => {
+    return new Promise((resolve) => {
+        resolve(
+            axios.post("http://localhost:8080/api/bills/cancel?idBill="+idBill+"&reason="+reason)
+                .then(() => {
+                    alert("Vui lòng chờ chủ shop xác nhận!")
+                }).catch(() => {
+                alert("Lỗi không hủy được đơn hàng")
+            })
+        )
+    })
+}
+
+export {showCartDetailUserSelect, showBillByAccountAndStatus,saveBill, cancelBill, cancelBillByReason, receive}
