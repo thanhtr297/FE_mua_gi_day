@@ -46,6 +46,7 @@ import DoneUser from "./components/OrderUser/DoneUser";
 
 import {ForgotPass} from "./pages/UserManagement/ForgotPass";
 import {PasswordNew} from "./pages/UserManagement/PasswordNew";
+import ShopProfile from "./pages/ShopManagement/ShopProfile";
 
 
 
@@ -134,13 +135,14 @@ function App() {
                             <Route path="/shop-management/profile" element={<Profile/>}/>
                             <Route path="/shop-management/:id" element={<UpdateProduct/>}/>
 
+
                         </Route>
 
 
                         {/*<Route path={"/login"} element={<Login b={test1}/>}/>*/}
+                        <Route path="/shop-management/shop-profile/:id" element={<ShopProfile />}/>
 
                     </Routes>
-
                     <Footer/>
                 </BrowserRouter></AppProvider>
             </Provider>

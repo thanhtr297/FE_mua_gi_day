@@ -68,10 +68,10 @@ export default function Order(prop) {
                         height: '55px'
                     }}>
                         <div style={{marginLeft: '25px', marginTop: '12px'}}>Sản phẩm</div>
-                        <div style={{marginLeft: '360px', marginTop: '12px'}}>
+                        <div style={{marginLeft: '390px', marginTop: '12px'}}>
                             <p>Tổng đơn hàng</p>
                         </div>
-                        <div style={{marginLeft: '45px', marginTop: '12px'}}>
+                        <div style={{marginLeft: '68px', marginTop: '12px'}}>
                             <p>Trạng thái</p>
                         </div>
                         <div style={{marginLeft: '100px', marginTop: '12px'}}>
