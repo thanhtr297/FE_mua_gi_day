@@ -113,12 +113,15 @@ export default function ShopProfile() {
                 </div>
                 <br/>
                 <br/>
-                <FilterForShop />
-                <div className="containerr">
+                <div style={{marginTop:'25px'}}>
+                    <FilterForShop />
+                </div>
+
+                <div className="containerr" style={{marginTop:'-75px'}}>
                     <div className='categories-item'>
                         <div className='title-md'>
                             <h3>Top sản phẩm bán chạy nhất </h3>
-                        </div>
+                        </div><br/>
                         <div className='product-lists grid bg-whitesmoke my-3' style={{background:'rgb(232, 232, 232)'}}>
                             {product.map((p) => {
                                 return (
@@ -127,15 +130,8 @@ export default function ShopProfile() {
                             })}
                         </div>
                     </div>
-                    <br/>
-                    <br/>
-
-
-                    <br/>
-                    <br/>
                     <div className='categories py-5'>
                         <div className='categories-item'>
-                            <div>
                                 <div className='title-md'>
                                     <h3>Tất cả sản phẩm của shop</h3>
                                 </div>
@@ -146,7 +142,6 @@ export default function ShopProfile() {
                                         )
                                     })}
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>

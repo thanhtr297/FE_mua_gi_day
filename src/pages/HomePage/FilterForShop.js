@@ -42,6 +42,7 @@ export default function FilterForShop() {
             console.log(res.data)
         })
     }
+
     return (
         <>
             <Formik
@@ -63,8 +64,14 @@ export default function FilterForShop() {
                 }}
                 enableReinitialize={true}>
                 <Form>
-                    <div style={{display: 'flex'}}>
-                        <div style={{width: "35%", fontSize: "16px", marginLeft: '40px', marginTop: '20px'}}>
+                    <div style={{
+                        display: 'flex',
+                        width: '85%',
+                        marginLeft: '55px',
+                        marginTop: '-35px',
+                        marginBottom: '13px'
+                    }}>
+                        <div style={{width: "20%", fontSize: "16px", marginLeft: '200px', marginTop: '20px'}}>
                             Từ {formatPrice(range[0])} đến {formatPrice(range[1])}
                             <Slider style={{color: "rgb(215, 0, 24)", fontSize: "5px", marginTop: '10px'}} value={range}
                                     onChange={handleChanges} valueLabelDisplay="auto"
@@ -75,7 +82,7 @@ export default function FilterForShop() {
 
                         </div>
                         <div style={{fontSize: '16px', width: "20%"}}>
-                            <div className={'col-md-6'} style={{marginLeft: '40px', marginTop: "18px"}}>
+                            <div className={'col-md-6'} style={{marginLeft: '60px', marginTop: "18px"}}>
                                 <label htmlFor={'category'} className="form-label">Mặt hàng</label>
                                 <Field as="select" name="category.id" class="form-control"
                                        style={{fontSize: '16px', width: '220px'}}>
@@ -91,7 +98,7 @@ export default function FilterForShop() {
                         </div>
 
                         <div style={{fontSize: '16px', width: "20%"}}>
-                            <div className={'col-md-6'} style={{marginLeft: '45px', marginTop: "18px"}}>
+                            <div className={'col-md-6'} style={{marginLeft: '80px', marginTop: "18px"}}>
                                 <label htmlFor={'brand'} className="form-label">Thương hiệu</label>
                                 <Field as="select" name="brand.id" class="form-control"
                                        style={{fontSize: '16px', width: '220px'}}>
@@ -112,7 +119,7 @@ export default function FilterForShop() {
                                     fontSize: '16px',
                                     marginTop: '50px',
                                     background: 'rgb(215, 0, 24)',
-                                    marginRight: '40px',
+                                    marginLeft: '100px',
                                     width: '10%',
                                     height: '35px',
                                     color: 'white'
@@ -122,28 +129,34 @@ export default function FilterForShop() {
                     </div>
                 </Form>
             </Formik>
-            <div>
-                {products === STATUS.LOADING ? <Loader/> : (products === null ? ""
-                    : (products.length === 0 ?
-                        <div className='categories-item'>
-                            <div className='title-md'>
-                                <h3>KẾT QUẢ TÌM KIẾM </h3>
-                            </div>
-                            <br/>
-                            <img style={{height:'150px',width:'150px',marginLeft:'550px'}}
-                                 src="https://static.vecteezy.com/system/resources/thumbnails/006/208/684/small/search-no-result-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg" alt=""/>
-                            <br/>
-                            <h3 style={{textAlign: 'center'}}>Không có sản phẩm phù hợp tiêu chí tìm kiếm</h3>
+            <div className="containerr">
+                <div className='categories py-5'>
+                    <div className='categories-item'>
 
+                            {products === STATUS.LOADING ? <Loader/> : (products === null ? ""
+                                : (products.length === 0 ?
+                                    <div className='categories-item'>
+                                        <div className='title-md'>
+                                            <h3>KẾT QUẢ TÌM KIẾM </h3>
+                                        </div>
+                                        <img style={{height: '150px', width: '150px', marginLeft: '550px'}}
+                                             src="https://static.vecteezy.com/system/resources/thumbnails/006/208/684/small/search-no-result-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg"
+                                             alt=""/>
+                                        <br/>
+                                        <h3 style={{textAlign: 'center'}}>Không có sản phẩm phù hợp tiêu chí tìm
+                                            kiếm</h3>
+
+                                    </div>
+                                    :
+                                    <div className='categories-item'>
+                                        <div className='title-md'>
+                                            <h3>KẾT QUẢ TÌM KIẾM </h3>
+                                        </div>
+                                        <ProductList products={products}/>
+                                    </div>))}
                         </div>
-                        :
-                        <div className='categories-item'>
-                            <div className='title-md'>
-                                <h3>KẾT QUẢ TÌM KIẾM </h3>
-                            </div>
-                            <br/>
-                            <ProductList products={products}/>
-                        </div>))}
+
+                </div>
             </div>
         </>
 
