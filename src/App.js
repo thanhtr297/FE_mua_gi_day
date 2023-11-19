@@ -48,6 +48,8 @@ import {ForgotPass} from "./pages/UserManagement/ForgotPass";
 import {PasswordNew} from "./pages/UserManagement/PasswordNew";
 import ShopProfile from "./pages/ShopManagement/ShopProfile";
 import Comment from "./pages/CommentPage/Comment";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -147,6 +149,7 @@ function App() {
                     <Footer/>
                 </BrowserRouter></AppProvider>
             </Provider>
+            <ToastContainer style={{fontSize : '13px'}}/>
         </div>
     );
 }

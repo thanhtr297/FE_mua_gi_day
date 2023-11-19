@@ -3,6 +3,7 @@ import {formatPrice} from "../../utils/helpers";
 import {Field, Form, Formik} from "formik";
 import {acceptOrder, rejectionOrder} from "../../service/OrderService";
 import {AppContext} from "../../Context/AppContext";
+import {toast} from "react-toastify";
 
 const BillDetails = (props) => {
     const [total, setTotal] = useState(0);
@@ -26,6 +27,7 @@ const BillDetails = (props) => {
     const acp = () => {
         acceptOrder(props.bill).then((res) => {
             alert("Xác nhận thành công")
+            toast.success('Thành công');
             toggleFlag()
 
         })
