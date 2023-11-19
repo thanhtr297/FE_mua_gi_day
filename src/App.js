@@ -47,6 +47,7 @@ import DoneUser from "./components/OrderUser/DoneUser";
 import {ForgotPass} from "./pages/UserManagement/ForgotPass";
 import {PasswordNew} from "./pages/UserManagement/PasswordNew";
 import ShopProfile from "./pages/ShopManagement/ShopProfile";
+import Comment from "./pages/CommentPage/Comment";
 
 
 
@@ -105,7 +106,7 @@ function App() {
                         <Route path={"/register"} element={<Register/>}/>
                         <Route path="/profile" element={<Profile/>}/>
 
-
+                        <Route path={"/comment"} element={<Comment/>}/>
                         <Route path="/user-management" element={<UserManagement/>}>
                             <Route index element={<div>Chọn chức năng</div>}/>
                             <Route path="/user-management/profile" element={<ProfileUser/>}/>
