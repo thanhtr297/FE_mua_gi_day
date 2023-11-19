@@ -145,6 +145,7 @@ export default function FilterForShop() {
                                         <br/>
                                         <h3 style={{textAlign: 'center'}}>Không có sản phẩm phù hợp tiêu chí tìm
                                             kiếm</h3>
+                                        <br/>
 
                                     </div>
                                     :

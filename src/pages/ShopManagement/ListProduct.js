@@ -5,6 +5,9 @@ import {MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
 import {deleteById, save} from "./service/ProductService";
+import {MdDeleteOutline} from "react-icons/md";
+import {CiEdit} from "react-icons/ci";
+import { MdCreateNewFolder } from "react-icons/md";
 
 function ListProduct() {
     let [products, setProducts] = useState([]);
@@ -41,27 +44,29 @@ function ListProduct() {
 
     return (
         <>
-            <Link to={'/shop-management/create'} className={'btn btn-primary'} style={{fontSize: '12px'}}>Thêm sản phẩm mới</Link>
-            <br/>
-            <br/>
-            <h1  style={{textAlign: "center"}}>Danh sách sản phẩm</h1>
+            <div style={{display:'flex'}}>
+                <Link to={'/shop-management/create'}>
+                    <MdCreateNewFolder style={{color:'black',fontSize: '30px'}}/>
+                </Link>
+                <h1 style={{marginLeft:'440px'}}>Danh sách sản phẩm</h1>
+            </div>
             <br/>
             <br/>
             <MDBTable style={{fontSize: '16px'}}>
-                <MDBTableHead >
-                    <tr style={{textAlign:'center'}}>
-                        <th style={{background:'white',color:'black'}}>STT</th>
-                        <th style={{background:'white',color:'black'}}>Tên</th>
-                        <th style={{background:'white',color:'black'}}>Ảnh</th>
-                        <th style={{background:'white',color:'black'}}>Loại sản phẩm</th>
-                        <th style={{background:'white',color:'black'}}>Thương hiệu</th>
-                        <th style={{background:'white',color:'black'}}>Số lượng</th>
-                        <th style={{background:'white',color:'black'}}>Giá</th>
-                        <th style={{background:'white',color:'black'}}>Thao tác</th>
+                <MDBTableHead>
+                    <tr style={{textAlign: 'center'}}>
+                        <th style={{background: 'white', color: 'black'}}>STT</th>
+                        <th style={{background: 'white', color: 'black'}}>Tên</th>
+                        <th style={{background: 'white', color: 'black'}}>Ảnh</th>
+                        <th style={{background: 'white', color: 'black'}}>Loại sản phẩm</th>
+                        <th style={{background: 'white', color: 'black'}}>Thương hiệu</th>
+                        <th style={{background: 'white', color: 'black'}}>Số lượng</th>
+                        <th style={{background: 'white', color: 'black'}}>Giá</th>
+                        <th style={{background: 'white', color: 'black'}}>Thao tác</th>
                     </tr>
                 </MDBTableHead>
                 <MDBTableBody>
-                    {products.map((p,index) => {
+                    {products.map((p, index) => {
                         return (
                             <>
                                 <tr>
@@ -78,7 +83,7 @@ function ListProduct() {
                                     <td>
                                         <div id={"carouselExampleIndicators" + index} className="carousel slide"
                                              style={{width: "130px", marginLeft: '35px'}}>
-                                            <div className="carousel-indicators" >
+                                            <div className="carousel-indicators">
                                                 <button type="button" data-bs-target="#carouselExampleIndicators"
                                                         data-bs-slide-to="0" className="active" aria-current="true"
                                                         aria-label="Slide 1"></button>
@@ -89,18 +94,22 @@ function ListProduct() {
                                             </div>
                                             <div className="carousel-inner">
                                                 {p.image.map((i, imageIndex) => (
-                                                    <div className={`carousel-item ${imageIndex === 0 ? 'active' : ''}`} key={imageIndex}>
-                                                        <img style={{width:"120px", height: "120px", margin: "0 0"}} src={i.name} className="d-block w-100" alt="..."/>
+                                                    <div className={`carousel-item ${imageIndex === 0 ? 'active' : ''}`}
+                                                         key={imageIndex}>
+                                                        <img style={{width: "120px", height: "120px", margin: "0 0"}}
+                                                             src={i.name} className="d-block w-100" alt="..."/>
                                                         <button className="carousel-control-prev" type="button"
-                                                                data-bs-target={"#carouselExampleIndicators"+ index}
+                                                                data-bs-target={"#carouselExampleIndicators" + index}
                                                                 data-bs-slide="prev">
-                                                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span className="carousel-control-prev-icon"
+                                                                  aria-hidden="true"></span>
                                                             <span className="visually-hidden">Previous</span>
                                                         </button>
                                                         <button className="carousel-control-next" type="button"
-                                                                data-bs-target={"#carouselExampleIndicators"+ index}
+                                                                data-bs-target={"#carouselExampleIndicators" + index}
                                                                 data-bs-slide="next">
-                                                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span className="carousel-control-next-icon"
+                                                                  aria-hidden="true"></span>
                                                             <span className="visually-hidden">Next</span>
                                                         </button>
                                                     </div>
@@ -123,30 +132,32 @@ function ListProduct() {
                                         <p className='fw-normal mb-1'>{p.price}</p>
                                     </td>
                                     <td>
-                                        <button onClick={() => {
-                                            update(p.id)
-                                        }} className={'btn btn-warning'} style={{fontSize: '12px'}}>Sửa
-                                        </button>
-                                        <br/>
-                                        <br/>
-                                        <button onClick={() => {
-                                            deleteP(p.id)
-                                        }} className={'btn btn-danger'} style={{fontSize: '12px'}}>Xóa
-                                        </button>
+                                        <div style={{display: 'flex', marginLeft: '10px', marginTop: '-10px'}}>
+                                            <button onClick={() => {
+                                                update(p.id)
+                                            }} style={{fontSize: '26px'}}><CiEdit/>
+                                            </button>
+
+                                            <button onClick={() => {
+                                                deleteP(p.id)
+                                            }} style={{fontSize: '26px', marginLeft: '5px'}}><MdDeleteOutline/>
+                                            </button>
+                                        </div>
                                     </td>
+
                                 </tr>
 
                             </>
-                    )
+                        )
 
 
                     })}
-                    </MDBTableBody>
-                    </MDBTable>
+                </MDBTableBody>
+            </MDBTable>
 
-                    </>
-                    )
-                        ;
-                    }
+        </>
+    )
+        ;
+}
 
-                        export default ListProduct;
+export default ListProduct;
