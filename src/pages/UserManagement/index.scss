@@ -15,10 +15,10 @@ $nav-item-active-background: #2980b9;
 .nav {
 
   width: 250px; // Điều chỉnh chiều rộng của nav nếu cần
-  background-color: $nav-background;
+  background-color: white;
   min-height: 100%;
-  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
-
+  box-shadow: white;
+  color: black !important;
   &__list {
     margin-left: 15%;
     list-style-type: none;
@@ -32,7 +32,7 @@ $nav-item-active-background: #2980b9;
       a {
         display: block;
         padding: 15px 20px;
-        color: $nav-text-color;
+
         text-decoration: none;
         font-size: 30px;
         transition: background-color 0.3s, color 0.3s;
@@ -79,7 +79,7 @@ $nav-item-active-background: #2980b9;
 
   // Thêm hover effect cho từng hàng
   tbody tr:hover {
-    background-color: #f8f9fa; // Màu nền khi hover
+    background-color: #fff; // Màu nền khi hover
   }
 }
 
@@ -97,4 +97,7 @@ td, th {
 // Nếu bạn muốn responsive, bạn có thể sử dụng class `table-responsive` từ Bootstrap
 .table-responsive {
   overflow-x: auto; // Cho phép cuộn ngang trên thiết bị nhỏ
+}
+.cekkonn {
+  color : #121517 !important;
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     findAllCity,
     findAllDistrictByIdCity,
@@ -12,6 +12,7 @@ import {Field, Form, Formik} from "formik";
 import {LoadingButton} from "./LoadingButton";
 import {findShop, saveShop} from "./service/ProfileService";
 import {useNavigate} from "react-router-dom";
+import {AppContext} from "../../Context/AppContext";
 
 export default function Profile() {
     const [idCity, setIdCity] = useState(0)
@@ -32,6 +33,7 @@ export default function Profile() {
     const [nameWards, setNameWards] = useState("");
     const [shop, setShop] = useState({})
     const [check, setCheck] = useState(true)
+    const {toggleFlag} = useContext(AppContext);
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
             setCoords({lat: latitude, lng: longitude})
@@ -76,7 +78,6 @@ export default function Profile() {
         uploadBytes(imageRef, file).then(snapshot => {
             getDownloadURL(snapshot.ref).then(url => {
                 setAvatar(url)
-                console.log(url)
                 setLoading(false);
             })
         })
@@ -102,10 +103,11 @@ export default function Profile() {
                 }
             }
         }
-        console.log(e)
+
         saveShop(e, navigate).then(()=>{
             alert("Lưu thành công!")
             setCheck(true)
+            toggleFlag()
         })
     }
 const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
