@@ -33,19 +33,20 @@ export default function Order(prop) {
                 }
                 listBillByUser[i] = product;
             }
-        } }else {
-            if (billDetail.length > 0) {
-                for (let i = 0; i < user.length; i++) {
-                    let product = [];
-                    for (let j = 0; j < billDetail.length; j++) {
-                        if (billDetail[j]?.bill?.account?.username === user[i] && billDetail[j]?.bill?.status === prop.name) {
-                            product.push(billDetail[j])
-                        }
+        }
+    } else {
+        if (billDetail.length > 0) {
+            for (let i = 0; i < user.length; i++) {
+                let product = [];
+                for (let j = 0; j < billDetail.length; j++) {
+                    if (billDetail[j]?.bill?.account?.username === user[i] && billDetail[j]?.bill?.status === prop.name) {
+                        product.push(billDetail[j])
                     }
-                    listBillByUser[i] = product;
                 }
+                listBillByUser[i] = product;
             }
         }
+    }
 
 
     const checkEmpty = (list) => {

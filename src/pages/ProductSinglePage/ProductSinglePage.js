@@ -73,6 +73,10 @@ const ProductSinglePage = () => {
     function shopProfile(id) {
         return navigate("/shop-management/shop-profile/" + id)
     }
+    function saveToBill ()  {
+        addToCartHandler(product)
+        navigate("/cart");
+    }
 
     return (
         <main className='py-5 bg-whitesmoke'>
@@ -178,7 +182,7 @@ const ProductSinglePage = () => {
                                         }}>Thêm vào giỏ hàng</span>
                                     </button>
                                     <button type="button" className='buy-now btn mx-3'
-                                            disabled={idShop === product?.shop?.id}>
+                                            disabled={idShop === product?.shop?.id} onClick={() => {saveToBill()}}>
                                         <span className='btn-text'>Mua ngay</span>
                                     </button>
                                 </div>
