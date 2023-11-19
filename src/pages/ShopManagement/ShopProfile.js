@@ -113,7 +113,7 @@ export default function ShopProfile() {
                 </div>
                 <br/>
                 <br/>
-                {/*<FilterForShop />*/}
+                <FilterForShop />
                 <div className="containerr">
                     <div className='categories-item'>
                         <div className='title-md'>

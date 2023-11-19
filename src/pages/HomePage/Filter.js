@@ -97,7 +97,7 @@ export default function Filter() {
                                 <label htmlFor={'category'} className="form-label">Mặt hàng</label>
                                 <Field as="select" name="category.id" class="form-control"
                                        style={{fontSize: '16px', width: '220px'}}>
-                                    <option value={null} style={{fontSize: '13px', textAlign: 'center'}}>--Chọn loại--
+                                    <option value={null} style={{fontSize: '13px', textAlign: 'center'}}>-- Chọn loại --
                                     </option>
                                     {categories.map((d) => {
                                         return (
@@ -113,8 +113,8 @@ export default function Filter() {
                                 <label htmlFor={'brand'} className="form-label">Thương hiệu</label>
                                 <Field as="select" name="brand.id" class="form-control"
                                        style={{fontSize: '16px', width: '220px'}}>
-                                    <option value={null} style={{fontSize: '13px', textAlign: 'center'}}>--Thương
-                                        hiệu--
+                                    <option value={null} style={{fontSize: '13px', textAlign: 'center'}}>-- Thương
+                                        hiệu --
                                     </option>
                                     {brands.map((b) => {
                                         return (
@@ -130,7 +130,7 @@ export default function Filter() {
                                 <label htmlFor={'city'} className="form-label">Khu vực</label>
                                 <Field as="select" style={{fontSize: '16px', width: '220px'}} name="city.id"
                                        className={"form-select"}>
-                                    <option value={null} style={{textAlign: 'center'}}>--Chọn thành phố--</option>
+                                    <option value={null} style={{textAlign: 'center'}}>-- Chọn thành phố --</option>
                                     {cities.map((c) => {
                                         return (
                                             <option value={c.id}>{c.name}</option>
