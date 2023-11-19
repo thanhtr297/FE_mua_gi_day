@@ -11,6 +11,7 @@ import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { MdStarBorder } from "react-icons/md";
 import { SlUserFollowing } from "react-icons/sl";
 import { MdJoinInner } from "react-icons/md";
+import FilterForShop from "../HomePage/FilterForShop";
 
 
 
@@ -22,6 +23,8 @@ export default function ShopProfile() {
     let {id} = useParams()
     let [shop, setShop] = useState({});
     const [products, setProducts] = useState([]);
+    const [product, setProduct] = useState([]);
+
 
 
     useEffect(() => {
@@ -34,14 +37,20 @@ export default function ShopProfile() {
             setShop(res.data)
         })
     }, [id])
+    useEffect(() => {
+        axios.get("http://localhost:8080/api/products/count/" + id).then((res) => {
+            setProduct(res.data)
+        })
+    }, []);
+
     return (
-        <>
-            <div>
-                <div className='product-single-r'>
+        <div style={{background:'rgb(232, 232, 232)'}}>
+            <div >
+                <div className='product-single-r' style={{marginLeft:'100px',width:'86.6%'}}>
                     <div className='product-single'>
                         <div className='containerr'>
                             <div className='product-single-content bg-white grid'>
-                                <div style={{display: 'flex',width:'650px'}}>
+                                <div style={{display: 'flex',width:'650px',marginTop:'20px'}}>
                                     <img src={shop?.avatar} alt=""
                                          style={{height: '80px', width: '80px', borderRadius: '50px'}}/>
                                     <div style={{marginLeft: '20px'}}>
@@ -76,7 +85,7 @@ export default function ShopProfile() {
                                     </div>
                                 </div>
                                 <div>
-                                    <div style={{marginLeft:'80px',marginTop:'3px'}}>
+                                    <div style={{marginLeft:'80px',marginTop:'20px'}}>
                                         <div style={{display: 'flex', fontSize: '16px'}}>
                                             <MdStarBorder />
                                             <p style={{marginTop: '-5px', marginLeft: '5px'}}> Đánh giá</p>
@@ -104,10 +113,18 @@ export default function ShopProfile() {
                 </div>
                 <br/>
                 <br/>
+                {/*<FilterForShop />*/}
                 <div className="containerr">
                     <div className='categories-item'>
                         <div className='title-md'>
                             <h3>Top sản phẩm bán chạy nhất </h3>
+                        </div>
+                        <div className='product-lists grid bg-whitesmoke my-3' style={{background:'rgb(232, 232, 232)'}}>
+                            {product.map((p) => {
+                                return (
+                                    <Product key={p.id} product={{...p}}/>
+                                )
+                            })}
                         </div>
                     </div>
                     <br/>
@@ -122,7 +139,7 @@ export default function ShopProfile() {
                                 <div className='title-md'>
                                     <h3>Tất cả sản phẩm của shop</h3>
                                 </div>
-                                <div className='product-lists grid bg-whitesmoke my-3'>
+                                <div className='product-lists grid bg-whitesmoke my-3' style={{background:'rgb(232, 232, 232)'}}>
                                     {products.map((product) => {
                                         return (
                                             <Product key={product.id} product={{...product}}/>
@@ -135,7 +152,7 @@ export default function ShopProfile() {
                 </div>
             </div>
 
-        </>
+        </div>
     )
 }
 

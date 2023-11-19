@@ -48,10 +48,8 @@ export default function Filter() {
     }
 
     function filter(filter) {
-        console.log(filter)
         axios.post("http://localhost:8080/api/filters", filter).then(res => {
             setProducts(res.data)
-            console.log(res.data)
         })
     }
 

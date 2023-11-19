@@ -134,15 +134,15 @@ function App() {
                             <Route path="/shop-management/report" element={<Report/>}/>
                             <Route path="/shop-management/profile" element={<Profile/>}/>
                             <Route path="/shop-management/:id" element={<UpdateProduct/>}/>
-                            <Route path="/shop-management/shop-profile/:id" element={<ShopProfile />}/>
+
 
                         </Route>
 
 
                         {/*<Route path={"/login"} element={<Login b={test1}/>}/>*/}
+                        <Route path="/shop-management/shop-profile/:id" element={<ShopProfile />}/>
 
                     </Routes>
-
                     <Footer/>
                 </BrowserRouter></AppProvider>
             </Provider>
