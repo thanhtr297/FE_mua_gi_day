@@ -9,6 +9,7 @@ import {BsArrowThroughHeart} from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { pink } from '@mui/material/colors';
 import Checkbox from '@mui/material/Checkbox';
+import {toast} from "react-toastify";
 
 
 const CartPage = () => {
@@ -94,7 +95,7 @@ const CartPage = () => {
         if (quantity <= maxQty) {
             updateQuantityInDB(quantity, idProduct, idCart);
         } else {
-            alert("Số lượng sản phẩm bạn muốn mua đã hết hàng");
+            toast.error("Số lượng sản phẩm bạn muốn mua đã hết hàng")
         }
     }
 
@@ -118,7 +119,7 @@ const CartPage = () => {
         if (window.confirm("Bạn có muốn xóa sản phẩm này không?")) {
             deleteProductFromCart(idCartDetail).then(() => {
                 setCheck(!check);
-                alert("Xóa sản phẩm thành công!")
+                toast.success("Xóa sản phẩm thành công")
             })
         }
     }

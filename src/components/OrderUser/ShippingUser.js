@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import "./BillUser.scss";
 import {shopping_cart} from '../../utils/images';
 import {Link} from 'react-router-dom';
@@ -12,6 +12,8 @@ import {IoLocationOutline} from "react-icons/io5";
 import {FaV, FaX} from "react-icons/fa6";
 
 import Cancel from "./ModalCancel";
+import {AppContext} from "../../Context/AppContext";
+import {toast} from "react-toastify";
 
 
 const PendingUser = () => {
@@ -22,42 +24,45 @@ const PendingUser = () => {
     const [user, setUser] = useState({})
     const status = "Đang giao"
     const [check, setCheck] = useState(true)
-    const [shops, setShops] = useState([])
-    const [listBillByShop, setListBillByShop] = useState([])
+    const [bill1, setBill1] = useState([])
+    const [listBillByBillDetail, setListBillByBillDeatl] = useState([])
+    const {isFlag } = useContext(AppContext);
+
 
 
     useEffect(() => {
         showBillByAccountAndStatus(idAccount, status).then((response) => {
             setBills(response)
-            const checkShop = [];
-            response.forEach((cart) => {
-                if (!checkShop.includes(cart.product.shop.name)) {
-                    checkShop.push(cart.product.shop.name);
+            const checkBill = [];
+            response.forEach((billDetail) => {
+                if (!checkBill.includes(billDetail.bill.id)) {
+                    checkBill.push(billDetail.bill.id);
                 }
             });
-            setShops(checkShop);
+            setBill1(checkBill);
+            console.log(checkBill)
         })
-    }, [check])
+    }, [check ,isFlag])
 
     useEffect(() => {
-        const listBillByShop = () => {
-            const updatedListBillByShop = new Array(shops.length).fill(0);
-            if (bills.length > 0) {
-                for (let i = 0; i < shops.length; i++) {
+        const listBillByBillDetail = () => {
+            const updatedListBillByBillDetail = new Array(bill1.length).fill(0);
+            if (bill1.length > 0) {
+                for (let i = 0; i < bill1.length; i++) {
                     let product = [];
                     for (let j = 0; j < bills.length; j++) {
-                        if (bills[j]?.product?.shop?.name === shops[i]) {
+                        if (bills[j]?.bill.id === bill1[i]) {
                             product.push(bills[j]);
                         }
                     }
-                    updatedListBillByShop[i] = product;
+                    updatedListBillByBillDetail[i] = product;
                 }
             }
-            setListBillByShop(updatedListBillByShop);
+            setListBillByBillDeatl(updatedListBillByBillDetail);
         };
 
-        listBillByShop();
-    }, [bills, shops]);
+        listBillByBillDetail();
+    }, [bills, bill1]);
 
     useEffect(() => {
         let totalPrice = 0;
@@ -68,7 +73,6 @@ const PendingUser = () => {
     }, [bills]);
 
     useEffect(() => {
-        console.log(idAccount)
         findUserByAccount(idAccount).then((res) => {
             setUser(res)
         })
@@ -77,10 +81,8 @@ const PendingUser = () => {
 
     function cancelBillDetail(idBill) {
         cancelBill(idBill).then(() => {
-            setCheck(!check);
-            alert("Hủy sản phẩm thành công!")
+            toast.success("Hủy sản phẩm thành công!")
         })
-
     }
 
     function receiveItem(idBill) {
@@ -90,6 +92,9 @@ const PendingUser = () => {
 
     }
 
+    const m1 = () => {
+        setCheck(!check);
+    }
 
     const checkEmpty = (list) => {
         for (let i = 0; i < list.length; i++) {
@@ -122,7 +127,7 @@ const PendingUser = () => {
 
     return (
         <>
-            {checkEmpty(listBillByShop) ?
+            {checkEmpty(listBillByBillDetail) ?
                 <div className='cart bg-whitesmoke'>
                     <div className='containerr'>
                         <div className='cart-ctable1'>
@@ -172,7 +177,7 @@ const PendingUser = () => {
 
                             <div className='cart-cbody bg-white'>
                                 {
-                                    listBillByShop.map((bill, index) => {
+                                    listBillByBillDetail.map((bill, index) => {
                                         return <>
                                             <div className='cart-ctr fw-8 font-manrope fs-16'
                                                  style={{
@@ -197,15 +202,10 @@ const PendingUser = () => {
                                                         color: "E70B21"
                                                     }}/>
                                                     <span style={{marginLeft: "825px"}}>
-                                                            <FaV style={{scale: "1.1", color: "blue"}} onClick={() => {
-                                                                receiveItem(bill[0].bill.id)
-                                                            }}/>
-                                                            <button style={{marginLeft: "7px", marginTop: "2px"}}
-                                                                    type="button" className='delete-btn text-dark'
-                                                                    onClick={() => {
-                                                                        receiveItem(bill[0].bill.id)
-                                                                    }}>Nhận hàng
-                                                            </button>
+                                                          <button onClick={() => {
+                                                              receiveItem(bill[0].bill.id)
+                                                          }} style={{fontWeight: 'bold' , color : 'green', marginRight:"5px"}}>Nhận hàng <i className="fa-solid fa-check" style={{color: '#17b563', scale:"1.3", marginLeft:"3px"}}></i></button>
+
                                                         </span>
                                                 </div>
                                             </div>
@@ -218,9 +218,9 @@ const PendingUser = () => {
                                                             style={{marginLeft: "450px"}}>{sumQuantity(bill[0].bill.id)}</span>
                                                         <span
                                                             style={{marginLeft: "115px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
-                                                        <span style={{marginLeft: "60px"}}>
+                                                        <span style={{marginLeft: "65px"}}>
                                             <FaX style={{scale: "1.1", color: "D70018"}}/>
-                                                            <Cancel id={bill[0].bill.id}
+                                                            <Cancel a={m1} id={bill[0].bill.id}
                                                                     onCancelClick={() => cancelBillDetail(bill[0].bill.id)}/>
                                                     </span>
 

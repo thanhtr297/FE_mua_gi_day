@@ -9,9 +9,7 @@ import {CiShop} from "react-icons/ci";
 import {BsArrowThroughHeart} from "react-icons/bs";
 import {IoLocationOutline} from "react-icons/io5";
 import {FaX} from "react-icons/fa6";
-
-
-
+import {toast} from "react-toastify";
 
 
 const PendingUser = () => {
@@ -22,42 +20,42 @@ const PendingUser = () => {
     const [user, setUser] = useState({})
     const status = "Chờ xác nhận"
     const [check, setCheck] = useState(true)
-    const [shops, setShops] = useState([])
-    const [listBillByShop, setListBillByShop] = useState([])
+    const [bill1, setBill1] = useState([])
+    const [listBillByBillDetail, setListBillByBillDeatl] = useState([])
 
 
     useEffect(() => {
         showBillByAccountAndStatus(idAccount, status).then((response) => {
             setBills(response)
-            const checkShop = [];
-            response.forEach((cart) => {
-                if (!checkShop.includes(cart.product.shop.name)) {
-                    checkShop.push(cart.product.shop.name);
+            const checkBill = [];
+            response.forEach((billDetail) => {
+                if (!checkBill.includes(billDetail.bill.id)) {
+                    checkBill.push(billDetail.bill.id);
                 }
             });
-            setShops(checkShop);
+            setBill1(checkBill);
         })
     }, [check])
 
     useEffect(() => {
-        const listBillByShop = () => {
-            const updatedListBillByShop = new Array(shops.length).fill(0);
-            if (bills.length > 0) {
-                for (let i = 0; i < shops.length; i++) {
+        const listBillByBillDetail = () => {
+            const updatedListBillByBillDetail = new Array(bill1.length).fill(0);
+            if (bill1.length > 0) {
+                for (let i = 0; i < bill1.length; i++) {
                     let product = [];
                     for (let j = 0; j < bills.length; j++) {
-                        if (bills[j]?.product?.shop?.name === shops[i]) {
+                        if (bills[j]?.bill.id === bill1[i]) {
                             product.push(bills[j]);
                         }
                     }
-                    updatedListBillByShop[i] = product;
+                    updatedListBillByBillDetail[i] = product;
                 }
             }
-            setListBillByShop(updatedListBillByShop);
+            setListBillByBillDeatl(updatedListBillByBillDetail);
         };
 
-        listBillByShop();
-    }, [bills, shops]);
+        listBillByBillDetail();
+    }, [bills, bill1]);
 
     useEffect(() => {
         let totalPrice = 0;
@@ -78,7 +76,7 @@ const PendingUser = () => {
         if (window.confirm("Bạn có muốn hủy đơn hàng này không ?")) {
             cancelBill(idBill).then(() => {
                 setCheck(!check);
-                alert("Hủy sản phẩm thành công!")
+                toast.success("Hủy sản phẩm thành công!")
             })
         }
     }
@@ -120,7 +118,7 @@ const PendingUser = () => {
 
     return (
         <>
-            {checkEmpty(listBillByShop) ?
+            {checkEmpty(listBillByBillDetail) ?
         <div className='cart bg-whitesmoke'>
             <div className='containerr'>
                 <div className='cart-ctable1'>
@@ -164,7 +162,7 @@ const PendingUser = () => {
 
                     <div className='cart-cbody bg-white'>
                         {
-                            listBillByShop.map((bill, index) => {
+                            listBillByBillDetail.map((bill, index) => {
                                 return (<>
                                     <div className='cart-ctr fw-8 font-manrope fs-16'
                                          style={{padding: "14px 15px", display: "flex", backgroundColor: 'rgba(232, 232, 232)', margin: "0 0"}}>
@@ -194,7 +192,7 @@ const PendingUser = () => {
                                             }}/>
                                             <button style={{marginLeft: "7px", marginTop: "2px"}} type="button" className='delete-btn text-dark'
                                                     onClick={() => {
-                                                        cancelBillDetail(bill.id)
+                                                        cancelBillDetail(bill[0].bill.id)
                                                     }}>Hủy đơn
                                             </button>
                                                     </span>

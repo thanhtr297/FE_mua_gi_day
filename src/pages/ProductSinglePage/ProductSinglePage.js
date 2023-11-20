@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import "./ProductSinglePage.scss";
 import {useNavigate, useParams} from "react-router-dom";
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 import {getSingleProductStatus} from '../../store/productSlice';
 import {STATUS} from '../../utils/status';
 import Loader from "../../components/Loader/Loader";
@@ -11,9 +11,9 @@ import CartMessage from "../../components/CartMessage/CartMessage";
 import {getProductById} from "../../service/ProductService";
 import {addToCart} from "../../service/CartService";
 import {findShop} from "../ShopManagement/service/ProfileService";
-import AddToCartButton from "../../components/Notification/Notification";
-import {useSnackbar} from "notistack";
+import {SnackbarProvider, useSnackbar} from "notistack";
 import Button from "react-bootstrap/Button";
+import IntegrationNotistack from "../../components/Notification/Notification";
 
 const ProductSinglePage = () => {
     const {id} = useParams();
@@ -24,11 +24,7 @@ const ProductSinglePage = () => {
     let idAccount = localStorage.getItem("account");
     let navigate = useNavigate()
     const [idShop , setIdShop] = useState(0);
-    const { enqueueSnackbar } = useSnackbar();
-    const handleClickVariant = (variant) => () => {
-        // variant could be success, error, warning, info, or default
-        enqueueSnackbar('This is a success message!', { variant });
-    };
+
 
     // getting single product
     useEffect(() => {
@@ -189,13 +185,11 @@ const ProductSinglePage = () => {
                                             addToCartHandler(product)
                                         }}>Thêm vào giỏ hàng</span>
                                     </button>
-                                    {/*<React.Fragment>*/}
-                                    {/*    <Button onClick={handleClickVariant('success')}>Thêm vào giỏ hàng</Button>*/}
-                                    {/*</React.Fragment>*/}
                                     <button type="button" className='buy-now btn mx-3'
                                             disabled={idShop === product?.shop?.id} onClick={() => {saveToBill()}}>
                                         <span className='btn-text'>Mua ngay</span>
                                     </button>
+                                    {/*<IntegrationNotistack addClick = {() => addToCartHandler(product)}></IntegrationNotistack>*/}
                                 </div>
                             </div>
                         </div>

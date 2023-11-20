@@ -16,42 +16,43 @@ const DoneUser = () => {
     const [totalPrice, setTotalPrice] = useState(0)
     const [user, setUser] = useState({})
     const status = "Đã giao"
-    const [shops, setShops] = useState([])
-    const [listBillByShop, setListBillByShop] = useState([])
+    const [bill1, setBill1] = useState([])
+    const [listBillByBillDetail, setListBillByBillDeatl] = useState([])
 
 
     useEffect(() => {
         showBillByAccountAndStatus(idAccount, status).then((response) => {
             setBills(response)
-            const checkShop = [];
-            response.forEach((cart) => {
-                if (!checkShop.includes(cart.product.shop.name)) {
-                    checkShop.push(cart.product.shop.name);
+            const checkBill = [];
+            response.forEach((billDetail) => {
+                if (!checkBill.includes(billDetail.bill.id)) {
+                    checkBill.push(billDetail.bill.id);
                 }
             });
-            setShops(checkShop);
+            setBill1(checkBill);
         })
     }, [])
 
     useEffect(() => {
-        const listBillByShop = () => {
-            const updatedListBillByShop = new Array(shops.length).fill(0);
-            if (bills.length > 0) {
-                for (let i = 0; i < shops.length; i++) {
+        const listBillByBillDetail = () => {
+            const updatedListBillByBillDetail = new Array(bill1.length).fill(0);
+            if (bill1.length > 0) {
+                for (let i = 0; i < bill1.length; i++) {
                     let product = [];
                     for (let j = 0; j < bills.length; j++) {
-                        if (bills[j]?.product?.shop?.name === shops[i]) {
+                        if (bills[j]?.bill.id === bill1[i]) {
                             product.push(bills[j]);
                         }
                     }
-                    updatedListBillByShop[i] = product;
+                    updatedListBillByBillDetail[i] = product;
                 }
             }
-            setListBillByShop(updatedListBillByShop);
+            setListBillByBillDeatl(updatedListBillByBillDetail);
         };
 
-        listBillByShop();
-    }, [bills, shops]);
+        listBillByBillDetail();
+    }, [bills, bill1]);
+
 
     useEffect(() => {
         let totalPrice = 0;
@@ -96,9 +97,10 @@ const DoneUser = () => {
         }
         return price;
     }
+
     return (
         <>
-            {checkEmpty(listBillByShop) ?
+            {checkEmpty(listBillByBillDetail) ?
                 <div className='cart bg-whitesmoke'>
                     <div className='containerr'>
                         <div className='cart-ctable2'>
@@ -142,7 +144,7 @@ const DoneUser = () => {
 
                             <div className='cart-cbody bg-white'>
                                 {
-                                    listBillByShop.map((bill, index) => {
+                                    listBillByBillDetail.map((bill, index) => {
                                         return (<>
                                             <div className='cart-ctr fw-8 font-manrope fs-16'
                                                  style={{

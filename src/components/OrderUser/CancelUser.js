@@ -16,42 +16,43 @@ const CancelUser = () => {
     const [totalPrice, setTotalPrice] = useState(0)
     const [user, setUser] = useState({})
     const status = "Đơn hủy"
-    const [shops, setShops] = useState([])
-    const [listBillByShop, setListBillByShop] = useState([])
+    const [bill1, setBill1] = useState([])
+    const [listBillByBillDetail, setListBillByBillDeatl] = useState([])
 
 
     useEffect(() => {
         showBillByAccountAndStatus(idAccount, status).then((response) => {
             setBills(response)
-            const checkShop = [];
-            response.forEach((cart) => {
-                if (!checkShop.includes(cart.product.shop.name)) {
-                    checkShop.push(cart.product.shop.name);
+            const checkBill = [];
+            response.forEach((billDetail) => {
+                if (!checkBill.includes(billDetail.bill.id)) {
+                    checkBill.push(billDetail.bill.id);
                 }
             });
-            setShops(checkShop);
+            setBill1(checkBill);
         })
     }, [])
 
     useEffect(() => {
-        const listBillByShop = () => {
-            const updatedListBillByShop = new Array(shops.length).fill(0);
-            if (bills.length > 0) {
-                for (let i = 0; i < shops.length; i++) {
+        const listBillByBillDetail = () => {
+            const updatedListBillByBillDetail = new Array(bill1.length).fill(0);
+            if (bill1.length > 0) {
+                for (let i = 0; i < bill1.length; i++) {
                     let product = [];
                     for (let j = 0; j < bills.length; j++) {
-                        if (bills[j]?.product?.shop?.name === shops[i]) {
+                        if (bills[j]?.bill.id === bill1[i]) {
                             product.push(bills[j]);
                         }
                     }
-                    updatedListBillByShop[i] = product;
+                    updatedListBillByBillDetail[i] = product;
                 }
             }
-            setListBillByShop(updatedListBillByShop);
+            setListBillByBillDeatl(updatedListBillByBillDetail);
         };
 
-        listBillByShop();
-    }, [bills, shops]);
+        listBillByBillDetail();
+    }, [bills, bill1]);
+
 
     useEffect(() => {
         let totalPrice = 0;
@@ -70,11 +71,7 @@ const CancelUser = () => {
 
 
     const checkEmpty = (list) => {
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].length > 0) {
-                return true;
-            }
-        }
+        return list.length !== 0
     }
 
     function sumQuantity(id) {
@@ -96,9 +93,10 @@ const CancelUser = () => {
         }
         return price;
     }
+
     return (
         <>
-            {checkEmpty(listBillByShop) ?
+            {checkEmpty(listBillByBillDetail) ?
                 <div className='cart bg-whitesmoke'>
                     <div className='containerr'>
                         <div className='cart-ctable3'>
@@ -138,14 +136,14 @@ const CancelUser = () => {
                                         <span className='cart-ctxt'>Thành tiền</span>
                                     </div>
                                     <div className='cart-cth'>
-                                        <span className='cart-ctxt' style={{marginLeft:"10px"}}>Lý do hủy</span>
+                                        <span className='cart-ctxt' style={{marginLeft: "10px"}}>Lý do hủy</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div className='cart-cbody bg-white'>
                                 {
-                                    listBillByShop.map((bill, index) => {
+                                    listBillByBillDetail.map((bill, index) => {
                                         return (<>
                                             <div className='cart-ctr fw-8 font-manrope fs-16'
                                                  style={{
@@ -184,7 +182,7 @@ const CancelUser = () => {
                                                             style={{marginLeft: "390px"}}>{sumQuantity(bill[0].bill.id)}</span>
                                                         <span
                                                             style={{marginLeft: "130px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
-                                                        <span style={{marginLeft: "90px"}}>{bill[0].bill.reason}
+                                                        <span style={{marginLeft: "110px"}}>{bill[0].bill.reason}
                                                     </span>
                                                     </div>
                                                 </div>

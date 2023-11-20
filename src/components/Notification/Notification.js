@@ -1,24 +1,25 @@
-import React from 'react';
-import { useSnackbar } from 'notistack';
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import { SnackbarProvider, useSnackbar } from 'notistack';
 
-const AddToCartButton = ({ product }) => {
+function MyApp({addClick}) {
     const { enqueueSnackbar } = useSnackbar();
 
-    const addToCartHandler = (product) => {
-        enqueueSnackbar('Sản phẩm đã được thêm vào giỏ hàng', { variant: 'success' });
+    const handleClickVariant = (variant) => () => {
+        enqueueSnackbar('Thêm sản phẩm thành công!', { variant });
     };
 
     return (
-        <button
-            type="button"
-            className="add-to-cart-btn btn"
-            // disabled={idShop === product?.shop?.id}
-            onClick={() => addToCartHandler(product)}
-        >
-            <i className="fas fa-shopping-cart"></i>
-            <span className="btn-text mx-2">Thêm vào giỏ hàng</span>
-        </button>
+        <React.Fragment>
+            <Button onClick={handleClickVariant('success')}>Add</Button>
+        </React.Fragment>
     );
-};
+}
 
-export default AddToCartButton;
+export default function IntegrationNotistack() {
+    return (
+        <SnackbarProvider maxSnack={4}>
+            <MyApp />
+        </SnackbarProvider>
+    );
+}

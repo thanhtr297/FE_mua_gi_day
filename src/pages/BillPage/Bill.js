@@ -8,6 +8,7 @@ import {findUserByAccount} from "../UserManagement/Service/UserService";
 import {CiShop} from "react-icons/ci";
 import {BsArrowThroughHeart} from "react-icons/bs";
 import { IoLocationOutline } from "react-icons/io5";
+import {toast} from "react-toastify";
 
 
 const Bill = () => {
@@ -85,10 +86,9 @@ const Bill = () => {
 
     const saveBills = () => {
         if(user.address !== "" && user.phone !== "") {
-            console.log(user.address)
             saveBill(idAccount, cartDetails, navigate).then()
         } else {
-            alert("Vui lòng nhập thông tin địa chỉ nhận hàng")
+            toast.error("Vui lòng nhập thông tin địa chỉ nhận hàng")
             navigate(("/user-management/profile"))
         }
 
