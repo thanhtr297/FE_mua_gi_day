@@ -9,6 +9,7 @@ import Slider from "@mui/material/Slider";
 import {formatPrice} from "../../utils/helpers";
 import {findAllBrand} from "../ShopManagement/service/BrandService";
 import {useParams} from "react-router-dom";
+import Select from "react-select";
 
 
 export default function FilterForShop() {
@@ -17,6 +18,65 @@ export default function FilterForShop() {
     let [brands, setBrands] = useState([])
     let [products, setProducts] = useState(null);
     const [range, setRange] = React.useState([0, 50000000]);
+    let [search, setSearch] = useState({
+        maxPrice: range[1],
+        minPrice: range[0],
+        category: {
+            id: ""
+        },
+        brand: {
+            id: ""
+        },
+        shop: {
+            id: id
+        }
+    })
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
+    const brandsOptions = brands.map((brand) => ({
+        value: brand.id,
+        label: brand.name
+    }));
+    const categoriesOptions = categories.map((category) => ({
+        value: category.id,
+        label: category.name
+    }));
+    const getBrand = (e) => {
+        if (e && e.value) {
+            setSearch({
+                ...search, brand: {
+                    id: e.value
+                }
+            })
+            setSelectedCategory(e);
+        } else {
+            setSearch({
+                ...search, brand: {
+                    id: null
+                }
+            });
+            setSelectedCategory(null);
+        }
+    }
+    const getCategory = (e) => {
+        if (e && e.value) {
+            setSearch({
+                ...search,
+                category: {
+                    id: e.value
+                }
+            });
+            setSelectedCategory(e);
+        } else {
+            setSearch({
+                ...search,
+                category: {
+                    id: null
+                }
+            });
+            setSelectedCategory(null);
+        }
+    }
 
 
     useEffect(() => {
@@ -32,8 +92,11 @@ export default function FilterForShop() {
         }, []
     )
 
-    function handleChanges(event, newValue) {
-        setRange(newValue);
+    function handleChanges(event) {
+        setRange(event.target.value)
+        setSearch({
+            ...search, maxPrice: event.target.value[1], minPrice: event.target.value[0]
+        })
     }
 
     function filterForShop(filter) {
@@ -46,19 +109,7 @@ export default function FilterForShop() {
     return (
         <>
             <Formik
-                initialValues={{
-                    maxPrice: range[1],
-                    minPrice: range[0],
-                    category: {
-                        id: ""
-                    },
-                    brand: {
-                        id: ""
-                    },
-                    shop: {
-                        id: id
-                    }
-                }}
+                initialValues={search}
                 onSubmit={(e) => {
                     filterForShop(e)
                 }}
@@ -84,33 +135,32 @@ export default function FilterForShop() {
                         <div style={{fontSize: '16px', width: "20%"}}>
                             <div className={'col-md-6'} style={{marginLeft: '60px', marginTop: "18px"}}>
                                 <label htmlFor={'category'} className="form-label">Mặt hàng</label>
-                                <Field as="select" name="category.id" class="form-control"
-                                       style={{fontSize: '16px', width: '220px'}}>
-                                    <option value={null} style={{fontSize: '13px', textAlign: 'center'}}>-- Chọn loại --
-                                    </option>
-                                    {categories.map((d) => {
-                                        return (
-                                            <option value={d.id}>{d.name}</option>
-                                        )
-                                    })}
-                                </Field>
+                                <div style={{fontSize: '16px', width: '220px'}}>
+                                    <Select placeholder={"Chọn mặt hàng"} onChange={(e) => {
+                                        getCategory(e)
+                                    }}
+                                            options={categoriesOptions}
+                                            isSearchable={true}
+                                            name="category.id"
+                                            isClearable={true}
+                                    />
+                                </div>
                             </div>
                         </div>
 
                         <div style={{fontSize: '16px', width: "20%"}}>
                             <div className={'col-md-6'} style={{marginLeft: '80px', marginTop: "18px"}}>
                                 <label htmlFor={'brand'} className="form-label">Thương hiệu</label>
-                                <Field as="select" name="brand.id" class="form-control"
-                                       style={{fontSize: '16px', width: '220px'}}>
-                                    <option value={null} style={{fontSize: '13px', textAlign: 'center'}}>-- Thương
-                                        hiệu --
-                                    </option>
-                                    {brands.map((b) => {
-                                        return (
-                                            <option value={b.id}>{b.name}</option>
-                                        )
-                                    })}
-                                </Field>
+                                <div style={{fontSize: '16px', width: '220px'}}>
+                                    <Select placeholder={"Chọn thương hiệu"} onChange={(e) => {
+                                        getBrand(e)
+                                    }}
+                                            options={brandsOptions}
+                                            isSearchable={true}
+                                            name="brand.id"
+                                            isClearable={true}
+                                    />
+                                </div>
                             </div>
                         </div>
 

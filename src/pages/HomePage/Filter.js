@@ -11,24 +11,48 @@ import ProductList from "../../components/ProductList/ProductList";
 import Slider from "@mui/material/Slider";
 import {formatPrice} from "../../utils/helpers";
 import {findAllBrand} from "../ShopManagement/service/BrandService";
+import Select from 'react-select'
+import Checkbox from "@mui/material/Checkbox";
 
 
 export default function Filter() {
 
     let [categories, setCategories] = useState([])
     let [brands, setBrands] = useState([])
+    const [isClearable, setIsClearable] = useState(true);
 
     let [products, setProducts] = useState(null);
     const [cities, setCities] = useState([]);
-    const [check, setCheck] = useState(true)
     const [range, setRange] = React.useState([0, 50000000]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
+
+    let [search, setSearch] = useState({
+        maxPrice: range[1],
+        minPrice: range[0],
+        category: {
+            id: ""
+        },
+        brand: {
+            id: ""
+        },
+        wards: {
+            id: null
+        },
+        district: {
+            id: null
+        },
+        city: {
+            id: ""
+        }
+    })
 
 
     useEffect(() => {
         findAllCity().then((result) => {
             setCities(result);
         })
-    }, [check])
+    }, [])
 
     useEffect(() => {
             findAllCategory().then(res => {
@@ -43,8 +67,11 @@ export default function Filter() {
         }, []
     )
 
-    function handleChanges(event, newValue) {
-        setRange(newValue);
+    function handleChanges(event) {
+        setRange(event.target.value)
+        setSearch({
+            ...search, maxPrice: event.target.value[1], minPrice: event.target.value[0]
+        })
     }
 
     function filter(filter) {
@@ -54,28 +81,76 @@ export default function Filter() {
     }
 
 
+    const brandsOptions = brands.map((brand) => ({
+        value: brand.id,
+        label: brand.name
+    }));
+    const categoriesOptions = categories.map((category) => ({
+        value: category.id,
+        label: category.name
+    }));
+    const citiesOptions = cities.map((city) => ({
+        value: city.id,
+        label: city.name
+    }));
+    const getBrand = (e) => {
+        if (e && e.value) {
+            setSearch({
+                ...search, brand: {
+                    id: e.value
+                }
+            })
+            setSelectedCategory(e);
+        } else {
+            setSearch({
+                ...search, brand: {
+                    id: null
+                }
+            });
+            setSelectedCategory(null);
+        }
+    }
+    const getCategory = (e) => {
+        if (e && e.value) {
+            setSearch({
+                ...search,
+                category: {
+                    id: e.value
+                }
+            });
+            setSelectedCategory(e);
+        } else {
+            setSearch({
+                ...search,
+                category: {
+                    id: null
+                }
+            });
+            setSelectedCategory(null);
+        }
+    }
+
+    const getCity = (e) => {
+        if (e && e.value) {
+            setSearch({
+                ...search, city: {
+                    id: e.value
+                }
+            });
+            setSelectedCategory(e);
+        } else {
+            setSearch({
+                ...search, city: {
+                    id: null
+                }
+            });
+            setSelectedCategory(null);
+        }
+    }
     return (
         <>
             <Formik
-                initialValues={{
-                    maxPrice: range[1],
-                    minPrice: range[0],
-                    category: {
-                        id: ""
-                    },
-                    brand: {
-                        id: ""
-                    },
-                    wards: {
-                        id: null
-                    },
-                    district: {
-                        id: null
-                    },
-                    city: {
-                        id: ""
-                    }
-                }}
+                initialValues={search}
                 onSubmit={(e) => {
                     filter(e)
                 }}
@@ -85,7 +160,7 @@ export default function Filter() {
                         <div style={{width: "35%", fontSize: "16px", marginLeft: '40px', marginTop: '20px'}}>
                             Từ {formatPrice(range[0])} đến {formatPrice(range[1])}
                             <Slider style={{color: "rgb(215, 0, 24)", fontSize: "5px", marginTop: '10px'}} value={range}
-                                    onChange={handleChanges} valueLabelDisplay="auto"
+                                    onChange={(e) => handleChanges(e)} valueLabelDisplay="auto"
                                     min={0}
                                     max={50000000}
                                     step={100000}/>
@@ -95,51 +170,52 @@ export default function Filter() {
                         <div style={{fontSize: '16px', width: "20%"}}>
                             <div className={'col-md-6'} style={{marginLeft: '40px', marginTop: "18px"}}>
                                 <label htmlFor={'category'} className="form-label">Mặt hàng</label>
-                                <Field as="select" name="category.id" class="form-control"
-                                       style={{fontSize: '16px', width: '220px'}}>
-                                    <option value={null} style={{fontSize: '13px', textAlign: 'center'}}>-- Chọn loại --
-                                    </option>
-                                    {categories.map((d) => {
-                                        return (
-                                            <option value={d.id}>{d.name}</option>
-                                        )
-                                    })}
-                                </Field>
+                                <div style={{fontSize: '16px', width: '220px'}}>
+                                    <Select placeholder={"Chọn mặt hàng"} onChange={(e) => {
+                                        getCategory(e)
+                                    }}
+                                            options={categoriesOptions}
+                                            isSearchable={true}
+                                            name="category.id"
+                                            isClearable={true}
+                                    />
+                                </div>
                             </div>
                         </div>
 
                         <div style={{fontSize: '16px', width: "20%"}}>
                             <div className={'col-md-6'} style={{marginLeft: '45px', marginTop: "18px"}}>
                                 <label htmlFor={'brand'} className="form-label">Thương hiệu</label>
-                                <Field as="select" name="brand.id" class="form-control"
-                                       style={{fontSize: '16px', width: '220px'}}>
-                                    <option value={null} style={{fontSize: '13px', textAlign: 'center'}}>-- Thương
-                                        hiệu --
-                                    </option>
-                                    {brands.map((b) => {
-                                        return (
-                                            <option value={b.id}>{b.name}</option>
-                                        )
-                                    })}
-                                </Field>
+                                <div style={{fontSize: '16px', width: '220px'}}>
+                                    <Select placeholder={"Chọn thương hiệu"} onChange={(e) => {
+                                        getBrand(e)
+                                    }}
+                                            options={brandsOptions}
+                                            isSearchable={true}
+                                            name="brand.id"
+                                            isClearable={true}
+                                    />
+                                </div>
                             </div>
                         </div>
 
                         <div className={'col-md-6'} style={{width: '15%', marginLeft: '150px', marginTop: "18px"}}>
                             <div className="mb-3" style={{fontSize: '16px', marginLeft: '-100px'}}>
                                 <label htmlFor={'city'} className="form-label">Khu vực</label>
-                                <Field as="select" style={{fontSize: '16px', width: '220px'}} name="city.id"
-                                       className={"form-select"}>
-                                    <option value={null} style={{textAlign: 'center'}}>-- Chọn thành phố --</option>
-                                    {cities.map((c) => {
-                                        return (
-                                            <option value={c.id}>{c.name}</option>
-                                        )
-                                    })}
-                                </Field>
+                                <div style={{fontSize: '16px', width: '220px'}}>
+                                    <Select placeholder={"Chọn thành phố"} onChange={(e) => {
+                                        getCity(e)
+                                    }}
+                                            options={citiesOptions}
+                                            isSearchable={true}
+                                            name="city.id"
+                                            isClearable={true}
+                                    />
+                                </div>
+
                             </div>
                         </div>
-                        <button className={"mb-3"}
+                        <button className={"mb-3"} type={'submit'}
                                 style={{
                                     fontSize: '16px',
                                     marginTop: '50px',
@@ -162,8 +238,9 @@ export default function Filter() {
                                 <h3>KẾT QUẢ TÌM KIẾM </h3>
                             </div>
                             <br/>
-                            <img style={{height:'150px',width:'150px',marginLeft:'550px'}}
-                                src="https://static.vecteezy.com/system/resources/thumbnails/006/208/684/small/search-no-result-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg" alt=""/>
+                            <img style={{height: '150px', width: '150px', marginLeft: '550px'}}
+                                 src="https://static.vecteezy.com/system/resources/thumbnails/006/208/684/small/search-no-result-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg"
+                                 alt=""/>
                             <br/>
                             <h3 style={{textAlign: 'center'}}>Không có sản phẩm phù hợp tiêu chí tìm kiếm</h3>
 
