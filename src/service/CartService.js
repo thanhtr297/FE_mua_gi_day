@@ -1,11 +1,14 @@
 import axios from "axios";
+import IntegrationNotistack from "../components/Notification/Notification";
+import Notification from "../components/Notification/Notification";
 
 export const addToCart = (cart, id) => {
     return new Promise((resolve) => {
         resolve(
             axios.post("http://localhost:8080/api/carts/add?idAccount="+id, cart)
                 .then(() => {
-                    alert("Thêm sản phẩm thành công !")
+                    // alert("Thêm sản phẩm thành công !")
+                    IntegrationNotistack()
                 }).catch(() => {
                 alert("Thêm sản phẩm thất bại")
             })

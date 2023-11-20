@@ -7,6 +7,8 @@ import {deleteAllProductFromCart, deleteProductFromCart, showCart, updateQuantit
 import {CiShop} from "react-icons/ci";
 import {BsArrowThroughHeart} from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { pink } from '@mui/material/colors';
+import Checkbox from '@mui/material/Checkbox';
 
 
 const CartPage = () => {
@@ -18,6 +20,7 @@ const CartPage = () => {
     const [isChecked, setIsChecked] = useState([])
     const [shops, setShops] = useState([])
     const [check, setCheck] = useState(false)
+    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     const [listCartByShop, setListCartByShop] = useState([])
     useEffect(() => {
         showCart(idAccount).then((response) => {
@@ -29,9 +32,9 @@ const CartPage = () => {
                 }
             });
             setShops(checkShop);
+            // localStorage.setItem('carts', JSON.stringify(response));
         });
-
-    }, [check, idAccount])
+    }, [check, idAccount]);
 
 
     useEffect(() => {
@@ -149,6 +152,7 @@ const CartPage = () => {
 
     return (
         <>
+
             {checkEmpty(listCartByShop) ?
                 <div className='cart bg-whitesmoke'>
                     <div className='containerr'>
@@ -207,12 +211,19 @@ const CartPage = () => {
                                                         <div className='cart-ctr py-5' key={cartDetail?.id}>
                                                             {/*{setIdCart(cart?.cart.id)}*/}
                                                             <div className='cart-ctd'>
-                                            <span className='cart-ctxt'><input type={"checkbox"} style={{
-                                                transform: "scale(1.4)",
-                                                marginLeft: "10px"
-                                            }} checked={isChecked.includes(cartDetail?.id)} onChange={(e) => {
-                                                checked(e, cartDetail?.id)
-                                            }}/></span>
+                                            <span className='cart-ctxt'>
+                                                <Checkbox style={{scale:"1.5"}}
+                                                    {...label}
+                                                    defaultChecked
+                                                    sx={{
+                                                        color: pink[800],
+                                                        '&.Mui-checked': {
+                                                            color: pink[600],
+                                                        },
+                                                    }} checked={isChecked.includes(cartDetail?.id)} onChange={(e) => {
+                                                    checked(e, cartDetail?.id)}}
+                                                />
+                                            </span>
                                                             </div>
                                                             <div className='cart-ctd'
                                                                  style={{display: 'flex', alignItems: 'center'}}>
