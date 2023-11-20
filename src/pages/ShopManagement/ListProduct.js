@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import CreateProduct from './CreateProduct';
+import React, {useContext, useEffect, useState} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
 import axios from "axios";
@@ -7,24 +6,40 @@ import {Link, useNavigate} from "react-router-dom";
 import {deleteById, save} from "./service/ProductService";
 import {MdDeleteOutline} from "react-icons/md";
 import {CiEdit} from "react-icons/ci";
-import { MdCreateNewFolder } from "react-icons/md";
+import {MdCreateNewFolder} from "react-icons/md";
+import ReactPaginate from "react-paginate";
+import './styles.scss';
+import {AppContext} from "../../Context/AppContext";
+
 
 function ListProduct() {
     let [products, setProducts] = useState([]);
     let navigate = useNavigate()
     let [checkDelete, setCheckDelete] = useState(false)
+    const [page, setPage] = useState(0);
+    const [perPage] = useState(3);
+    const [totalPages, setTotalPages] = useState(0);
+    const {toggleFlag , isFlag} = useContext(AppContext);
 
     useEffect(() => {
-        const id = localStorage.getItem('account')
-        findAllById(id)
+        const fetchData = async () => {
+            const id = localStorage.getItem('account');
+            const response = await axios.get('http://localhost:8080/api/products/acc/' + id);
+            const allProducts = response.data;
 
-    }, [checkDelete])
+            const startIndex = page * perPage;
+            const endIndex = startIndex + perPage;
+            const paginatedProducts = allProducts.slice(startIndex, endIndex);
 
-    function findAllById(id) {
-        axios.get("http://localhost:8080/api/products/acc/" + id).then(res => {
-            setProducts(res.data)
-        })
-    }
+            setProducts(paginatedProducts);
+            setTotalPages(Math.ceil(allProducts.length / perPage));
+        };
+
+        fetchData();
+    }, [page, perPage, isFlag]);
+    const handlePageClick = (selectedPage) => {
+        setPage(selectedPage.selected);
+    };
 
     function update(id) {
         return navigate("/shop-management/" + id)
@@ -35,20 +50,20 @@ function ListProduct() {
             deleteById(id)
                 .then(() => {
                         setCheckDelete(!checkDelete)
+                        toggleFlag()
                         alert("Xóa thành công!")
                     }
                 )
         }
     }
 
-
     return (
         <>
-            <div style={{display:'flex'}}>
+            <div style={{display: 'flex'}}>
                 <Link to={'/shop-management/create'}>
-                    <MdCreateNewFolder style={{color:'black',fontSize: '30px'}}/>
+                    <MdCreateNewFolder style={{color: 'black', fontSize: '30px'}}/>
                 </Link>
-                <h1 style={{marginLeft:'440px'}}>Danh sách sản phẩm</h1>
+                <h1 style={{marginLeft: '440px'}}>Danh sách sản phẩm</h1>
             </div>
             <br/>
             <br/>
@@ -154,7 +169,16 @@ function ListProduct() {
                     })}
                 </MDBTableBody>
             </MDBTable>
-
+            <div style={{marginTop: '30px'}}>
+                    <ReactPaginate
+                        pageCount={totalPages}
+                        pageRangeDisplayed={3}
+                        marginPagesDisplayed={1}
+                        onPageChange={handlePageClick}
+                        containerClassName={'pagination-container'}
+                        activeClassName={'active'}
+                    />
+            </div>
         </>
     )
         ;
