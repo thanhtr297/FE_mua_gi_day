@@ -35,8 +35,8 @@ const Product = ({product}) => {
                       <span>Đánh giá : 1</span>
                   </div>
                   <div style={{}}>
-                    <span style={{marginLeft : '80px'}} >
-                    Đã bán {product?.count}
+                    <span style={{marginLeft : '59px'}} >
+                    Đã bán : {formatNumberToK(product?.count)}
                     </span>
                     </div>
               </div>
@@ -48,6 +48,18 @@ const Product = ({product}) => {
       </div>
     </Link>
   )
+  function formatNumberToK(number) {
+    if (number >= 1000000) {
+      const result = number / 1000000;
+      return result % 1 === 0 ? result.toFixed(0) + 'M' : result.toFixed(1) + 'M';
+    } else if (number >= 1000) {
+      const result = number / 1000;
+      return result % 1 === 0 ? result.toFixed(0) + 'k' : result.toFixed(1) + 'k';
+    } else {
+      return number.toString();
+    }
+  }
+
 }
 
 export default Product
