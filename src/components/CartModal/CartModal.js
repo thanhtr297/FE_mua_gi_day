@@ -43,7 +43,7 @@ const CartModal = () => {
           </div>) : (
           <div className = "flex flex-column align-center justify-center cart-modal-empty">
             <img src = {shopping_cart} alt = "" className='' />
-            <h6 className='text-dark fw-4'>No products yet</h6>
+            <h6 className='text-dark fw-4'>Không có sản phẩm trong giỏ hàng    </h6>
           </div>
         )
       }

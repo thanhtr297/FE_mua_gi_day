@@ -8,6 +8,7 @@ import {findUserByAccount} from "../../pages/UserManagement/Service/UserService"
 import {CiShop} from "react-icons/ci";
 import {BsArrowThroughHeart} from "react-icons/bs";
 import {IoLocationOutline} from "react-icons/io5";
+import CommentUser from "./ModalComment";
 
 
 const DoneUser = () => {
@@ -219,14 +220,18 @@ const DoneUser = () => {
                                                                 <billDetail
                                                                     className='cart-ctxt text-orange fw-5'
                                                                     style={{marginLeft: "20px"}}>{formatPrice(billDetail.total)}</billDetail>
+                                                                <CommentUser modalComment={billDetail?.product}/>
                                                             </div>
+
                                                         </div>
                                                     )
                                                 })}
+
                                             </div>
                                         </>)
                                     })
                                 }
+
                             </div>
 
                             <div className='cart-cfoot flex align-start justify-between py-3 bg-white'>

@@ -39,7 +39,7 @@ function Cancel({ id, onCancelClick }) {
                     <Button variant="secondary" onClick={handleClose}>
                         Đóng
                     </Button>
-                    <Button type={"submit"} variant="primary" onClick={() => {
+                    <Button type={"submit"} variant="danger" onClick={() => {
                         handleClose();
                         cancelBillByReason(id, reason).then()
                     }}>

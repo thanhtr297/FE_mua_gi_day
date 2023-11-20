@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import "./ProductSinglePage.scss";
 import {useNavigate, useParams} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
@@ -11,10 +11,15 @@ import CartMessage from "../../components/CartMessage/CartMessage";
 import {getProductById} from "../../service/ProductService";
 import {addToCart} from "../../service/CartService";
 import {findShop} from "../ShopManagement/service/ProfileService";
-import {findCommentByIdP} from "../../service/CommentService";
+import {createReply, findCommentByIdP, saveComment} from "../../service/CommentService";
 import AddToCartButton from "../../components/Notification/Notification";
 import {useSnackbar} from "notistack";
 import Button from "react-bootstrap/Button";
+import {toast} from "react-toastify";
+import "./Comment.scss"
+import {AppContext} from "../../Context/AppContext";
+import {findUserByAccount} from "../UserManagement/Service/UserService";
+
 
 const ProductSinglePage = () => {
     const {id} = useParams();
@@ -24,29 +29,26 @@ const ProductSinglePage = () => {
     const cartMessageStatus = useSelector(getCartMessageStatus);
     let idAccount = localStorage.getItem("account");
     let navigate = useNavigate()
-    const [comment,setComment] = useState([]);
-    const [idShop , setIdShop] = useState(0);
-    const { enqueueSnackbar } = useSnackbar();
-    const handleClickVariant = (variant) => () => {
-        // variant could be success, error, warning, info, or default
-        enqueueSnackbar('This is a success message!', { variant });
-    };
-
+    let [comments, setComments] = useState([]);
+    const [idShop, setIdShop] = useState(0);
+    const [reply, setReply] = useState('')
+    const [isFlag, setIsFlag] = useState(true);
+    const [isShow, setIsShow] = useState(true);
     // getting single product
     useEffect(() => {
         findShop(idAccount).then((res) => {
             setIdShop(res.id);
         }).catch(() => {
-
+            setIdShop(0)
         })
         getProductById(id).then((res) => {
             setProduct(res.data);
         })
-        findCommentByIdP(id).then((res)=>{
-            setComment(res.data);
+        findCommentByIdP(id).then((res) => {
+            setComments(res.data);
+            console.log(res)
         })
-
-    }, [cartMessageStatus]);
+    }, [cartMessageStatus, isFlag]);
 
     let discountedPrice = (product?.price) - (product?.price * (product?.promotion / 100));
     if (productSingleStatus === STATUS.LOADING) {
@@ -200,11 +202,10 @@ const ProductSinglePage = () => {
                                             addToCartHandler(product)
                                         }}>Thêm vào giỏ hàng</span>
                                     </button>
-                                    {/*<React.Fragment>*/}
-                                    {/*    <Button onClick={handleClickVariant('success')}>Thêm vào giỏ hàng</Button>*/}
-                                    {/*</React.Fragment>*/}
                                     <button type="button" className='buy-now btn mx-3'
-                                            disabled={idShop === product?.shop?.id} onClick={() => {saveToBill()}}>
+                                            disabled={idShop === product?.shop?.id} onClick={() => {
+                                        saveToBill()
+                                    }}>
                                         <span className='btn-text'>Mua ngay</span>
                                     </button>
                                 </div>
@@ -253,20 +254,52 @@ const ProductSinglePage = () => {
                     </div>
                 </div>
             </div>
-            <div style={{ marginTop: '50px' }}>
-                <div className='product-single-r'>
+
+            <div style={{marginTop: '50px'}}>
+                <div className='product-single'>
                     <div className='product-single'>
                         <div className='containerr'>
-                            <h1 style={{ marginBottom: '20px', fontSize: '24px' }}>Comment</h1>
-                            <div className='product-single-content bg-white grid' style={{fontSize:'14px'}}>
+                            <h1 style={{marginBottom: '20px', fontSize: '24px'}}>Đánh giá: </h1>
+                            <div className='product-single-content bg-white grid'>
+                                {comments.map((c) => (
+                                    <>
+                                        <div className="comment-container">
+                                            <div className="avatar-container">
+                                                <img
+                                                    src={findUserByAccount(c?.account?.id)?.avatar}
+                                                    alt="Avatar"
+                                                />
+                                            </div>
+                                            <div className="comment-details">
+                                                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>Người
+                                                    dùng: {c?.account?.username}</div>
+                                                <div style={{marginBottom: '5px'}}>Nội dung: {c?.content}</div>
+                                                <div style={{marginBottom: '5px'}}>Thời gian: {c?.createAt}</div>
 
-                                {comment.map((c) => (
-                                    <div  style={{ marginBottom: '10px' }}>
-
-                                        <div>Nguoi dung: {c?.account?.username}</div>
-                                        <div>Noi dung: {c?.content}</div>
-                                        <div>Thoi gian: {c?.createAt}</div>
-                                    </div>
+                                                {c?.reply !== null ? (
+                                                    <div className="shop-reply">Shop phản hồi: {c?.reply}</div>
+                                                ) : ''}
+                                                <button style={{fontSize:'14px'}} disabled={!isShow} onClick={() => setIsShow(!isShow)}>Phản hồi &nbsp;<i
+                                                    className="fa-sharp fa-regular fa-pen-to-square"
+                                                    style={{color: '#b61b1b'}}></i></button>
+                                                {(product?.shop?.id === idShop) ? (
+                                                    <div className="reply-container">
+                                        <textarea
+                                            disabled={isShow}
+                                            className="reply-textarea"
+                                            onChange={handleReply}
+                                            placeholder="Nhập phản hồi của bạn..."
+                                        />
+                                                        <button className="reply-button"
+                                                                disabled={isShow}
+                                                                onClick={() => saveReply(c?.id)}>Trả lời
+                                                        </button>
+                                                    </div>
+                                                ) : ''}
+                                            </div>
+                                        </div>
+                                        <br/>
+                                    </>
                                 ))}
                             </div>
                         </div>
@@ -277,6 +310,25 @@ const ProductSinglePage = () => {
 
         </main>
     )
+
+    function saveReply(id) {
+        if (reply !== '') {
+            createReply(id, reply).then(() => {
+                toast.success("Thêm thành công!")
+                setIsFlag(!isFlag)
+                setIsShow(!isShow)
+                setReply('')
+            })
+        } else {
+            toast.error("Thêm không thành công!")
+        }
+
+
+    }
+
+    function handleReply(e) {
+        setReply(e.target.value)
+    }
 }
 
 export default ProductSinglePage
