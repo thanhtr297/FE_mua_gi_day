@@ -98,16 +98,16 @@ const Header = (props) => {
                                     </div>
                                     </div>
                                 </li>
-                                <li className='vert1-line' style={!checkLogin ? {display: 'none'} : {}}></li>
-                                <li>
+                                <li  style={{marginBottom : '-14%'}}>
                                     <Link to="/register">
+                                        <span style= { !checkLogin ? {display: 'none'} : { color : 'white' ,fontSize : '16px' , fontWeight : 'bold' , margin : '-5px 7px 0 7px'}}>|</span>
                                         <span className='top-link-itm-txt'
                                               style={!checkLogin ? {display: 'none'} : {}}>Đăng ký</span>
                                     </Link>
                                 </li>
-                                <li className='vert1-line' style={!checkLogin ? {display: 'none'} : {}}></li>
-                                <li>
+                                <li style={{marginBottom : '-14%'}}>
                                     <Link to="/login">
+                                        <span style= { !checkLogin ? {display: 'none'} : { color : 'white' ,fontSize : '16px' , fontWeight : 'bold' , margin : '-5px 7px 0 7px'}}>|</span>
                                         <span className='top-link-itm-txt' onClick={props.a}
                                               style={!checkLogin ? {display: 'none'} : {}}>Đăng nhập</span>
                                     </Link>
