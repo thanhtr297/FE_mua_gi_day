@@ -24,7 +24,7 @@ export default function Login() {
                 if (res.status === 200) {
                     login()
                     toast.success('Đăng nhập thành công');
-                    if (res.data.authorities[0].authority == 'ROLE_ADMIN') {
+                    if (res.data.authorities[0].authority === 'ROLE_ADMIN') {
                         navigate('/admin')
                     } else {
                         localStorage.setItem("account", JSON.stringify(res.data.id));

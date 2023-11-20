@@ -59,7 +59,8 @@ export default function Profile() {
 
 
     const find = async () => {
-        setFullAddress(address + ", " + nameWards + ", " + nameDistrict + ", " + nameCity)
+        setFullAddress(address + ", " + address + ", " + nameWards + ", " + nameDistrict + ", " + nameCity)
+        console.log('address in find ', address + ", " + nameWards + ", " + nameDistrict + ", " + nameCity);
         // const result = await geocodeByAddress("Bến xe Mỹ Đình")
         const result = await geocodeByAddress(fullAddress)
         const latLng = await getLatLng(result[0])
@@ -95,7 +96,7 @@ export default function Profile() {
     function save(e) {
         setAddress(e.address)
         const idAcc = localStorage.getItem("account")
-        e = {
+        const request = {
             ...e,
             id: shop.id,
             avatar: avatar,
@@ -113,7 +114,7 @@ export default function Profile() {
             }
         }
 
-        saveShop(e, navigate).then(async () => {
+        saveShop(request, navigate).then(async () => {
             toast.success("Lưu thành công!")
             setCheck(true)
             toggleFlag()
@@ -123,6 +124,13 @@ export default function Profile() {
         })
     }
 const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
+
+    function onWardChange(e) {
+        setIdWards(e.target.value);
+        const ward = wards.find(w => w.id === +e.target.value);
+        setNameWards(ward.name);
+    }
+
     return (
         <>
             <div className={'container'} style={{width: '85%', height: "500px"}}>
@@ -231,16 +239,12 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                     </div>
                                     <div className="mb-3" style={{fontSize: '16px'}}>
                                         <label htmlFor={'wards'} className="form-label">Phường/xã</label>
-                                        <select style={{fontSize: '16px'}} disabled={check} name={'address.wards.id'} onChange={(e) => {
-                                            const textWards = e.target.value;
-                                            setNameWards(textWards.split("-")[1])
-                                            setIdWards(textWards.split("-")[0])
-                                        }} className={"form-select"}>
+                                        <select style={{fontSize: '16px'}} disabled={check} name={'address.wards.id'} onChange={(e) => onWardChange(e)} className={"form-select"}>
                                             {/*<option >--Chọn xã/phường--</option>*/}
                                             <option >{shop?.wards?.name}</option>
                                             {wards.map((w) => {
                                                 return (
-                                                    <option value={w.id + "-" + w.name}>{w.name}</option>
+                                                    <option value={w.id}>{w.name}</option>
                                                 )
                                             })}
                                         </select>
