@@ -153,12 +153,12 @@ export default function ChangePassword() {
                             <input style={{width : '100px'}} type="text" onChange={(event) => setOtpCheck(event.target.value)}/>
                         </div>
                     </div>
-                    <button  className={'button-send-email'} disabled={isButtonDisabled}  type={'button'} onClick={onSubmit}>
+                    <button style={{paddingTop:'5%'}}  className={'button-send-email'} disabled={isButtonDisabled}  type={'button'} onClick={onSubmit}>
                         {isButtonDisabled ? `Gửi lại ( ${countdown} s)` : "Gửi mã"}
                     </button>
                 </div>
-                <div style={{textAlign:"center"}}>
-                    <button className={password && (otp == otpCheck) ? "active":""}
+                <div >
+                    <button style={{border:'1px solid red',width:'150px'}} className={password && (otp == otpCheck) ? "active":""}
                             disabled={!(password && (otp == otpCheck))}
                     onClick={savePassword}
                     >Đổi mật khẩu

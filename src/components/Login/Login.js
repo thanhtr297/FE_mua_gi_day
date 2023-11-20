@@ -59,16 +59,20 @@ export default function Login() {
                     ></i>
                 </div>
                 <div >
-                    <button className={email && password ? "active" : ""}
-                            disabled={!(email && password)}
-                            onClick={() => handleLogin()}
-                    >Đăng nhập
+                    <button
+                        style={{ border: '1px solid red' }}
+                        className={email && password ? 'active' : ''}
+                        disabled={!(email && password)}
+                        onClick={() => handleLogin()}>
+                        Đăng nhập
                     </button>
-                    <Link  className={'link'}  to={"/forgotPass"}>Quên mật khẩu</Link>
+
                 </div>
 
                 <div className={'back'}>
-                    <Link className={'link'}  to={"/"}>Trở về</Link>
+                    <Link  className={'link'}  to={"/forgotPass"}>Quên mật khẩu</Link>
+
+                    <Link className={'link'} style={{marginLeft:'5%'}}  to={"/"}>Trở về</Link>
                 </div>
             </div>
         </>

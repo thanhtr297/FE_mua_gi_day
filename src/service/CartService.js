@@ -7,8 +7,8 @@ export const addToCart = (cart, id) => {
         resolve(
             axios.post("http://localhost:8080/api/carts/add?idAccount="+id, cart)
                 .then(() => {
-                    // alert("Thêm sản phẩm thành công !")
-                    IntegrationNotistack()
+                    alert("Thêm sản phẩm thành công !")
+                    // IntegrationNotistack()
                 }).catch(() => {
                 alert("Thêm sản phẩm thất bại")
             })

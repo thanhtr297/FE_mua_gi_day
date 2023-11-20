@@ -48,6 +48,7 @@ import {ForgotPass} from "./pages/UserManagement/ForgotPass";
 import {PasswordNew} from "./pages/UserManagement/PasswordNew";
 import ShopProfile from "./pages/ShopManagement/ShopProfile";
 import Comment from "./pages/CommentPage/Comment";
+import Demo from "./Demo";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -107,7 +108,7 @@ function App() {
                         <Route path={"/login"} element={<Login/>}/>
                         <Route path={"/register"} element={<Register/>}/>
                         <Route path="/profile" element={<Profile/>}/>
-
+                        <Route path={"/demo"} element={<Demo/>}/>
                         <Route path={"/comment"} element={<Comment/>}/>
                         <Route path="/user-management" element={<UserManagement/>}>
                             <Route index element={<div>Chọn chức năng</div>}/>
