@@ -11,6 +11,7 @@ import CartMessage from "../../components/CartMessage/CartMessage";
 import {getProductById} from "../../service/ProductService";
 import {addToCart} from "../../service/CartService";
 import {findShop} from "../ShopManagement/service/ProfileService";
+import {findCommentByIdP} from "../../service/CommentService";
 
 const ProductSinglePage = () => {
     const {id} = useParams();
@@ -20,17 +21,21 @@ const ProductSinglePage = () => {
     const cartMessageStatus = useSelector(getCartMessageStatus);
     let idAccount = localStorage.getItem("account");
     let navigate = useNavigate()
-    const [idShop , setIdShop] = useState(0);
+    const [idShop, setIdShop] = useState(0);
+    const [comment,setComment] = useState([]);
 
     // getting single product
     useEffect(() => {
         findShop(idAccount).then((res) => {
-            setIdShop(res.id) ;
-        }).catch( () =>{
+            setIdShop(res.id);
+        }).catch(() => {
 
         })
         getProductById(id).then((res) => {
             setProduct(res.data);
+        })
+        findCommentByIdP(id).then((res)=>{
+            setComment(res.data);
         })
 
     }, [cartMessageStatus]);
@@ -73,7 +78,8 @@ const ProductSinglePage = () => {
     function shopProfile(id) {
         return navigate("/shop-management/shop-profile/" + id)
     }
-    function saveToBill ()  {
+
+    function saveToBill() {
         addToCartHandler(product)
         navigate("/cart");
     }
@@ -85,8 +91,13 @@ const ProductSinglePage = () => {
                     <div className='product-single-content bg-white grid'>
                         <div className='product-single-l'>
                             <div className='product-img'>
-                                <div className='product-img-zoom'  style={{border : '1px solid black'}}>
-                                    <img style={{width: '350px', height: '350px', marginLeft: '100px' ,marginTop: '10px'}}
+                                <div className='product-img-zoom' style={{border: '1px solid black'}}>
+                                    <img style={{
+                                        width: '350px',
+                                        height: '350px',
+                                        marginLeft: '100px',
+                                        marginTop: '10px'
+                                    }}
                                          src={product?.image === undefined ? '' : product?.image[0]?.name} alt=""
                                          className='img-cover'/>
                                 </div>
@@ -182,7 +193,9 @@ const ProductSinglePage = () => {
                                         }}>Thêm vào giỏ hàng</span>
                                     </button>
                                     <button type="button" className='buy-now btn mx-3'
-                                            disabled={idShop === product?.shop?.id} onClick={() => {saveToBill()}}>
+                                            disabled={idShop === product?.shop?.id} onClick={() => {
+                                        saveToBill()
+                                    }}>
                                         <span className='btn-text'>Mua ngay</span>
                                     </button>
                                 </div>
@@ -231,7 +244,26 @@ const ProductSinglePage = () => {
                     </div>
                 </div>
             </div>
+            <div style={{ marginTop: '50px' }}>
+                <div className='product-single-r'>
+                    <div className='product-single'>
+                        <div className='containerr'>
+                            <h1 style={{ marginBottom: '20px', fontSize: '24px' }}>Comment</h1>
+                            <div className='product-single-content bg-white grid' style={{fontSize:'14px'}}>
 
+                                {comment.map((c) => (
+                                    <div  style={{ marginBottom: '10px' }}>
+                                        
+                                        <div>Nguoi dung: {c?.account?.username}</div>
+                                        <div>Noi dung: {c?.content}</div>
+                                        <div>Thoi gian: {c?.createAt}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </main>
     )

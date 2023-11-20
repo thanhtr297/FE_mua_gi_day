@@ -141,7 +141,7 @@ export default function Register() {
                         </Form>
                     )}
                 </Formik>
-                <button type="button" onClick={handleButtonClick} style={{fontSize : '16px'}} className={(otp == otpCheck) ? "active" : "" }  disabled={!(otp == otpCheck)}>
+                <button type="button" onClick={handleButtonClick} style={{width:'100px',fontSize : '16px',border: '1px solid red'}} className={(otp == otpCheck) ? "active" : "" }  disabled={!(otp == otpCheck)}>
                    <b>Đăng kí</b>
                 </button>
                 <div className={'back'}>
