@@ -1,16 +1,14 @@
 import axios from "axios";
-import IntegrationNotistack from "../components/Notification/Notification";
-import Notification from "../components/Notification/Notification";
+import {toast} from "react-toastify";
 
 export const addToCart = (cart, id) => {
     return new Promise((resolve) => {
         resolve(
             axios.post("http://localhost:8080/api/carts/add?idAccount="+id, cart)
                 .then(() => {
-                    alert("Thêm sản phẩm thành công !")
-                    // IntegrationNotistack()
+                    toast.success("Thêm sản phẩm thành công")
                 }).catch(() => {
-                alert("Thêm sản phẩm thất bại")
+                toast.error("Thêm sản phẩm thất bại")
             })
         )
     })

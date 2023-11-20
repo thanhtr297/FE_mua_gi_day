@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import "./ProductSinglePage.scss";
 import {useNavigate, useParams} from "react-router-dom";
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 import {getSingleProductStatus} from '../../store/productSlice';
 import {STATUS} from '../../utils/status';
 import Loader from "../../components/Loader/Loader";
@@ -11,10 +11,12 @@ import CartMessage from "../../components/CartMessage/CartMessage";
 import {getProductById} from "../../service/ProductService";
 import {addToCart} from "../../service/CartService";
 import {findShop} from "../ShopManagement/service/ProfileService";
+import {SnackbarProvider, useSnackbar} from "notistack";
 import {findCommentByIdP} from "../../service/CommentService";
 import AddToCartButton from "../../components/Notification/Notification";
 import {useSnackbar} from "notistack";
 import Button from "react-bootstrap/Button";
+import IntegrationNotistack from "../../components/Notification/Notification";
 
 const ProductSinglePage = () => {
     const {id} = useParams();
@@ -35,15 +37,12 @@ const ProductSinglePage = () => {
     // getting single product
     useEffect(() => {
         findShop(idAccount).then((res) => {
-            setIdShop(res.id);
-        }).catch(() => {
+            setIdShop(res.id) ;
+        }).catch( () =>{
 
         })
         getProductById(id).then((res) => {
             setProduct(res.data);
-        })
-        findCommentByIdP(id).then((res)=>{
-            setComment(res.data);
         })
 
     }, [cartMessageStatus]);
@@ -86,8 +85,7 @@ const ProductSinglePage = () => {
     function shopProfile(id) {
         return navigate("/shop-management/shop-profile/" + id)
     }
-
-    function saveToBill() {
+    function saveToBill ()  {
         addToCartHandler(product)
         navigate("/cart");
     }
@@ -99,13 +97,8 @@ const ProductSinglePage = () => {
                     <div className='product-single-content bg-white grid'>
                         <div className='product-single-l'>
                             <div className='product-img'>
-                                <div className='product-img-zoom' style={{border: '1px solid black'}}>
-                                    <img style={{
-                                        width: '350px',
-                                        height: '350px',
-                                        marginLeft: '100px',
-                                        marginTop: '10px'
-                                    }}
+                                <div className='product-img-zoom'  style={{border : '1px solid black'}}>
+                                    <img style={{width: '350px', height: '350px', marginLeft: '100px' ,marginTop: '10px'}}
                                          src={product?.image === undefined ? '' : product?.image[0]?.name} alt=""
                                          className='img-cover'/>
                                 </div>

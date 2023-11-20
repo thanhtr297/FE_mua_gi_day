@@ -1,18 +1,5 @@
 import axios from "axios";
-
-// export const saveBill = (bill, navigate) => {
-//     return new Promise((resolve) => {
-//         resolve(
-//             axios.post("http://localhost:8080/api/bills/", bill)
-//                 .then(() => {
-//                     alert("Đặt hàng thành công, vui lòng chờ chủ shop xác nhận !")
-//                     navigate("/info")
-//                 }).catch(() => {
-//                 alert("Lỗi không đặt được hàng")
-//             })
-//         )
-//     })
-// }
+import {toast} from "react-toastify";
 
  const showCartDetailUserSelect = (idCarts) => {
     return new Promise((resolve) => {
@@ -21,7 +8,7 @@ import axios from "axios";
                 .then((response) => {
                     return response.data
                 }).catch(() => {
-                alert("Lỗi không đặt được hàng")
+                toast.error("Lỗi không đặt được hàng")
             })
         )
     })
@@ -45,10 +32,10 @@ import axios from "axios";
         resolve(
             axios.post("http://localhost:8080/api/bills/save/bill?idAccount="+idAccount,idCartDetails)
                 .then(() => {
-                    alert("Đặt hàng thành công, vui lòng chờ chủ shop xác nhận !")
+                    toast.success("Đặt hàng thành công, vui lòng chờ chủ shop xác nhận !")
                     navigate("/user-management/order/confirm")
                 }).catch(() => {
-                alert("Lỗi không đặt được hàng")
+                toast.error("Lỗi không đặt được hàng")
             })
         )
     })
@@ -72,9 +59,9 @@ const receive = (idBill) => {
         resolve(
             axios.post("http://localhost:8080/api/bills/receive?idBill="+idBill)
                 .then(() => {
-                    alert("Bạn đã nhận hàng thành công!")
+                    toast.success("Nhận hàng thành công!")
                 }).catch(() => {
-                alert("Lỗi")
+                toast.error("Lỗi không nhận được hàng!")
             })
         )
     })
@@ -85,12 +72,12 @@ const cancelBillByReason = (idBill, reason) => {
             axios.post("http://localhost:8080/api/bills/cancel?idBill="+idBill+"&reason="+reason)
                 .then(() => {
                     if(reason.length > 0) {
-                    alert("Hủy đơn hàng thành công!") }
-                    else {
-                        alert("Bạn cần nhập lý do hủy đơn hàng")
+                        toast.success("Hủy đơn hàng thành công!")
+                    }  else {
+                        toast.error("Bạn cần nhập lý do hủy đơn hàng")
                     }
                 }).catch(() => {
-                alert("Lỗi không hủy được đơn hàng")
+                toast.error("Lỗi không hủy được đơn hàng")
             })
         )
     })

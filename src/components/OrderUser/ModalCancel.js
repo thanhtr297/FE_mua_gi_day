@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import {useContext, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import {cancelBillByReason} from "../../service/BillService";
+import {AppContext} from "../../Context/AppContext";
 
-function Cancel({ id, onCancelClick }) {
+function Cancel(props) {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [reason, setReason] = useState('');
+    const {toggleFlag } = useContext(AppContext);
+
 
     const handleReason = (event) => {
         setReason(event.target.value);
@@ -39,10 +42,15 @@ function Cancel({ id, onCancelClick }) {
                     <Button variant="secondary" onClick={handleClose}>
                         Đóng
                     </Button>
-                    <Button type={"submit"} variant="primary" onClick={() => {
+                    <Button type={"submit"} variant="primary"
+                            onClick={() => {
                         handleClose();
-                        cancelBillByReason(id, reason).then()
-                    }}>
+
+                        cancelBillByReason(props.id, reason).then(() => {
+                            toggleFlag();
+                        })
+                    }}
+                    >
                         Lưu
                     </Button>
                 </Modal.Footer>

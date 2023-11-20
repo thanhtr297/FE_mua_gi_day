@@ -23,7 +23,7 @@ export default function Login() {
         }).then((res) => {
                 if (res.status === 200) {
                     login()
-                    toast.success('Đăng nhập hành công');
+                    toast.success('Đăng nhập thành công');
                     if (res.data.authorities[0].authority == 'ROLE_ADMIN') {
                         navigate('/admin')
                     } else {
