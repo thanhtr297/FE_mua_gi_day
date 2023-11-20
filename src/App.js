@@ -97,8 +97,10 @@ function App() {
             <Route path={"/password-new/:id"} element={<PasswordNew/>}/>
             <Route path={"/register"} element={<Register/>}/>
             <Route path = "/profile" element = {<Profile />} />
+
                         {/* single product route */}
                         <Route path="/product/:id" element={<ProductSingle/>}/>
+                        <Route path="/address" element={<DisplayAddress/>}/>
                         {/* category wise product listing route */}
                         <Route path="/category/:category" element={<CategoryProduct/>}/>
                         {/* cart */}

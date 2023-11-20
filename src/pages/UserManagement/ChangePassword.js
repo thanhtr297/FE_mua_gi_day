@@ -1,7 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {findUserByAccount, savePass, sendmail} from "../../service/UserService";
-import async from "async";
 
 export default function ChangePassword() {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);

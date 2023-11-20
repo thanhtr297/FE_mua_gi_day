@@ -11,12 +11,8 @@ import CartMessage from "../../components/CartMessage/CartMessage";
 import {getProductById} from "../../service/ProductService";
 import {addToCart} from "../../service/CartService";
 import {findShop} from "../ShopManagement/service/ProfileService";
-import {SnackbarProvider, useSnackbar} from "notistack";
-import {findCommentByIdP} from "../../service/CommentService";
-import AddToCartButton from "../../components/Notification/Notification";
-import {useSnackbar} from "notistack";
-import Button from "react-bootstrap/Button";
-import IntegrationNotistack from "../../components/Notification/Notification";
+
+
 
 const ProductSinglePage = () => {
     const {id} = useParams();
@@ -28,11 +24,6 @@ const ProductSinglePage = () => {
     let navigate = useNavigate()
     const [comment,setComment] = useState([]);
     const [idShop , setIdShop] = useState(0);
-    const { enqueueSnackbar } = useSnackbar();
-    const handleClickVariant = (variant) => () => {
-        // variant could be success, error, warning, info, or default
-        enqueueSnackbar('This is a success message!', { variant });
-    };
 
     // getting single product
     useEffect(() => {

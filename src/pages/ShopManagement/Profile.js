@@ -14,13 +14,15 @@ import {findShop, saveShop} from "./service/ProfileService";
 import {useNavigate} from "react-router-dom";
 import {AppContext} from "../../Context/AppContext";
 import {toast} from "react-toastify";
+import GoogleMapReact from "google-map-react";
+import {IoLocationSharp} from "react-icons/io5";
+
 
 export default function Profile() {
     const [idCity, setIdCity] = useState(0)
     const [idDistrict, setIdDistrict] = useState(0)
     const [idWards, setIdWards] = useState(0)
     const navigate = useNavigate();
-
     const [avatar, setAvatar] = useState(null);
     const [loading, setLoading] = useState(false);
     const [cities, setCities] = useState([]);
@@ -35,6 +37,9 @@ export default function Profile() {
     const [shop, setShop] = useState({})
     const [check, setCheck] = useState(true)
     const {toggleFlag} = useContext(AppContext);
+    const Icon = ({text}) => <div>{text}</div>;
+
+
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
             setCoords({lat: latitude, lng: longitude})
@@ -55,6 +60,7 @@ export default function Profile() {
 
     const find = async () => {
         setFullAddress(address + ", " + nameWards + ", " + nameDistrict + ", " + nameCity)
+        // const result = await geocodeByAddress("Bến xe Mỹ Đình")
         const result = await geocodeByAddress(fullAddress)
         const latLng = await getLatLng(result[0])
         setCoords(latLng)
@@ -84,8 +90,10 @@ export default function Profile() {
         })
     }
 
-    function save(e) {
 
+
+    function save(e) {
+        setAddress(e.address)
         const idAcc = localStorage.getItem("account")
         e = {
             ...e,
@@ -105,10 +113,11 @@ export default function Profile() {
             }
         }
 
-        saveShop(e, navigate).then(()=>{
+        saveShop(e, navigate).then(async () => {
             toast.success("Lưu thành công!")
             setCheck(true)
             toggleFlag()
+            find().then()
         }).catch( () => {
             toast.warning("Lưu thất bại !")
         })
@@ -131,7 +140,25 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                         <input type="file" id="imageUpload" style={{display: 'none'}}
                                onChange={(e) => handledImage(e.target.files[0])}/>
                     </div>
-                    <div className={'col-md-2'}></div>
+                    <div className={'col-md-2'}>
+                        <div style={{color: "red", scale: "2"}}>{nameCity}</div>
+                        <div style={{width: "500px", height: "200px", marginLeft:"55px"}}>
+                            <GoogleMapReact
+                                bootstrapURLKeys={{key: "AIzaSyB_L2SRcyyNxng3rGmtzpGcMXLxOBbyqk4"}}
+                                defaultCenter={coords}
+                                defaultZoom={15}
+                                center={coords}
+                            >
+                                <Icon
+                                    lat={coords.lat}
+                                    lng={coords.lng}
+                                    text={<IoLocationSharp color={"red"} size={24}/>}
+                                />
+                            </GoogleMapReact>
+
+                        </div>
+
+                    </div>
                     <div className={'col-md-6'}>
 
                     </div>
@@ -139,7 +166,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                 <div className={'row'} style={{height: "250px"}}>
                     <Formik initialValues={shop}
                     enableReinitialize={true}
-                            onSubmit={e => {
+                            onSubmit={(e) => {
                                 save(e)
                             }}>
                         <Form>
@@ -222,6 +249,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                             </div>
                         </Form>
                     </Formik>
+
                 </div>
 
             </div>
