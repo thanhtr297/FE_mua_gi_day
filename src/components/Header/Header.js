@@ -35,17 +35,18 @@ const Header = (props) => {
                 <div className='header1-cnt'>
                     <div className='header1-cnt-top fs-13 py-2 flex align-center justify-between'>
                         <div className='header1-cnt-top-l'>
-                            <ul className='flex top-links align-center'>
+                            <ul className='flex top-links align-center' style={{marginTop: '3%', marginBottom : '-1%'}}>
                                 <li>
                                     {/* dummy links */}
                                     <Link to="/seller" style={{}}>Kênh người bán</Link>
                                 </li>
-                                <li className='vert1-line'></li>
+                                <li  style={{color : 'white' ,fontSize : '16px' , fontWeight : 'bold' , margin : '-5px 7px 0 7px'}}> |</li>
                                 <li>
                                     {/* dummy links */}
                                     <Link to="/download">Tải xuống</Link>
                                 </li>
-                                <li className='vert1-line'></li>
+                                <li  style={{color : 'white' ,fontSize : '16px' , fontWeight : 'bold' , margin : '-5px 7px 0 7px'}}> |</li>
+
                                 <li className='flex align-center'>
                                     <span className='fs-13'>Kết nối</span>
                                     <ul className='social-links flex align-center'>
@@ -68,7 +69,7 @@ const Header = (props) => {
                                 <li style={checkLogin
                                     ? {display: 'none'} : {}}>
                                     <div style={{display : 'flex' , marginTop : '-15px' , marginBottom : '-20px' ,marginRight : '-25px'}}>
-                                        {username !== null ?  <div style={{marginTop : '20px' ,fontSize : '15px' }}>{username}</div> : ''}
+                                        {username !== null ?  <div style={{marginTop : '20px' ,fontSize : '15px' ,fontFamily :'Font Awesome 6 Free' }}>{username}</div> : ''}
 
                                     <div className="nav-item dropdown" style={{borderBottom : 'none' ,backgroundColor :'white' ,borderRadius : '50%' ,width :'30px' ,height :'30px' , marginLeft :'5px'}}>
                                         <a href="#" className=" nav-link dropdown-toggle" data-bs-toggle="dropdown">
