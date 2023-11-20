@@ -17,7 +17,7 @@ function ListProduct() {
     let navigate = useNavigate()
     let [checkDelete, setCheckDelete] = useState(false)
     const [page, setPage] = useState(0);
-    const [perPage] = useState(3);
+    const [perPage] = useState(5);
     const [totalPages, setTotalPages] = useState(0);
     const {toggleFlag , isFlag} = useContext(AppContext);
 
@@ -63,7 +63,16 @@ function ListProduct() {
                 <Link to={'/shop-management/create'}>
                     <MdCreateNewFolder style={{color: 'black', fontSize: '30px'}}/>
                 </Link>
-                <h1 style={{marginLeft: '440px'}}>Danh sách sản phẩm</h1>
+                <h1 style={{marginLeft: '400px'}}>Danh sách sản phẩm</h1> <div style={{marginTop: '10px',marginLeft:'280px'}}>
+                <ReactPaginate
+                    pageCount={totalPages}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={1}
+                    onPageChange={handlePageClick}
+                    containerClassName={'pagination-container'}
+                    activeClassName={'active'}
+                />
+            </div>
             </div>
             <br/>
             <br/>
@@ -169,16 +178,7 @@ function ListProduct() {
                     })}
                 </MDBTableBody>
             </MDBTable>
-            <div style={{marginTop: '30px'}}>
-                    <ReactPaginate
-                        pageCount={totalPages}
-                        pageRangeDisplayed={3}
-                        marginPagesDisplayed={1}
-                        onPageChange={handlePageClick}
-                        containerClassName={'pagination-container'}
-                        activeClassName={'active'}
-                    />
-            </div>
+
         </>
     )
         ;
