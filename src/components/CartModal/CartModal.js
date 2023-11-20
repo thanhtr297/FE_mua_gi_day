@@ -7,10 +7,15 @@ import {showCart} from "../../service/CartService";
 const CartModal = () => {
     const [carts, setCarts] = useState([]);
     const idAccount = localStorage.getItem("account");
+    // const cats = JSON.parse(localStorage.getItem("cart"))
+
+
     useEffect(() => {
         showCart(idAccount).then((response) => {
             setCarts(response)
         })
+
+
     },[idAccount])
   return (
     <div className='cart-modal'>

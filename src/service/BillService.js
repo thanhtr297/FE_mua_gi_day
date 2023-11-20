@@ -84,7 +84,11 @@ const cancelBillByReason = (idBill, reason) => {
         resolve(
             axios.post("http://localhost:8080/api/bills/cancel?idBill="+idBill+"&reason="+reason)
                 .then(() => {
-                    alert("Vui lòng chờ chủ shop xác nhận!")
+                    if(reason.length > 0) {
+                    alert("Hủy đơn hàng thành công!") }
+                    else {
+                        alert("Bạn cần nhập lý do hủy đơn hàng")
+                    }
                 }).catch(() => {
                 alert("Lỗi không hủy được đơn hàng")
             })

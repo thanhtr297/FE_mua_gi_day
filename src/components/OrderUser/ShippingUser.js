@@ -76,10 +76,10 @@ const PendingUser = () => {
 
 
     function cancelBillDetail(idBill) {
-            cancelBill(idBill).then(() => {
-                setCheck(!check);
-                alert("Hủy sản phẩm thành công!")
-            })
+        cancelBill(idBill).then(() => {
+            setCheck(!check);
+            alert("Hủy sản phẩm thành công!")
+        })
 
     }
 
@@ -89,7 +89,6 @@ const PendingUser = () => {
         })
 
     }
-
 
 
     const checkEmpty = (list) => {
@@ -220,11 +219,9 @@ const PendingUser = () => {
                                                         <span
                                                             style={{marginLeft: "115px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
                                                         <span style={{marginLeft: "60px"}}>
-                                            <FaX style={{scale: "1.1", color: "D70018"}} onClick={() => {
-                                                cancelBillDetail(bill[0].bill.id)
-                                            }}/>
-
-                                                            <Cancel id={bill[0].bill.id} onCancelClick={() => cancelBillDetail(bill[0].bill.id)} />
+                                            <FaX style={{scale: "1.1", color: "D70018"}}/>
+                                                            <Cancel id={bill[0].bill.id}
+                                                                    onCancelClick={() => cancelBillDetail(bill[0].bill.id)}/>
                                                     </span>
 
                                                     </div>
@@ -233,39 +230,39 @@ const PendingUser = () => {
                                             <div className='cart-cbody bg-white'>
                                                 {bill.map((billDetail, index) => {
                                                     return <div className='cart-ctr py-5' key={billDetail?.id}>
-                                                            <div className='cart-ctd'>
-                                                                <span className='cart-ctxt'>{index + 1}</span>
-                                                            </div>
-                                                            <div className='cart-ctd'
-                                                                 style={{display: 'flex', alignItems: 'center'}}>
-                                                                <img
-                                                                    style={{
-                                                                        width: "60px",
-                                                                        height: "50px",
-                                                                        marginRight: "20px"
-                                                                    }}
-                                                                    src={billDetail?.product?.image[0].name}
-                                                                    alt="..."
-                                                                />
-                                                                <span
-                                                                    className='cart-ctxt'>{billDetail?.product?.name}</span>
-                                                            </div>
-                                                            <div className='cart-ctd'>
+                                                        <div className='cart-ctd'>
+                                                            <span className='cart-ctxt'>{index + 1}</span>
+                                                        </div>
+                                                        <div className='cart-ctd'
+                                                             style={{display: 'flex', alignItems: 'center'}}>
+                                                            <img
+                                                                style={{
+                                                                    width: "60px",
+                                                                    height: "50px",
+                                                                    marginRight: "20px"
+                                                                }}
+                                                                src={billDetail?.product?.image[0].name}
+                                                                alt="..."
+                                                            />
+                                                            <span
+                                                                className='cart-ctxt'>{billDetail?.product?.name}</span>
+                                                        </div>
+                                                        <div className='cart-ctd'>
                                           <span className='cart-ctxt'>
                                            (<del>{formatPrice(billDetail.product.price)}</del>) / {formatPrice(billDetail.price)}
                                           </span>
-                                                            </div>
-                                                            <div className='cart-ctd' style={{marginLeft: "27px"}}>
-                                                                <span className='cart-ctxt'>{billDetail.quantity}</span>
-
-                                                            </div>
-
-                                                            <div className='cart-ctd'>
-                                                                <billDetail
-                                                                    className='cart-ctxt text-orange fw-5'
-                                                                    style={{marginLeft: "20px"}}>{formatPrice(billDetail.total)}</billDetail>
-                                                            </div>
                                                         </div>
+                                                        <div className='cart-ctd' style={{marginLeft: "27px"}}>
+                                                            <span className='cart-ctxt'>{billDetail.quantity}</span>
+
+                                                        </div>
+
+                                                        <div className='cart-ctd'>
+                                                            <billDetail
+                                                                className='cart-ctxt text-orange fw-5'
+                                                                style={{marginLeft: "20px"}}>{formatPrice(billDetail.total)}</billDetail>
+                                                        </div>
+                                                    </div>
                                                 })}
                                             </div>
                                         </>
