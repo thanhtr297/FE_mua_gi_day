@@ -111,7 +111,7 @@ function App() {
                         <Route path={"/demo"} element={<Demo/>}/>
                         <Route path={"/comment"} element={<Comment/>}/>
                         <Route path="/user-management" element={<UserManagement/>}>
-                            <Route index element={<div>Chọn chức năng</div>}/>
+                            <Route index element={<ProfileUser/>}/>
                             <Route path="/user-management/profile" element={<ProfileUser/>}/>
                             <Route path="/user-management/change-password" element={<ChangePassword/>}/>
                             <Route path="/user-management/order" element={<OrderUser/>}>
@@ -123,7 +123,7 @@ function App() {
                             </Route>
                         </Route>
                         <Route path="/shop-management" element={<DashBoard/>}>
-                            <Route index element={<div>Chọn chức năng</div>}/>
+                            <Route index element={<Profile/>}/>
                             <Route path="/shop-management/list-product" element={<ListProduct/>}/>
                             <Route path="/shop-management/create" element={<CreateProduct/>}/>
                             <Route path="/shop-management/order-management" element={<OrderManagement/>}>

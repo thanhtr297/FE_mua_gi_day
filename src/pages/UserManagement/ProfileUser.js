@@ -12,6 +12,7 @@ import {LoadingButton} from "../ShopManagement/LoadingButton";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {v4} from "uuid";
 import {AppContext} from "../../Context/AppContext";
+import {toast} from "react-toastify";
 export default function ProfileUser() {
     const [idCity, setIdCity] = useState(0)
     const [idDistrict, setIdDistrict] = useState(0)
@@ -34,7 +35,7 @@ export default function ProfileUser() {
         const idAcc = localStorage.getItem("account")
         findUserByAccount(idAcc).then((res)=>{
             setUser(res)
-            console.log(res)
+
         })
     }, [check ,isFlag]);
     function displayDistrictByIdCity(id) {
@@ -80,7 +81,7 @@ export default function ProfileUser() {
         }
         console.log(e)
         saveUser(e, navigate).then(()=>{
-            alert("Lưu thành công!")
+            toast.success("Lưu thành công!")
             toggleFlag()
             setCheck(true)
         })
@@ -90,29 +91,16 @@ export default function ProfileUser() {
     return (
         <>
             <div className={'container'} style={{width: '85%', height: "500px"}}>
-                <button className={'btn btn-warning'} style={{fontSize:'14px'}} onClick={() => {
-                    setCheck(!check)
-                    document.getElementById("avatarFix").style.display="block"
-                }}>Sửa</button>&ensp;
                 <div className={'row'} style={{height: "200px"}}>
                     <div className="col-md-4" style={{marginBottom: '40px', position: 'relative' }}>
                         <img style={{
                             width: '200px', height: '200px', borderRadius: '50%',
                             border: '3px solid #ddd', boxShadow: '0px 0px 10px #aaa'
                         }}
-                             src={user.avatar || defaultImageUrl }
-                             alt="Avatar"/>
-
-                        <button type="button" id={"avatarFix"} className="" style={{
-                            display: 'none',
-                            position: 'absolute', top: '5%', right: '50%',
-                            borderRadius: '50%', border: 'none', padding: '5px 10px',
-                            transform: 'translate(50%, -50%)',
-                            backgroundColor: '#5f676c', color: 'white', fontSize: '12px'
-                        }}
-                                onClick={()=>document.getElementById('imageUpload').click()}>
-                            Sửa
-                        </button>
+                             src={user?.avatar || defaultImageUrl }
+                             alt="Avatar"
+                             onClick={()=>document.getElementById('imageUpload').click()}
+                        />
                         <input type="file" id="imageUpload" style={{display: 'none'}}
                                onChange={(e) => handledImage(e.target.files[0])}/>
 
@@ -184,8 +172,11 @@ export default function ProfileUser() {
                                         <Field style={{fontSize: '16px'}} disabled={check} type={'text'} name={'phone'} className={'form-control'} id="{'phone'}"/>
                                     </div>
 
-                                    <div className="mb-3" style={{fontSize: '16px'}}>
-                                        <br/>
+                                    <div  style={{fontSize: '16px',display: 'flex', alignItems: 'center',minWidth:'600px',textAlign:'center',marginLeft : '83%' ,marginTop : '10%'}}>
+                                        <button type={'button'} className={'btn '} style={{ fontSize: '14px', marginRight: '10px' }} onClick={() => {
+                                            setCheck(!check)
+                                        }}
+                                        > Cập nhật <i className="fa-sharp fa-regular fa-pen-to-square" style={{color: '#b61b1b'}}></i></button>
                                         <LoadingButton loading={loading}/>
                                     </div>
                                 </div>

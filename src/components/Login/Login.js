@@ -60,7 +60,7 @@ export default function Login() {
                 </div>
                 <div >
                     <button
-                        style={{ border: '1px solid red' }}
+                        style={{ border: '2px solid #aba5a5' }}
                         className={email && password ? 'active' : ''}
                         disabled={!(email && password)}
                         onClick={() => handleLogin()}>
