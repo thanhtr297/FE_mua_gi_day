@@ -279,22 +279,26 @@ const ProductSinglePage = () => {
                                                 {c?.reply !== null ? (
                                                     <div className="shop-reply">Shop phản hồi: {c?.reply}</div>
                                                 ) : ''}
-                                                <button style={{fontSize:'14px'}} disabled={!isShow} onClick={() => setIsShow(!isShow)}>Phản hồi &nbsp;<i
-                                                    className="fa-sharp fa-regular fa-pen-to-square"
-                                                    style={{color: '#b61b1b'}}></i></button>
+
                                                 {(product?.shop?.id === idShop) ? (
+                                                    <>
+                                                    <button style={{fontSize: '14px'}} disabled={!isShow}
+                                                            onClick={() => setIsShow(!isShow)}>Phản hồi &nbsp;<i
+                                                        className="fa-sharp fa-regular fa-pen-to-square"
+                                                        style={{color: '#b61b1b'}}></i></button>
                                                     <div className="reply-container">
-                                        <textarea
-                                            disabled={isShow}
-                                            className="reply-textarea"
-                                            onChange={handleReply}
-                                            placeholder="Nhập phản hồi của bạn..."
-                                        />
-                                                        <button className="reply-button"
-                                                                disabled={isShow}
-                                                                onClick={() => saveReply(c?.id)}>Trả lời
-                                                        </button>
+                                                    <textarea
+                                                        disabled={isShow}
+                                                        className="reply-textarea"
+                                                        onChange={handleReply}
+                                                        placeholder="Nhập phản hồi của bạn..."
+                                                    />
+                                                    <button className="reply-button"
+                                                            disabled={isShow}
+                                                            onClick={() => saveReply(c?.id)}>Trả lời
+                                                    </button>
                                                     </div>
+                                                    </>
                                                 ) : ''}
                                             </div>
                                         </div>

@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from "react";
 import {findAccountById, savePass} from "../../service/UserService";
 import {useNavigate, useParams} from "react-router-dom";
-
+import "./changePass.scss"
 export function PasswordNew() {
     const [passwordNew, setPasswordNew] = useState("");
     const [passwordError,setPasswordError] = useState("");
@@ -86,7 +86,8 @@ export function PasswordNew() {
                 <div style={{color:"red"}}> {passwordError && <div className="error-message">{passwordError.cfpass}</div>}</div>
 
                 <div style={{}}>
-                    <button className={ (passwordNew && passwordConfirm)  ? "active":""}
+                    <button
+                        style={{border:'1px solid #aba5a5',width:'100px'}} className={ (passwordNew && passwordConfirm)  ? "active":""}
                             disabled={!(passwordNew && passwordConfirm)}
                             onClick={savePassword}
                     >Cập nhật

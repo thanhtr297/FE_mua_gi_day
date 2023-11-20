@@ -1,8 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {findUserByAccount, savePass, sendmail} from "../../service/UserService";
-import async from "async";
-
+import "./changePass.scss"
 export default function ChangePassword() {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [otpCheck, setOtpCheck] = useState('1');
@@ -158,7 +157,7 @@ export default function ChangePassword() {
                     </button>
                 </div>
                 <div >
-                    <button style={{border:'1px solid red',width:'150px'}} className={password && (otp == otpCheck) ? "active":""}
+                    <button style={{border:'1px solid #aba5a5',width:'150px'}} className={password && (otp == otpCheck) ? "active":""}
                             disabled={!(password && (otp == otpCheck))}
                     onClick={savePassword}
                     >Đổi mật khẩu

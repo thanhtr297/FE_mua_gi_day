@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import {saveComment} from "../../service/CommentService";
+import {toast} from "react-toastify";
 
  export  default function CommentUser(idP) {
     const [show, setShow] = useState(false);
@@ -52,10 +53,14 @@ import {saveComment} from "../../service/CommentService";
                         Đóng
                     </Button>
                     <Button style={{fontSize:'12px'}} type={"submit"} variant="danger" onClick={() => {
+                        if (comment !=='') {
                         handleClose()
                         saveComment(comment).then(()=>{
-                            alert("Thêm đánh giá thành công!")
+                            toast.success("Thêm thành công!")
                         })
+                    } else {
+                            toast.error("Vui lòng nhập đánh giá!")
+                        }
                     }}>
                         Lưu
                     </Button>
