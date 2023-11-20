@@ -6,6 +6,7 @@ import {findUserByAccount} from "../UserManagement/Service/UserService";
 import {findShop} from "./service/ProfileService";
 import {red} from "@mui/material/colors";
 import {AppContext} from "../../Context/AppContext";
+import {toast} from "react-toastify";
 
 function DashBoard() {
     const dataOrder = "Thanh"
@@ -19,7 +20,7 @@ function DashBoard() {
                 setIdShop(res.account.id) ;
 
             }).catch( () =>{
-                alert("Bạn chưa có shop vui lòng cập nhật  thông tin shop để tiếp tục")
+                toast.warning("Bạn chưa có shop vui lòng cập nhật  thông tin shop để tiếp tục")
             })
             }
     }, [isFlag]);
