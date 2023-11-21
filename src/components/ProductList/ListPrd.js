@@ -45,7 +45,7 @@ const ListPrd = ({categories}) => {
                 }
 
             </div>
-            <div style={{marginTop:'40px'}}>
+            <div style={{marginTop:'40px' }}>
                 {totalPages > 1 ?
                 <ReactPaginate
                     pageCount={totalPages}
@@ -54,6 +54,17 @@ const ListPrd = ({categories}) => {
                     onPageChange={handlePageClick}
                     containerClassName={'pagination-container'}
                     activeClassName={'active'}
+                    previousClassName={'previous'}
+                    nextClassName={'next'}
+                    pageClassName={'page'}
+                    disabledClassName={'disabled'}
+                    breakClassName={'break-me'}
+                    previousLabel={'<'} // Đổi tên cho nút previous
+                    nextLabel={'>'}
+                    style={{
+                        backgroundColor: '#3498db',  // Đổi màu sắc nền chung
+                        color: '#fff',               // Đổi màu sắc chữ
+                    }}
                 /> : <div></div>}
             </div>
         </>

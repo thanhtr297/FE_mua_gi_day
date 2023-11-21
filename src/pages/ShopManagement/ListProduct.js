@@ -65,6 +65,8 @@ function ListProduct() {
                 </Link>
                 <h1 style={{marginLeft: '350px'}}>Danh sách sản phẩm</h1> <div style={{marginTop: '10px',marginLeft:'280px'}}>
                 <ReactPaginate
+                    previousLabel={'<'} // Đổi tên cho nút previous
+                    nextLabel={'>'}
                     pageCount={totalPages}
                     pageRangeDisplayed={3}
                     marginPagesDisplayed={1}
@@ -107,15 +109,7 @@ function ListProduct() {
                                     <td>
                                         <div id={"carouselExampleIndicators" + index} className="carousel slide"
                                              style={{width: "130px", marginLeft: '35px'}}>
-                                            <div className="carousel-indicators">
-                                                <button type="button" data-bs-target="#carouselExampleIndicators"
-                                                        data-bs-slide-to="0" className="active" aria-current="true"
-                                                        aria-label="Slide 1"></button>
-                                                <button type="button" data-bs-target="#carouselExampleIndicators"
-                                                        data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                                <button type="button" data-bs-target="#carouselExampleIndicators"
-                                                        data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                            </div>
+                                           {p.image.length > 1 ?
                                             <div className="carousel-inner">
                                                 {p.image.map((i, imageIndex) => (
                                                     <div className={`carousel-item ${imageIndex === 0 ? 'active' : ''}`}
@@ -124,21 +118,29 @@ function ListProduct() {
                                                              src={i.name} className="d-block w-100" alt="..."/>
                                                         <button className="carousel-control-prev" type="button"
                                                                 data-bs-target={"#carouselExampleIndicators" + index}
-                                                                data-bs-slide="prev">
+                                                                data-bs-slide="prev"  style={{color : '#9f9d9d'}}>
                                                             <span className="carousel-control-prev-icon"
                                                                   aria-hidden="true"></span>
                                                             <span className="visually-hidden">Previous</span>
                                                         </button>
                                                         <button className="carousel-control-next" type="button"
                                                                 data-bs-target={"#carouselExampleIndicators" + index}
-                                                                data-bs-slide="next">
+                                                                data-bs-slide="next"  style={{color : '#9f9d9d'}}>
                                                             <span className="carousel-control-next-icon"
                                                                   aria-hidden="true"></span>
                                                             <span className="visually-hidden">Next</span>
                                                         </button>
                                                     </div>
                                                 ))}
-                                            </div>
+                                            </div> :  <div className="carousel-inner">
+                                                {p.image.map((i, imageIndex) => (
+                                                    <div className={`carousel-item ${imageIndex === 0 ? 'active' : ''}`}
+                                                         key={imageIndex}>
+                                                        <img style={{width: "120px", height: "120px", margin: "0 0"}}
+                                                             src={i.name} className="d-block w-100" alt="..."/>
+                                                    </div>
+                                                ))}
+                                            </div> }
                                         </div>
 
 

@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import {AppContext} from "../../Context/AppContext";
 import {findAccountById} from "../../service/UserService";
 import {findUserByAccount} from "../../pages/UserManagement/Service/UserService";
+import {toast} from "react-toastify";
 
 
 const Header = (props) => {
@@ -83,9 +84,9 @@ const Header = (props) => {
                                             <Link to={'/user-management'} className="dropdown-item">Hồ sơ</Link>
                                             <Link to={'/shop-management'} className="dropdown-item">Shop của tôi</Link>
                                             <Dropdown.Divider/>
-                                            <Link to="/" className="dropdown-item" onClick={() => {
+                                            <Link to="/login" className="dropdown-item" onClick={() => {
                                                 logout()
-                                                alert("Bạn đã đăng xuất!");
+                                                toast.success("bạn đã đăng xuất " , { autoClose: 700 });
                                                 localStorage.clear()
                                             }} >Đăng xuất</Link>
                                         </div> :
@@ -93,6 +94,9 @@ const Header = (props) => {
                                                 <Link to={'/login'} className="dropdown-item" onClick={() => {
                                                     logout()
                                                 }}>Đăng nhập</Link>
+                                                <Link to={'/register'} className="dropdown-item" onClick={() => {
+                                                    logout()
+                                                }}>Đăng ký</Link>
                                             </div>
                                         }
                                     </div>

@@ -3,6 +3,7 @@ import './/Login.scss';
 import {Formik, Form, ErrorMessage, Field} from 'formik';
 import {emailCheck, register, sendMail, userCheck} from "../../service/UserService";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 export default function Register() {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [countdown, setCountdown] = useState(30);
@@ -28,11 +29,11 @@ export default function Register() {
                 password: acc.password,
                 email: acc.email,}).then((res) => {
             }).then((res) => {
-                alert('Đăng kí thành công vui lòng đăng nhập lại')
+                toast.success('Đăng kí thành công vui lòng đăng nhập lại', {autoClose : 700})
                 navigate('/login')
             })
         }else {
-            alert('Vui lòng điền đủ thông tin') ;
+            toast.warning('Vui lòng điền đủ thông tin', {autoClose : 700})
         }
     };
         const onSubmit = (values) => {
@@ -56,8 +57,7 @@ export default function Register() {
                 email : values.email,
                 password : values.password ,
             }).then((res) => { if(res.status === 200) {
-                console.log(res)
-                alert("Vui lòng kiểm tra hòm thư của bạn")
+                toast.success('Vui lòng kiểm tra hòm thư của bạn', {autoClose : 700})
                 setOtp(res.data.name + ''); // Thiết lập giá trị OTP ban đầu
                 localStorage.setItem("acc", JSON.stringify(res.data))
                 const timer = setInterval(() => {
@@ -66,7 +66,7 @@ export default function Register() {
                     clearInterval(timer); // Huỷ bỏ setInterval
                 }, 60000);
             } else if (res.status === 202) {
-                alert('Thao tác quá hạn vui lòng thử lại')
+                toast.warning('Thao tác quá hạn vui lòng thử lại', {autoClose : 700})
                 navigate("/")
             }
             })
