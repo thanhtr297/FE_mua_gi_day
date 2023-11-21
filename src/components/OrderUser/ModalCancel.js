@@ -42,7 +42,7 @@ function Cancel(props) {
                     <Button variant="secondary" onClick={handleClose}>
                         Đóng
                     </Button>
-                    <Button type={"submit"} variant="primary"
+                    <Button type={"submit"} variant="danger"
                             onClick={() => {
                         handleClose();
 

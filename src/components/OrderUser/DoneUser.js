@@ -8,6 +8,7 @@ import {findUserByAccount} from "../../pages/UserManagement/Service/UserService"
 import {CiShop} from "react-icons/ci";
 import {BsArrowThroughHeart} from "react-icons/bs";
 import {IoLocationOutline} from "react-icons/io5";
+import CommentUser from "./ModalComment";
 
 
 const DoneUser = () => {
@@ -180,9 +181,9 @@ const DoneUser = () => {
                                                     <div style={{padding: '10px'}}>
                                                         <span>Mã đơn hàng: 2903VDC02{bill[0]?.bill?.id}</span>
                                                         <span
-                                                            style={{marginLeft: "540px"}}>{sumQuantity(bill[0].bill.id)}</span>
+                                                            style={{marginLeft: "470px"}}>{sumQuantity(bill[0].bill.id)}</span>
                                                         <span
-                                                            style={{marginLeft: "135px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
+                                                            style={{marginLeft: "150px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
                                                         <span style={{marginLeft: "60px"}}>
                                                     </span>
                                                     </div>
@@ -221,14 +222,18 @@ const DoneUser = () => {
                                                                 <billDetail
                                                                     className='cart-ctxt text-orange fw-5'
                                                                     style={{marginLeft: "20px"}}>{formatPrice(billDetail.total)}</billDetail>
+                                                                <CommentUser modalComment={billDetail?.product}/>
                                                             </div>
+
                                                         </div>
                                                     )
                                                 })}
+
                                             </div>
                                         </>)
                                     })
                                 }
+
                             </div>
 
                             <div className='cart-cfoot flex align-start justify-between py-3 bg-white'>

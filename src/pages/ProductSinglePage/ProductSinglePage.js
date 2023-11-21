@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import "./ProductSinglePage.scss";
 import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -11,6 +11,10 @@ import CartMessage from "../../components/CartMessage/CartMessage";
 import {getProductById} from "../../service/ProductService";
 import {addToCart} from "../../service/CartService";
 import {findShop} from "../ShopManagement/service/ProfileService";
+import {createReply, findCommentByIdP} from "../../service/CommentService";
+import {toast} from "react-toastify";
+import "./Comment.scss"
+
 
 
 const ProductSinglePage = () => {
@@ -19,25 +23,28 @@ const ProductSinglePage = () => {
     const productSingleStatus = useSelector(getSingleProductStatus);
     const [quantity, setQuantity] = useState(1);
     const cartMessageStatus = useSelector(getCartMessageStatus);
-    let idAccount = localStorage.getItem("account");
+    let idAccount = +localStorage.getItem("account");
     let navigate = useNavigate()
-    const [comment,setComment] = useState([]);
-    const [idShop , setIdShop] = useState(0);
-
-
-
+    let [comments, setComments] = useState([]);
+    const [idShop, setIdShop] = useState(0);
+    const [reply, setReply] = useState('')
+    const [isFlag, setIsFlag] = useState(true);
+    const [isShow, setIsShow] = useState(true);
+    const [isShowUpdate, setIsShowUpdate] = useState(true);
     // getting single product
     useEffect(() => {
         findShop(idAccount).then((res) => {
-            setIdShop(res.id) ;
-        }).catch( () =>{
-
+            setIdShop(res.id);
+        }).catch(() => {
+            setIdShop(0)
         })
         getProductById(id).then((res) => {
             setProduct(res.data);
         })
-
-    }, [cartMessageStatus]);
+        findCommentByIdP(id).then((res) => {
+            setComments(res.data);
+        })
+    }, [cartMessageStatus, isFlag]);
 
     let discountedPrice = (product?.price) - (product?.price * (product?.promotion / 100));
     if (productSingleStatus === STATUS.LOADING) {
@@ -89,8 +96,13 @@ const ProductSinglePage = () => {
                     <div className='product-single-content bg-white grid'>
                         <div className='product-single-l'>
                             <div className='product-img'>
-                                <div className='product-img-zoom'  style={{border : '1px solid black'}}>
-                                    <img style={{width: '350px', height: '350px', marginLeft: '100px' ,marginTop: '10px'}}
+                                <div className='product-img-zoom' style={{border: '1px solid black'}}>
+                                    <img style={{
+                                        width: '350px',
+                                        height: '350px',
+                                        marginLeft: '100px',
+                                        marginTop: '10px'
+                                    }}
                                          src={product?.image === undefined ? '' : product?.image[0]?.name} alt=""
                                          className='img-cover'/>
                                 </div>
@@ -186,7 +198,9 @@ const ProductSinglePage = () => {
                                         }}>Thêm vào giỏ hàng</span>
                                     </button>
                                     <button type="button" className='buy-now btn mx-3'
-                                            disabled={idShop === product?.shop?.id} onClick={() => {saveToBill()}}>
+                                            disabled={idShop === product?.shop?.id} onClick={() => {
+                                        saveToBill()
+                                    }}>
                                         <span className='btn-text'>Mua ngay</span>
                                     </button>
                                 </div>
@@ -235,20 +249,81 @@ const ProductSinglePage = () => {
                     </div>
                 </div>
             </div>
-            <div style={{ marginTop: '50px' }}>
-                <div className='product-single-r'>
+
+            <div style={{marginTop: '50px'}}>
+                <div className='product-single'>
                     <div className='product-single'>
                         <div className='containerr'>
-                            <h1 style={{ marginBottom: '20px', fontSize: '24px' }}>Comment</h1>
-                            <div className='product-single-content bg-white grid' style={{fontSize:'14px'}}>
+                            <h1 style={{marginBottom: '20px', fontSize: '24px'}}>Đánh giá: </h1>
+                            <div className='product-single-content bg-white grid'>
+                                {comments.map((c) => (
+                                    <>
+                                        <div className="comment-container">
+                                            <div className="avatar-container">
+                                                <img
+                                                    src={c.user?.avatar}
+                                                    alt="Avatar"
+                                                />
+                                            </div>
+                                            <div className="comment-details">
+                                                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>
+                                                    Người dùng: {c?.account?.username}</div>
+                                                <div style={{marginBottom: '5px'}}>Nội dung: {c?.content}</div>
+                                                <div style={{marginBottom: '5px'}}>Thời gian: {c?.createAt}</div>
 
-                                {comment.map((c) => (
-                                    <div  style={{ marginBottom: '10px' }}>
+                                                {/*hien thi nut sua comment cua user*/}
+                                                {(c.account.id===idAccount) ?
+                                                        <>
+                                                            <button style={{fontSize: '14px'}} disabled={!isShowUpdate}
+                                                                    onClick={() => setIsShow(!isShowUpdate)}>Sửa &nbsp;<i
+                                                                className="fa-sharp fa-regular fa-pen-to-square"
+                                                                style={{color: '#b61b1b'}}></i></button>
+                                                            <div className="reply-container">
+                                                        <textarea
+                                                            disabled={isShowUpdate}
+                                                            className="reply-textarea"
+                                                            onChange={handleComment}
+                                                            placeholder="Sửa phản hồi của bạn..."
+                                                        />
+                                                            </div>
+                                                            <button className="reply-button"
+                                                                    disabled={isShowUpdate}
+                                                                    onClick={() => saveReply(c?.id)}> Gửi
+                                                            </button>
+                                                        </>
 
-                                        <div>Nguoi dung: {c?.account?.username}</div>
-                                        <div>Noi dung: {c?.content}</div>
-                                        <div>Thoi gian: {c?.createAt}</div>
-                                    </div>
+                                                    : ''}
+
+                                                {/*Hien thi phan hoi cua shop*/}
+                                                {c?.reply !== null ? (
+                                                    <div className="shop-reply">Shop phản hồi: {c?.reply}</div>
+                                                ) : ''}
+
+                                                {(product?.shop?.id === idShop) ? (
+                                                    <>
+                                                        <button style={{fontSize: '14px'}} disabled={!isShow}
+                                                                onClick={() => setIsShow(!isShow)}>Phản hồi &nbsp;<i
+                                                            className="fa-sharp fa-regular fa-pen-to-square"
+                                                            style={{color: '#b61b1b'}}></i></button>
+                                                        <div className="reply-container">
+                                                    <textarea
+                                                        disabled={isShow}
+                                                        className="reply-textarea"
+                                                        onChange={handleReply}
+                                                        placeholder="Nhập phản hồi của bạn..."
+                                                    />
+
+                                                        </div>
+                                                        <button className="reply-button"
+                                                                disabled={isShow}
+                                                                onClick={() => saveReply(c?.id)}>Trả lời
+                                                        </button>
+                                                    </>
+                                                ) : ''}
+                                            </div>
+                                        </div>
+                                        <br/>
+                                    </>
                                 ))}
                             </div>
                         </div>
@@ -259,6 +334,28 @@ const ProductSinglePage = () => {
 
         </main>
     )
+
+    function saveReply(id) {
+        if (reply !== '') {
+            createReply(id, reply).then(() => {
+                toast.success("Thêm thành công!")
+                setIsFlag(!isFlag)
+                setIsShow(!isShow)
+                setReply('')
+            })
+        } else {
+            toast.error("Thêm không thành công!")
+        }
+
+
+    }
+
+    function handleReply(e) {
+        setReply(e.target.value)
+    }
+    function handleComment(e) {
+
+    }
 }
 
 export default ProductSinglePage
