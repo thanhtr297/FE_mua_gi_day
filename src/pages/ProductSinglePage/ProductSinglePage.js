@@ -11,10 +11,7 @@ import CartMessage from "../../components/CartMessage/CartMessage";
 import {getProductById} from "../../service/ProductService";
 import {addToCart} from "../../service/CartService";
 import {findShop} from "../ShopManagement/service/ProfileService";
-import {createReply, findCommentByIdP, saveComment} from "../../service/CommentService";
-import AddToCartButton from "../../components/Notification/Notification";
-import {useSnackbar} from "notistack";
-import Button from "react-bootstrap/Button";
+import {createReply, findCommentByIdP} from "../../service/CommentService";
 import {toast} from "react-toastify";
 import "./Comment.scss"
 import {AppContext} from "../../Context/AppContext";
@@ -27,13 +24,14 @@ const ProductSinglePage = () => {
     const productSingleStatus = useSelector(getSingleProductStatus);
     const [quantity, setQuantity] = useState(1);
     const cartMessageStatus = useSelector(getCartMessageStatus);
-    let idAccount = localStorage.getItem("account");
+    let idAccount = +localStorage.getItem("account");
     let navigate = useNavigate()
     let [comments, setComments] = useState([]);
     const [idShop, setIdShop] = useState(0);
     const [reply, setReply] = useState('')
     const [isFlag, setIsFlag] = useState(true);
     const [isShow, setIsShow] = useState(true);
+    const [isShowUpdate, setIsShowUpdate] = useState(true);
     // getting single product
     useEffect(() => {
         findShop(idAccount).then((res) => {
@@ -46,7 +44,6 @@ const ProductSinglePage = () => {
         })
         findCommentByIdP(id).then((res) => {
             setComments(res.data);
-            console.log(res)
         })
     }, [cartMessageStatus, isFlag]);
 
@@ -266,38 +263,63 @@ const ProductSinglePage = () => {
                                         <div className="comment-container">
                                             <div className="avatar-container">
                                                 <img
-                                                    src={findUserByAccount(c?.account?.id)?.avatar}
+                                                    src={c.user?.avatar}
                                                     alt="Avatar"
                                                 />
                                             </div>
                                             <div className="comment-details">
-                                                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>Người
-                                                    dùng: {c?.account?.username}</div>
+                                                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>
+                                                    Người dùng: {c?.account?.username}</div>
                                                 <div style={{marginBottom: '5px'}}>Nội dung: {c?.content}</div>
                                                 <div style={{marginBottom: '5px'}}>Thời gian: {c?.createAt}</div>
 
+                                                {/*hien thi nut sua comment cua user*/}
+                                                {(c.account.id===idAccount) ?
+                                                        <>
+                                                            <button style={{fontSize: '14px'}} disabled={!isShowUpdate}
+                                                                    onClick={() => setIsShow(!isShowUpdate)}>Sửa &nbsp;<i
+                                                                className="fa-sharp fa-regular fa-pen-to-square"
+                                                                style={{color: '#b61b1b'}}></i></button>
+                                                            <div className="reply-container">
+                                                        <textarea
+                                                            disabled={isShowUpdate}
+                                                            className="reply-textarea"
+                                                            onChange={handleComment}
+                                                            placeholder="Sửa phản hồi của bạn..."
+                                                        />
+                                                            </div>
+                                                            <button className="reply-button"
+                                                                    disabled={isShowUpdate}
+                                                                    onClick={() => saveReply(c?.id)}> Gửi
+                                                            </button>
+                                                        </>
+
+                                                    : ''}
+
+                                                {/*Hien thi phan hoi cua shop*/}
                                                 {c?.reply !== null ? (
                                                     <div className="shop-reply">Shop phản hồi: {c?.reply}</div>
                                                 ) : ''}
 
                                                 {(product?.shop?.id === idShop) ? (
                                                     <>
-                                                    <button style={{fontSize: '14px'}} disabled={!isShow}
-                                                            onClick={() => setIsShow(!isShow)}>Phản hồi &nbsp;<i
-                                                        className="fa-sharp fa-regular fa-pen-to-square"
-                                                        style={{color: '#b61b1b'}}></i></button>
-                                                    <div className="reply-container">
+                                                        <button style={{fontSize: '14px'}} disabled={!isShow}
+                                                                onClick={() => setIsShow(!isShow)}>Phản hồi &nbsp;<i
+                                                            className="fa-sharp fa-regular fa-pen-to-square"
+                                                            style={{color: '#b61b1b'}}></i></button>
+                                                        <div className="reply-container">
                                                     <textarea
                                                         disabled={isShow}
                                                         className="reply-textarea"
                                                         onChange={handleReply}
                                                         placeholder="Nhập phản hồi của bạn..."
                                                     />
-                                                    <button className="reply-button"
-                                                            disabled={isShow}
-                                                            onClick={() => saveReply(c?.id)}>Trả lời
-                                                    </button>
-                                                    </div>
+
+                                                        </div>
+                                                        <button className="reply-button"
+                                                                disabled={isShow}
+                                                                onClick={() => saveReply(c?.id)}>Trả lời
+                                                        </button>
                                                     </>
                                                 ) : ''}
                                             </div>
@@ -332,6 +354,9 @@ const ProductSinglePage = () => {
 
     function handleReply(e) {
         setReply(e.target.value)
+    }
+    function handleComment(e) {
+
     }
 }
 

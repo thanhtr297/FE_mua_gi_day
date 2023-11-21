@@ -179,9 +179,9 @@ const DoneUser = () => {
                                                     <div style={{padding: '10px'}}>
                                                         <span>Mã đơn hàng: 2903VDC02{bill[0]?.bill?.id}</span>
                                                         <span
-                                                            style={{marginLeft: "540px"}}>{sumQuantity(bill[0].bill.id)}</span>
+                                                            style={{marginLeft: "470px"}}>{sumQuantity(bill[0].bill.id)}</span>
                                                         <span
-                                                            style={{marginLeft: "135px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
+                                                            style={{marginLeft: "150px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
                                                         <span style={{marginLeft: "60px"}}>
                                                     </span>
                                                     </div>
