@@ -46,6 +46,9 @@
 }
 
 .reply-textarea {
+  height: 50px;
+  resize: none;
+  margin-left:50px;
   flex-grow: 1;
   padding: 8px;
   border: 1px solid #ccc;
@@ -55,12 +58,14 @@
 }
 
 .reply-button {
-  margin-left: 85%;
+  //margin-left: 85%;
+
   background-color: #ce3013;
-  color: white;
+  color: #ffffff;
   padding: 8px 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px; /* Adjust the font size as needed */
 }
+
