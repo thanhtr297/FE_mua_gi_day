@@ -218,11 +218,11 @@ export default function Filter() {
                         <button className={"mb-3"} type={'submit'}
                                 style={{
                                     fontSize: '16px',
-                                    marginTop: '50px',
+                                    marginTop: '47px',
                                     background: 'rgb(215, 0, 24)',
                                     marginRight: '40px',
-                                    width: '10%',
-                                    height: '35px',
+                                    width: '15%',
+                                    height: '42px',
                                     color: 'white'
                                 }}>
                             Tìm kiếm

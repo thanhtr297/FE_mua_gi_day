@@ -36,7 +36,7 @@ function CreateProduct(props) {
                 setShop(res)
             }
         })
-    })
+    },[])
 
     function create(e) {
         e.image = path

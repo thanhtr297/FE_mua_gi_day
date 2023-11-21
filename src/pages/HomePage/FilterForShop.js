@@ -167,14 +167,15 @@ export default function FilterForShop() {
                         <button className={"mb-3"}
                                 style={{
                                     fontSize: '16px',
-                                    marginTop: '50px',
+                                    marginTop: '49px',
                                     background: 'rgb(215, 0, 24)',
                                     marginLeft: '100px',
-                                    width: '10%',
-                                    height: '35px',
-                                    color: 'white'
+                                    width: '7%',
+                                    height: '37px',
+                                    color: 'white',
                                 }}>
-                            Tìm kiếm
+                            <div style={{marginTop:'-5%'}}>Tìm kiếm</div>
+
                         </button>
                     </div>
                 </Form>
