@@ -18,16 +18,14 @@ const BillDetails = (props) => {
 
     const onSubmit = (values) => {
         rejectionOrder(props.bill, values.reason).then((res) => {
-            alert("Hủy thành công !")
-
+            toast.success('Hủy thành công ', {autoClose : 700})
             toggleFlag()
 
         })
     };
     const acp = () => {
         acceptOrder(props.bill).then((res) => {
-            alert("Xác nhận thành công")
-            toast.success('Thành công');
+            toast.success('Xác nhận thành công', {autoClose : 700})
             toggleFlag()
 
         })
@@ -51,7 +49,7 @@ const BillDetails = (props) => {
                                             maxHeight: '3em'
                                         }}>{item?.product?.name}</p>
                                     </td>
-                                    <td style={{marginLeft: '25px'}}><p className='fw-normal mb-1'>x{item?.quantity}</p>
+                                    <td style={{width: '30px',marginLeft: '25px'}}><p className='fw-normal mb-1'>x{item?.quantity}</p>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -59,25 +57,23 @@ const BillDetails = (props) => {
                         </div>
                     ))}
                 </div>
-                <div style={{marginTop: '20.3px', marginLeft: '20px'}}>
+                <div style={{width: '120px', marginTop: '20.3px', marginLeft: '20px'}}>
                     <p style={{marginTop: '6.5px'}}>{formatPrice(total)}</p>
                 </div>
-                <div>
-                    <div style={{marginTop: '26px', marginLeft: '90px'}}>
+                <div style={{width: '170px'}}>
+                    <div style={{marginTop: '26px', marginLeft: '50px'}}>
                         {(props.bill[0]?.bill?.status === "Đơn hủy" || props.bill[0]?.bill?.status === "Đơn bị hủy") ?
                             <div><p style={{fontWeight: 'bold'}}> {props.bill[0]?.bill?.status}</p>
-                                <p>Lý do :{props.bill[0]?.bill?.reason}</p>
+                                <p>Lý do: {props.bill[0]?.bill?.reason}</p>
                             </div> :
                             <div>
                                 <p style={{fontWeight: 'bold'}}> {props.bill[0]?.bill?.status}</p>
                             </div>
 
                         }
-
-
                     </div>
                 </div>
-                <div style={{marginTop: '26px', marginLeft: '70px'}}>
+                <div style={{width: '260px', marginLeft: '30px' ,marginTop: '16px'}}>
                     {(props.bill[0]?.bill?.status === "Chờ xác nhận") ?
                         <div>
                             <button onClick={acp} style={{fontWeight: 'bold' , color : 'green'}}>Chấp nhận <i className="fa-solid fa-check" style={{color: '#17b563'}}></i></button>
@@ -90,7 +86,7 @@ const BillDetails = (props) => {
                                         <div>
                                             <button type="submit" >Hủy</button>
                                             <Field type="text" id="firstName" name="reason" style={
-                                                {marginLeft: '10px', marginTop: '10px', width: '200px', height: '50px',}
+                                                {marginBottom: '20px', width: '200px', height: '50px',}
                                             } placeholder="Lý do " title={"Vui lòng nhập đầy đủ thông tin"} required/>
                                         </div>
 
@@ -98,7 +94,7 @@ const BillDetails = (props) => {
                                 </Formik>
                             </div>
                         </div> :
-                        <div style={{marginLeft: '28px'}}><p> {props.bill[0]?.bill?.status}</p></div>
+                        <div style={{marginLeft: '28px' , marginTop :'4.05%'}}><p> {props.bill[0]?.bill?.status}</p></div>
 
                     }
                 </div>

@@ -13,7 +13,7 @@ export default function Login() {
     const navigate = useNavigate();
     const handleLogin = () => {
         if (!email || !password) {
-            toast.error("tài khoản mật khẩu không hợp lệ");
+            toast.error("tài khoản mật khẩu không hợp lệ" ,{autoClose : 800});
             return;
         }
         loginApi({
@@ -23,7 +23,7 @@ export default function Login() {
         }).then((res) => {
                 if (res.status === 200) {
                     login()
-                    toast.success('Đăng nhập thành công');
+                    toast.success('Đăng nhập thành công' ,{ autoClose: 800 });
                     if (res.data.authorities[0].authority === 'ROLE_ADMIN') {
                         navigate('/admin')
                     } else {
