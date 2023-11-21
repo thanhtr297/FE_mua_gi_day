@@ -11,9 +11,6 @@ import ListPrd from "../../components/ProductList/ListPrd";
 const HomePage = () => {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [page, setPage] = useState(0);
-    const [perPage] = useState(5);
-    const [totalPages, setTotalPages] = useState(0);
     useEffect(() => {
         displayProductStatus().then((res) => {
             setProducts(res.data);
@@ -24,21 +21,6 @@ const HomePage = () => {
 
         })
     }, []);
-    useEffect(() => {
-      const fetchData = async () => {
-        const startIndex = page * perPage;
-        const endIndex = startIndex + perPage;
-        const paginatedProducts = products.slice(startIndex, endIndex);
-        setProducts(paginatedProducts);
-        setTotalPages(Math.ceil(products.length / perPage));
-      };
-      fetchData();
-    }, [page, perPage]);
-    const handlePageClick = (selectedPage) => {
-        setPage(selectedPage.selected);
-    };
-
-
     // randomizing the products in the list
     const tempProducts = [];
     if (products.length > 0) {
@@ -83,18 +65,17 @@ const HomePage = () => {
                             </div>
                             {products === STATUS.LOADING ? <Loader/> : <ProductList products={tempProducts}/>}
                         </div>
-
-                        {productByCategory.map((item) => (
-                            (item.length > 0) ?
+                        {categories.map((item) => (
+                            // (item.length > 0) ?
                                 <div className='categories-item'>
                                     <div className='title-md'>
-                                        <h3>{item[0]?.category?.name}</h3>
+                                        <h3>{item?.name}</h3>
                                     </div>
-                                    {item === STATUS.LOADING ? <Loader/> : <ListPrd products={item}/>}
+                                    {item === STATUS.LOADING ? <Loader/> : <ListPrd categories={item?.id}/>}
 
                                 </div>
-                                :
-                                <div></div>
+                                // :
+                                // <div></div>
                         ))}
                     </div>
                 </div>

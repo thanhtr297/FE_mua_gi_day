@@ -5,7 +5,7 @@ import ReactPaginate from "react-paginate";
 
 const ProductList = ({products}) => {
     return (
-        <div className='product-lists grid bg-whitesmoke my-3'>
+        <div className='product-lists grid bg-whitesmoke my-3' style={{backgroundColor: '#F5F5F5'}}>
             {
                 products.map(product => {
                     let discountedPrice = (product.price) - (product.price * (product.promotion / 100));

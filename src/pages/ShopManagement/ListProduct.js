@@ -63,7 +63,7 @@ function ListProduct() {
                 <Link to={'/shop-management/create'}>
                     <MdCreateNewFolder style={{color: 'black', fontSize: '30px'}}/>
                 </Link>
-                <h1 style={{marginLeft: '400px'}}>Danh sách sản phẩm</h1> <div style={{marginTop: '10px',marginLeft:'280px'}}>
+                <h1 style={{marginLeft: '350px'}}>Danh sách sản phẩm</h1> <div style={{marginTop: '10px',marginLeft:'280px'}}>
                 <ReactPaginate
                     pageCount={totalPages}
                     pageRangeDisplayed={3}
