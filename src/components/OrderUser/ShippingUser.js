@@ -81,7 +81,7 @@ const PendingUser = () => {
 
     function cancelBillDetail(idBill) {
         cancelBill(idBill).then(() => {
-            toast.success("Hủy sản phẩm thành công!")
+            toast.success("Hủy sản phẩm thành công!",{ autoClose: 700 })
         })
     }
 

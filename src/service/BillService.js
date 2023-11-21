@@ -32,10 +32,10 @@ import {toast} from "react-toastify";
         resolve(
             axios.post("http://localhost:8080/api/bills/save/bill?idAccount="+idAccount,idCartDetails)
                 .then(() => {
-                    toast.success("Đặt hàng thành công, vui lòng chờ chủ shop xác nhận !")
+                    toast.success("Đặt hàng thành công, vui lòng chờ chủ shop xác nhận !",{ autoClose: 700 })
                     navigate("/user-management/order/confirm")
                 }).catch(() => {
-                toast.error("Lỗi không đặt được hàng")
+                toast.error("Lỗi không đặt được hàng",{ autoClose: 700 })
             })
         )
     })
@@ -59,9 +59,9 @@ const receive = (idBill) => {
         resolve(
             axios.post("http://localhost:8080/api/bills/receive?idBill="+idBill)
                 .then(() => {
-                    toast.success("Nhận hàng thành công!")
+                    toast.success("Nhận hàng thành công!",{ autoClose: 700 })
                 }).catch(() => {
-                toast.error("Lỗi không nhận được hàng!")
+                toast.error("Lỗi không nhận được hàng!",{ autoClose: 700 })
             })
         )
     })
@@ -72,12 +72,12 @@ const cancelBillByReason = (idBill, reason) => {
             axios.post("http://localhost:8080/api/bills/cancel?idBill="+idBill+"&reason="+reason)
                 .then(() => {
                     if(reason.length > 0) {
-                        toast.success("Hủy đơn hàng thành công!")
+                        toast.success("Hủy đơn hàng thành công!",{ autoClose: 700 })
                     }  else {
-                        toast.error("Bạn cần nhập lý do hủy đơn hàng")
+                        toast.error("Bạn cần nhập lý do hủy đơn hàng",{ autoClose: 700 })
                     }
                 }).catch(() => {
-                toast.error("Lỗi không hủy được đơn hàng")
+                toast.error("Lỗi không hủy được đơn hàng",{ autoClose: 700 })
             })
         )
     })

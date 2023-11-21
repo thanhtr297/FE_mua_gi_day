@@ -6,9 +6,9 @@ export const addToCart = (cart, id) => {
         resolve(
             axios.post("http://localhost:8080/api/carts/add?idAccount="+id, cart)
                 .then(() => {
-                    toast.success("Thêm sản phẩm thành công")
+                    toast.success("Thêm sản phẩm thành công",{ autoClose: 700 })
                 }).catch(() => {
-                toast.error("Thêm sản phẩm thất bại")
+                toast.error("Thêm sản phẩm thất bại",{ autoClose: 700 })
             })
         )
     })

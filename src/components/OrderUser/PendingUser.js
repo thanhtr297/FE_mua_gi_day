@@ -76,7 +76,7 @@ const PendingUser = () => {
         if (window.confirm("Bạn có muốn hủy đơn hàng này không ?")) {
             cancelBill(idBill).then(() => {
                 setCheck(!check);
-                toast.success("Hủy sản phẩm thành công!")
+                toast.success("Hủy sản phẩm thành công!",{ autoClose: 700 })
             })
         }
     }

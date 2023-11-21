@@ -45,6 +45,7 @@ const CartPage = () => {
                 for (let i = 0; i < shops.length; i++) {
                     let product = [];
                     for (let j = 0; j < carts.length; j++) {
+                        setIdCart(carts[0].cart.id)
                         if (carts[j]?.product?.shop?.name === shops[i]) {
                             product.push(carts[j]);
                         }
@@ -82,20 +83,11 @@ const CartPage = () => {
     }, [carts]);
 
 
-    useEffect(() => {
-        carts.map((c) => {
-            return (
-                setIdCart(c.cart.id)
-            )
-        })
-    }, [])
-
-
     const increaseQty = (quantity, idProduct, idCart, maxQty) => {
         if (quantity <= maxQty) {
             updateQuantityInDB(quantity, idProduct, idCart);
         } else {
-            toast.error("Số lượng sản phẩm bạn muốn mua đã hết hàng")
+            toast.error("Số lượng sản phẩm bạn muốn mua đã hết hàng", { autoClose: 700 })
         }
     }
 
@@ -119,7 +111,7 @@ const CartPage = () => {
         if (window.confirm("Bạn có muốn xóa sản phẩm này không?")) {
             deleteProductFromCart(idCartDetail).then(() => {
                 setCheck(!check);
-                toast.success("Xóa sản phẩm thành công")
+                toast.success("Xóa sản phẩm thành công",{ autoClose: 700 })
             })
         }
     }
@@ -128,7 +120,7 @@ const CartPage = () => {
         if (window.confirm("Bạn có muốn xóa tất cả sản phẩm không trong giỏ hàng không?")) {
             deleteAllProductFromCart(idCart).then(() => {
                 setCheck(!check);
-                alert("Xóa sản phẩm thành công!")
+                toast.success("Xóa sản phẩm thành công!", { autoClose: 700 })
             })
         }
     }
