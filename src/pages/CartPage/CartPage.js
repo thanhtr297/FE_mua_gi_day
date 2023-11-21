@@ -134,8 +134,13 @@ const CartPage = () => {
     }
 
     const saveToBill = () => {
-        localStorage.setItem("isChecked", JSON.stringify(isChecked));
-        navigate("/bill");
+        if (isChecked.length === 0) {
+            toast.error("Bạn chưa chọn sản phẩm nào!", { autoClose: 700 })
+        }else {
+            localStorage.setItem("isChecked", JSON.stringify(isChecked));
+            navigate("/bill");
+        }
+
     };
 
     const checked = (e, idCart) => {
