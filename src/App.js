@@ -51,6 +51,7 @@ import Comment from "./pages/CommentPage/Comment";
 import Demo from "./Demo";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CancelShop from "./components/OrderUser/CancelShop";
 
 
 
@@ -121,6 +122,7 @@ function App() {
                                 <Route path="/user-management/order/confirm" element={<PendingUser/>}/>
                                 <Route path="/user-management/order/shipping" element={<ShippingUser/>}/>
                                 <Route path="/user-management/order/cancel" element={<CancelUser/>}/>
+                                <Route path="/user-management/order/cancelShop" element={<CancelShop/>}/>
                                 <Route path="/user-management/order/done" element={<DoneUser/>}/>
                             </Route>
                         </Route>

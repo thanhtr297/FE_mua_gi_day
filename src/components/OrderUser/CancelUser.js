@@ -17,7 +17,7 @@ const CancelUser = () => {
     const [user, setUser] = useState({})
     const status = "Đơn hủy"
     const [bill1, setBill1] = useState([])
-    const [listBillByBillDetail, setListBillByBillDeatl] = useState([])
+    const [listBillByBillDetail, setListBillByBillDetail] = useState([])
 
 
     useEffect(() => {
@@ -47,7 +47,7 @@ const CancelUser = () => {
                     updatedListBillByBillDetail[i] = product;
                 }
             }
-            setListBillByBillDeatl(updatedListBillByBillDetail);
+            setListBillByBillDetail(updatedListBillByBillDetail);
         };
 
         listBillByBillDetail();
@@ -169,7 +169,7 @@ const CancelUser = () => {
                                                     }}/>
                                                     <span style={{
                                                         color: "#BB0F53",
-                                                        marginLeft: "750px"
+                                                        marginLeft: "700px"
                                                     }}>Ngày hủy: {bill[0]?.bill?.date}</span>
                                                 </div>
                                             </div>
@@ -179,7 +179,7 @@ const CancelUser = () => {
                                                     <div style={{padding: '10px'}}>
                                                         <span>Mã đơn hàng: 2903VDC02{bill[0]?.bill?.id}</span>
                                                         <span
-                                                            style={{marginLeft: "390px"}}>{sumQuantity(bill[0].bill.id)}</span>
+                                                            style={{marginLeft: "400px"}}>{sumQuantity(bill[0].bill.id)}</span>
                                                         <span
                                                             style={{marginLeft: "130px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
                                                         <span style={{marginLeft: "110px"}}>{bill[0].bill.reason}

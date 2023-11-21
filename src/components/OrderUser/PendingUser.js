@@ -21,7 +21,7 @@ const PendingUser = () => {
     const status = "Chờ xác nhận"
     const [check, setCheck] = useState(true)
     const [bill1, setBill1] = useState([])
-    const [listBillByBillDetail, setListBillByBillDeatl] = useState([])
+    const [listBillByBillDetail, setListBillByBillDetail] = useState([])
 
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const PendingUser = () => {
                     updatedListBillByBillDetail[i] = product;
                 }
             }
-            setListBillByBillDeatl(updatedListBillByBillDetail);
+            setListBillByBillDetail(updatedListBillByBillDetail);
         };
 
         listBillByBillDetail();

@@ -59,10 +59,10 @@ export default function Profile() {
 
 
     const find = async () => {
-        setFullAddress(address + ", " + address + ", " + nameWards + ", " + nameDistrict + ", " + nameCity)
-        console.log('address in find ', address + ", " + nameWards + ", " + nameDistrict + ", " + nameCity);
-        // const result = await geocodeByAddress("Bến xe Mỹ Đình")
-        const result = await geocodeByAddress(fullAddress)
+        setFullAddress(address +  ", " + nameWards + ", " + nameDistrict + ", " + nameCity)
+        console.log('address in find ', address + ", " + nameWards + ", " +nameDistrict + ", " + nameCity);
+        const result = await geocodeByAddress("Bến xe Giáp Bát")
+        // const result = await geocodeByAddress(fullAddress)
         const latLng = await getLatLng(result[0])
         setCoords(latLng)
     }
@@ -131,6 +131,8 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
         setNameWards(ward.name);
     }
 
+
+
     return (
         <>
             <div className={'container'} style={{width: '85%', height: "500px"}}>
@@ -152,7 +154,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                         <div style={{color: "red", scale: "2"}}>{nameCity}</div>
                         <div style={{width: "500px", height: "200px", marginLeft:"55px"}}>
                             <GoogleMapReact
-                                bootstrapURLKeys={{key: "AIzaSyB_L2SRcyyNxng3rGmtzpGcMXLxOBbyqk4"}}
+                                bootstrapURLKeys={{key: 'AIzaSyDRqtWVwZAl8sB2Au23S10L_V5GgC_3Cls'}}
                                 defaultCenter={coords}
                                 defaultZoom={15}
                                 center={coords}
@@ -227,7 +229,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                             setNameDistrict(textDistrict.split("-")[1])
                                             displayWardsByIdDistrict(textDistrict.split("-")[0])
                                             setIdDistrict(textDistrict.split("-")[0])
-                                        }} className={"form-select"}>
+                                        }}className={"form-select"}>
                                             {/*<option>--Chọn Quận/Huyện--</option>*/}
                                             <option>{shop?.wards?.district?.name}</option>
                                             {districts.map((d) => {

@@ -25,7 +25,7 @@ const PendingUser = () => {
     const status = "Đang giao"
     const [check, setCheck] = useState(true)
     const [bill1, setBill1] = useState([])
-    const [listBillByBillDetail, setListBillByBillDeatl] = useState([])
+    const [listBillByBillDetail, setListBillByBillDetail] = useState([])
     const {isFlag } = useContext(AppContext);
 
 
@@ -58,7 +58,7 @@ const PendingUser = () => {
                     updatedListBillByBillDetail[i] = product;
                 }
             }
-            setListBillByBillDeatl(updatedListBillByBillDetail);
+            setListBillByBillDetail(updatedListBillByBillDetail);
         };
 
         listBillByBillDetail();

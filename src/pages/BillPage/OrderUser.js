@@ -13,7 +13,8 @@ function OrderUser() {
         { to: "/user-management/order/shipping", label: 'Đang giao' },
         { to: "/user-management/order/done", label: 'Đã giao' },
         { to: "/user-management/order/cancel", label: 'Đơn hủy' },
-      
+        { to: "/user-management/order/cancelShop", label: 'Đơn bị hủy' },
+
 
 
     ];
@@ -28,7 +29,7 @@ function OrderUser() {
             <nav className={'naV'}>
                 <ul className="nav-list" style={{}} >
                     {links.map((link, index) => (
-                        <li key={index} className={`nav-item 
+                        <li key={index} style={{marginLeft:"65px"}} className={`nav-item 
                         ${selectedLink === link.to.split('/').pop() ? 'selected' : (initialLink === link.to.split('/').pop() ? 'selected' : '')}`}>
                             <Link to={link.to} className={`nav-link ${selectedLink === link.to.split('/').pop() ? 'selected' : (initialLink === link.to.split('/').pop() ? 'selected' : '')}`}>
                                 {link.label}
