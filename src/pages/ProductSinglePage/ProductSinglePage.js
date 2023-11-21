@@ -14,7 +14,7 @@ import {findShop} from "../ShopManagement/service/ProfileService";
 import {createReply, findCommentByIdP} from "../../service/CommentService";
 import {toast} from "react-toastify";
 import "./Comment.scss"
-
+import {FaStar} from "react-icons/fa";
 
 
 const ProductSinglePage = () => {
@@ -31,6 +31,7 @@ const ProductSinglePage = () => {
     const [isFlag, setIsFlag] = useState(true);
     const [isShow, setIsShow] = useState(true);
     const [isShowUpdate, setIsShowUpdate] = useState(true);
+    const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
     // getting single product
     useEffect(() => {
         findShop(idAccount).then((res) => {
@@ -84,7 +85,8 @@ const ProductSinglePage = () => {
     function shopProfile(id) {
         return navigate("/shop-management/shop-profile/" + id)
     }
-    function saveToBill ()  {
+
+    function saveToBill() {
         addToCartHandler(product)
         navigate("/cart");
     }
@@ -251,73 +253,93 @@ const ProductSinglePage = () => {
             </div>
 
             <div style={{marginTop: '50px'}}>
-                <div className='product-single'>
-                    <div className='product-single'>
+                <div className='comment-single'>
+                    <div className='comment-single'>
                         <div className='containerr'>
-                            <h1 style={{marginBottom: '20px', fontSize: '24px'}}>Đánh giá: </h1>
-                            <div className='product-single-content bg-white grid'>
+                            <h1 style={{marginBottom: '20px', fontSize: '24px'}}>Đánh giá: &nbsp; <FaStar style={{color:'F5E932'}} /><FaStar style={{color:'F5E932'}}/><FaStar style={{color:'F5E932'}} /><FaStar style={{color:'F5E932'}} /><FaStar  />  </h1>
+                            <div className=' bg-white grid' style={{paddingTop: '3%'}}>
                                 {comments.map((c) => (
                                     <>
-                                        <div className="comment-container">
-                                            <div className="avatar-container">
-                                                <img
-                                                    src={c.user?.avatar}
-                                                    alt="Avatar"
-                                                />
+                                        <div className="comment-container" style={{marginLeft: '10%',marginRight:'10%'}}>
+                                            <div style={{display: 'flex'}}>
+                                                <div className="avatar-container">
+                                                    <img
+                                                        src={c?.user?.avatar || defaultImageUrl}
+                                                        alt="Avatar"
+                                                    />
+
+                                                </div>
+                                                <div
+                                                    style={{fontWeight: 'bold', padding: '10px 0px', fontSize: '14px'}}>
+                                                    Người dùng: {c?.account?.username}
+                                                </div>
+                                                <div style={{ padding: '10px 0px', fontSize: '12px'}}>
+                                                    &nbsp;&nbsp; &nbsp;&nbsp; Loại: {c?.product?.category?.name}
+                                                </div>
+                                                <div style={{ padding: '10px 0px', fontSize: '12px'}}>
+                                                    &nbsp;&nbsp; &nbsp;&nbsp; Hãng: {c?.product?.brand?.name}
+                                                </div>
                                             </div>
                                             <div className="comment-details">
-                                                <div style={{fontWeight: 'bold', marginBottom: '5px'}}>
-                                                    Người dùng: {c?.account?.username}</div>
-                                                <div style={{marginBottom: '5px'}}>Nội dung: {c?.content}</div>
-                                                <div style={{marginBottom: '5px'}}>Thời gian: {c?.createAt}</div>
+
+                                                <div style={{
+                                                    marginBottom: '5px',
+                                                    maxWidth: '900px',
+                                                    marginLeft: '60px'
+                                                }}>Nội dung: {c?.content}</div>
+                                                <div style={{marginBottom: '5px', marginLeft: '60px'}}>Thời
+                                                    gian: {c?.createAt}</div>
 
                                                 {/*hien thi nut sua comment cua user*/}
-                                                {(c.account.id===idAccount) ?
-                                                        <>
-                                                            <button style={{fontSize: '14px'}} disabled={!isShowUpdate}
-                                                                    onClick={() => setIsShow(!isShowUpdate)}>Sửa &nbsp;<i
-                                                                className="fa-sharp fa-regular fa-pen-to-square"
-                                                                style={{color: '#b61b1b'}}></i></button>
-                                                            <div className="reply-container">
-                                                        <textarea
-                                                            disabled={isShowUpdate}
-                                                            className="reply-textarea"
-                                                            onChange={handleComment}
-                                                            placeholder="Sửa phản hồi của bạn..."
-                                                        />
-                                                            </div>
-                                                            <button className="reply-button"
-                                                                    disabled={isShowUpdate}
-                                                                    onClick={() => saveReply(c?.id)}> Gửi
-                                                            </button>
-                                                        </>
+                                                {/*{(c.account.id===idAccount) ?*/}
+                                                {/*        <>*/}
+                                                {/*            <button style={{fontSize: '14px'}} disabled={!isShowUpdate}*/}
+                                                {/*                    onClick={() => setIsShow(!isShowUpdate)}>Sửa &nbsp;<i*/}
+                                                {/*                className="fa-sharp fa-regular fa-pen-to-square"*/}
+                                                {/*                style={{color: '#b61b1b'}}></i></button>*/}
+                                                {/*            <div className="reply-container">*/}
+                                                {/*        <textarea*/}
+                                                {/*            disabled={isShowUpdate}*/}
+                                                {/*            className="reply-textarea"*/}
+                                                {/*            onChange={handleComment}*/}
+                                                {/*            placeholder="Sửa phản hồi của bạn..."*/}
+                                                {/*        />*/}
+                                                {/*            </div>*/}
+                                                {/*            <button className="reply-button"*/}
+                                                {/*                    disabled={isShowUpdate}*/}
+                                                {/*                    onClick={() => saveReply(c?.id)}> Gửi*/}
+                                                {/*            </button>*/}
+                                                {/*        </>*/}
 
-                                                    : ''}
+                                                {/*    : ''}*/}
 
                                                 {/*Hien thi phan hoi cua shop*/}
                                                 {c?.reply !== null ? (
-                                                    <div className="shop-reply">Shop phản hồi: {c?.reply}</div>
+                                                    <div style={{marginLeft: '100px',fontWeight: 'bold',color:"2A2727"}} className="shop-reply">Shop phản
+                                                        hồi: {c?.reply}</div>
                                                 ) : ''}
 
                                                 {(product?.shop?.id === idShop) ? (
                                                     <>
-                                                        <button style={{fontSize: '14px'}} disabled={!isShow}
+                                                        <button style={{fontSize: '14px', marginLeft: '50px'}}
+                                                                disabled={!isShow}
                                                                 onClick={() => setIsShow(!isShow)}>Phản hồi &nbsp;<i
                                                             className="fa-sharp fa-regular fa-pen-to-square"
                                                             style={{color: '#b61b1b'}}></i></button>
                                                         <div className="reply-container">
                                                     <textarea
+                                                        id={'rep'}
                                                         disabled={isShow}
                                                         className="reply-textarea"
                                                         onChange={handleReply}
                                                         placeholder="Nhập phản hồi của bạn..."
                                                     />
-
+                                                            <button className="reply-button"
+                                                                    disabled={isShow}
+                                                                    onClick={() => saveReply(c?.id)}>Trả lời
+                                                            </button>
                                                         </div>
-                                                        <button className="reply-button"
-                                                                disabled={isShow}
-                                                                onClick={() => saveReply(c?.id)}>Trả lời
-                                                        </button>
+
                                                     </>
                                                 ) : ''}
                                             </div>
@@ -353,6 +375,7 @@ const ProductSinglePage = () => {
     function handleReply(e) {
         setReply(e.target.value)
     }
+
     function handleComment(e) {
 
     }

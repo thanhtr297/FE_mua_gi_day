@@ -107,18 +107,18 @@ export default function Register() {
                     {({isSubmitting}) => (
                         <Form>
                             <div>
-                                <label className={'text'} htmlFor="username" style={{fontSize : '16px'}}>Tên đăng nhập</label>
+                                <label className={'text'} htmlFor="username" style={{fontSize : '14px'}}>Tên đăng nhập</label>
                                 <Field type="text" name="username" />
                                 <ErrorMessage  className={'formik-error-message'} name="username" component="div"/>
                             </div>
 
                             <div>
-                                <label className={'text'} htmlFor="password" style={{fontSize : '16px'}}>Mật khẩu</label>
+                                <label className={'text'} htmlFor="password" style={{fontSize : '14px'}}>Mật khẩu</label>
                                     <Field type="password" name="password" />
                                 <ErrorMessage className={'formik-error-message'} name="password" component="div"/>
                             </div>
                             <div>
-                                <label className={'text'} htmlFor="email" style={{fontSize : '16px'}}>Email</label>
+                                <label className={'text'} htmlFor="email" style={{fontSize : '14px'}}>Email</label>
                                 <div style={{display : 'flex'}}>
                                     <div>
                                         <Field type="text" name="email" style={{width : '410px'}}/>
@@ -133,7 +133,7 @@ export default function Register() {
 
                             </div>
                             <div>
-                                <label className={'number'} htmlFor="otp" style={{fontSize : '16px'}}><b>Nhập mã xác nhận</b></label>
+                                <label className={'number'} htmlFor="otp" style={{fontSize : '14px'}}><b>Nhập mã xác nhận</b></label>
                                 <div style={{display : 'flex' , }}>
                                 <input style={{width : '100px'}} type="text" onChange={(event) => setOtpCheck(event.target.value)}/>
                                 </div>

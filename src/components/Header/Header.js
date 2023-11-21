@@ -100,7 +100,7 @@ const Header = (props) => {
                                 </li>
                                 <li  style={{marginBottom : '-14%'}}>
                                     <Link to="/register">
-                                        <span style= { !checkLogin ? {display: 'none'} : { color : 'white' ,fontSize : '16px' , fontWeight : 'bold' , margin : '-5px 7px 0 7px'}}>|</span>
+                                        <span style= { !checkLogin ? {display: 'none'} : { color : 'white' ,fontSize : '16px' , fontWeight : 'bold' , margin : '-5px 7px 0 7px'}}></span>
                                         <span className='top-link-itm-txt'
                                               style={!checkLogin ? {display: 'none'} : {}}>Đăng ký</span>
                                     </Link>

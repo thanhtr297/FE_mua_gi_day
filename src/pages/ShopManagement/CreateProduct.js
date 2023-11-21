@@ -69,7 +69,8 @@ function CreateProduct(props) {
                         account: {
                             id: localStorage.getItem('account')
                         },
-                        shop: shop
+                        shop: shop,
+                        promotion: '0'
                     }}
                     onSubmit={(e) => {
                         create(e)
@@ -141,6 +142,12 @@ function CreateProduct(props) {
                                                 )
                                             })}
                                         </Field>
+                                    </div>
+                                    <div className="mb-3" style={{fontSize: '16px',marginTop:'10px'}}>
+                                        <label htmlFor={'promotion'} className="form-label">Phần trăm giảm giá</label>
+                                        <Field style={{fontSize: '16px'}} type={'text'} name={'promotion'}
+                                               className={'form-control'}
+                                               id="{'promotion'}"/>
                                     </div>
                                     <br/>
 
