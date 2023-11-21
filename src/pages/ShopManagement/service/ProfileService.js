@@ -1,27 +1,24 @@
 import axios from "axios";
+import {API_URL} from "../../../utils/config";
 
-export const findShop = (idAcc) => {
+export const findShop = (accountId) => {
 
     return new Promise((resolve) => {
-        resolve(
-            axios.get("http://localhost:8080/api/shops/account/"+idAcc)
-                .then(response => {
-                    return response.data
-                }).catch(() => {
+        resolve(axios.get(`${API_URL}/api/shops/account/${accountId}`)
+            .then(response => {
+                return response.data
+            }).catch(() => {
                 return {}
-            })
-        )
+            }))
     })
 }
-export const saveShop = (data,navigate) => {
+export const saveShop = (data, navigate) => {
     return new Promise((resolve) => {
-        resolve(
-            axios.post("http://localhost:8080/api/shops/",data)
-                .then(response => {
-                    return navigate("/shop-management/profile")
-                }).catch(() => {
+        resolve(axios.post(`${API_URL}/api/shops/`, data)
+            .then(() => {
+                return navigate("/shop-management/profile")
+            }).catch(() => {
 
-            })
-        )
+            }))
     })
 }

@@ -14,13 +14,15 @@ import {findShop, saveShop} from "./service/ProfileService";
 import {useNavigate} from "react-router-dom";
 import {AppContext} from "../../Context/AppContext";
 import {toast} from "react-toastify";
+import GoogleMapReact from "google-map-react";
+import {IoLocationSharp} from "react-icons/io5";
+
 
 export default function Profile() {
     const [idCity, setIdCity] = useState(0)
     const [idDistrict, setIdDistrict] = useState(0)
     const [idWards, setIdWards] = useState(0)
     const navigate = useNavigate();
-
     const [avatar, setAvatar] = useState(null);
     const [loading, setLoading] = useState(false);
     const [cities, setCities] = useState([]);
@@ -35,6 +37,9 @@ export default function Profile() {
     const [shop, setShop] = useState({})
     const [check, setCheck] = useState(true)
     const {toggleFlag} = useContext(AppContext);
+    const Icon = ({text}) => <div>{text}</div>;
+
+
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
             setCoords({lat: latitude, lng: longitude})
@@ -54,8 +59,10 @@ export default function Profile() {
 
 
     const find = async () => {
-        setFullAddress(address + ", " + nameWards + ", " + nameDistrict + ", " + nameCity)
-        const result = await geocodeByAddress(fullAddress)
+        setFullAddress(address +  ", " + nameWards + ", " + nameDistrict + ", " + nameCity)
+        console.log('address in find ', address + ", " + nameWards + ", " +nameDistrict + ", " + nameCity);
+        const result = await geocodeByAddress("Bến xe Giáp Bát")
+        // const result = await geocodeByAddress(fullAddress)
         const latLng = await getLatLng(result[0])
         setCoords(latLng)
     }
@@ -84,10 +91,12 @@ export default function Profile() {
         })
     }
 
-    function save(e) {
 
+
+    function save(e) {
+        setAddress(e.address)
         const idAcc = localStorage.getItem("account")
-        e = {
+        const request = {
             ...e,
             id: shop.id,
             avatar: avatar,
@@ -105,15 +114,25 @@ export default function Profile() {
             }
         }
 
-        saveShop(e, navigate).then(()=>{
+        saveShop(request, navigate).then(async () => {
             toast.success("Lưu thành công!")
             setCheck(true)
             toggleFlag()
+            find().then()
         }).catch( () => {
             toast.warning("Lưu thất bại !")
         })
     }
 const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
+
+    function onWardChange(e) {
+        setIdWards(e.target.value);
+        const ward = wards.find(w => w.id === +e.target.value);
+        setNameWards(ward.name);
+    }
+
+
+
     return (
         <>
             <div className={'container'} style={{width: '85%', height: "500px"}}>
@@ -131,7 +150,25 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                         <input type="file" id="imageUpload" style={{display: 'none'}}
                                onChange={(e) => handledImage(e.target.files[0])}/>
                     </div>
-                    <div className={'col-md-2'}></div>
+                    <div className={'col-md-2'}>
+                        <div style={{color: "red", scale: "2"}}>{nameCity}</div>
+                        <div style={{width: "500px", height: "200px", marginLeft:"55px"}}>
+                            <GoogleMapReact
+                                bootstrapURLKeys={{key: 'AIzaSyDRqtWVwZAl8sB2Au23S10L_V5GgC_3Cls'}}
+                                defaultCenter={coords}
+                                defaultZoom={15}
+                                center={coords}
+                            >
+                                <Icon
+                                    lat={coords.lat}
+                                    lng={coords.lng}
+                                    text={<IoLocationSharp color={"red"} size={24}/>}
+                                />
+                            </GoogleMapReact>
+
+                        </div>
+
+                    </div>
                     <div className={'col-md-6'}>
 
                     </div>
@@ -139,7 +176,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                 <div className={'row'} style={{height: "250px"}}>
                     <Formik initialValues={shop}
                     enableReinitialize={true}
-                            onSubmit={e => {
+                            onSubmit={(e) => {
                                 save(e)
                             }}>
                         <Form>
@@ -192,7 +229,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                             setNameDistrict(textDistrict.split("-")[1])
                                             displayWardsByIdDistrict(textDistrict.split("-")[0])
                                             setIdDistrict(textDistrict.split("-")[0])
-                                        }} className={"form-select"}>
+                                        }}className={"form-select"}>
                                             {/*<option>--Chọn Quận/Huyện--</option>*/}
                                             <option>{shop?.wards?.district?.name}</option>
                                             {districts.map((d) => {
@@ -204,16 +241,12 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                     </div>
                                     <div className="mb-3" style={{fontSize: '16px'}}>
                                         <label htmlFor={'wards'} className="form-label">Phường/xã</label>
-                                        <select style={{fontSize: '16px'}} disabled={check} name={'address.wards.id'} onChange={(e) => {
-                                            const textWards = e.target.value;
-                                            setNameWards(textWards.split("-")[1])
-                                            setIdWards(textWards.split("-")[0])
-                                        }} className={"form-select"}>
+                                        <select style={{fontSize: '16px'}} disabled={check} name={'address.wards.id'} onChange={(e) => onWardChange(e)} className={"form-select"}>
                                             {/*<option >--Chọn xã/phường--</option>*/}
                                             <option >{shop?.wards?.name}</option>
                                             {wards.map((w) => {
                                                 return (
-                                                    <option value={w.id + "-" + w.name}>{w.name}</option>
+                                                    <option value={w.id}>{w.name}</option>
                                                 )
                                             })}
                                         </select>
@@ -222,6 +255,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                             </div>
                         </Form>
                     </Formik>
+
                 </div>
 
             </div>

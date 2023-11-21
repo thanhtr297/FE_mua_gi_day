@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './/Login.scss';
 import {Formik, Form, ErrorMessage, Field} from 'formik';
 import {emailCheck, register, sendMail, userCheck} from "../../service/UserService";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 export default function Register() {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [countdown, setCountdown] = useState(30);
@@ -86,7 +86,7 @@ export default function Register() {
                             username: require("yup")
                                 .string()
                                 .matches(/^[a-zA-Z0-9_]+$/, "Tên tài khoản không hợp lệ")
-                                .required("Vui lòng nhập user.") .test('unique', 'Tài khoản đã tồn tại', (value) => {
+                                .required("Vui lòng nhập user.").test('unique', 'Tài khoản đã tồn tại', (value) => {
                                     return !listUserCheck.includes(value);
                                 }),
                             password: require("yup")
@@ -141,7 +141,7 @@ export default function Register() {
                         </Form>
                     )}
                 </Formik>
-                <button type="button" onClick={handleButtonClick} style={{width:'100px',fontSize : '16px',border: '2px solid #aba5a5'}} className={(otp == otpCheck) ? "active" : "" }  disabled={!(otp == otpCheck)}>
+                <button type="button" onClick={handleButtonClick} style={{width:'100px',fontSize : '16px',border: '2px solid #aba5a5'}} className={(otp === otpCheck) ? "active" : "" }  disabled={!(otp === otpCheck)}>
                    <b>Đăng kí</b>
                 </button>
                 <div className={'back'}>

@@ -20,7 +20,6 @@ export default function DisplayAddress() {
 
 
     const Icon = ({text}) => <div>{text}</div>;
-
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
             setCoords({lat: latitude, lng: longitude})
@@ -97,7 +96,7 @@ export default function DisplayAddress() {
                 }}/>
 
                 <button onClick={find}>Search</button>
-                <div>{fullAddress}</div>
+
 
                 <div style={{width: "500px", height: "300px"}}>
                     <GoogleMapReact

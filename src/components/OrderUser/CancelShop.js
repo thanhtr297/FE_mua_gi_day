@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import "./BillDone.scss";
+import "./BillCancel.scss";
 import {shopping_cart} from '../../utils/images';
 import {Link} from 'react-router-dom';
 import {formatPrice} from '../../utils/helpers';
@@ -8,15 +8,14 @@ import {findUserByAccount} from "../../pages/UserManagement/Service/UserService"
 import {CiShop} from "react-icons/ci";
 import {BsArrowThroughHeart} from "react-icons/bs";
 import {IoLocationOutline} from "react-icons/io5";
-import CommentUser from "./ModalComment";
 
 
-const DoneUser = () => {
+const CancelShop = () => {
     const idAccount = localStorage.getItem("account")
     const [bills, setBills] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
     const [user, setUser] = useState({})
-    const status = "Đã giao"
+    const status = "Đơn bị hủy"
     const [bill1, setBill1] = useState([])
     const [listBillByBillDetail, setListBillByBillDetail] = useState([])
 
@@ -72,11 +71,7 @@ const DoneUser = () => {
 
 
     const checkEmpty = (list) => {
-        for (let i = 0; i < list.length; i++) {
-            if (list[i].length > 0) {
-                return true;
-            }
-        }
+        return list.length !== 0
     }
 
     function sumQuantity(id) {
@@ -104,7 +99,7 @@ const DoneUser = () => {
             {checkEmpty(listBillByBillDetail) ?
                 <div className='cart bg-whitesmoke'>
                     <div className='containerr'>
-                        <div className='cart-ctable2'>
+                        <div className='cart-ctable3'>
                             <div className='cart-chead bg-white' style={{height: "50px"}}>
                                 <div style={{display: "flex"}}><h3 style={{color: "red", paddingTop: "11px"}}>
                                     <IoLocationOutline style={{scale: "1.2", marginRight: "5px"}}/>Địa chỉ nhận hàng :
@@ -122,7 +117,7 @@ const DoneUser = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='cart-ctable2'>
+                        <div className='cart-ctable3'>
                             <div className='cart-chead bg-white'>
                                 <div className='cart-ctr fw-6 font-manrope fs-15'>
                                     <div className='cart-cth'>
@@ -139,6 +134,9 @@ const DoneUser = () => {
                                     </div>
                                     <div className='cart-cth'>
                                         <span className='cart-ctxt'>Thành tiền</span>
+                                    </div>
+                                    <div className='cart-cth'>
+                                        <span className='cart-ctxt' style={{marginLeft: "10px"}}>Lý do hủy</span>
                                     </div>
                                 </div>
                             </div>
@@ -171,8 +169,8 @@ const DoneUser = () => {
                                                     }}/>
                                                     <span style={{
                                                         color: "#BB0F53",
-                                                        marginLeft: "640px"
-                                                    }}>Ngày nhận: {bill[0]?.bill?.date}</span>
+                                                        marginLeft: "700px"
+                                                    }}>Ngày hủy: {bill[0]?.bill?.date}</span>
                                                 </div>
                                             </div>
                                             <div className='cart-ctr fw-8 font-manrope fs-16'
@@ -181,10 +179,10 @@ const DoneUser = () => {
                                                     <div style={{padding: '10px'}}>
                                                         <span>Mã đơn hàng: 2903VDC02{bill[0]?.bill?.id}</span>
                                                         <span
-                                                            style={{marginLeft: "450px"}}>{sumQuantity(bill[0].bill.id)}</span>
+                                                            style={{marginLeft: "390px"}}>{sumQuantity(bill[0].bill.id)}</span>
                                                         <span
-                                                            style={{marginLeft: "150px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
-                                                        <span style={{marginLeft: "60px"}}>
+                                                            style={{marginLeft: "130px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
+                                                        <span style={{marginLeft: "110px"}}>{bill[0].bill.reason}
                                                     </span>
                                                     </div>
                                                 </div>
@@ -222,18 +220,14 @@ const DoneUser = () => {
                                                                 <billDetail
                                                                     className='cart-ctxt text-orange fw-5'
                                                                     style={{marginLeft: "20px"}}>{formatPrice(billDetail.total)}</billDetail>
-                                                                <CommentUser modalComment={billDetail?.product}/>
                                                             </div>
-
                                                         </div>
                                                     )
                                                 })}
-
                                             </div>
                                         </>)
                                     })
                                 }
-
                             </div>
 
                             <div className='cart-cfoot flex align-start justify-between py-3 bg-white'>
@@ -264,4 +258,4 @@ const DoneUser = () => {
     )
 }
 
-export default DoneUser
+export default CancelShop

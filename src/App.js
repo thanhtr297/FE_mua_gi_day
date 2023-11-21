@@ -51,6 +51,7 @@ import Comment from "./pages/CommentPage/Comment";
 import Demo from "./Demo";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CancelShop from "./components/OrderUser/CancelShop";
 
 
 
@@ -97,8 +98,10 @@ function App() {
             <Route path={"/password-new/:id"} element={<PasswordNew/>}/>
             <Route path={"/register"} element={<Register/>}/>
             <Route path = "/profile" element = {<Profile />} />
+
                         {/* single product route */}
                         <Route path="/product/:id" element={<ProductSingle/>}/>
+                        <Route path="/address" element={<DisplayAddress/>}/>
                         {/* category wise product listing route */}
                         <Route path="/category/:category" element={<CategoryProduct/>}/>
                         {/* cart */}
@@ -119,6 +122,7 @@ function App() {
                                 <Route path="/user-management/order/confirm" element={<PendingUser/>}/>
                                 <Route path="/user-management/order/shipping" element={<ShippingUser/>}/>
                                 <Route path="/user-management/order/cancel" element={<CancelUser/>}/>
+                                <Route path="/user-management/order/cancelShop" element={<CancelShop/>}/>
                                 <Route path="/user-management/order/done" element={<DoneUser/>}/>
                             </Route>
                         </Route>

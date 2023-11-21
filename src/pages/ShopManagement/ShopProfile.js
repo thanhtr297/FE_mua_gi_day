@@ -2,8 +2,6 @@ import React, {useEffect, useState} from "react";
 
 import axios from "axios";
 import {useParams} from "react-router-dom";
-import {STATUS} from "../../utils/status";
-import Loader from "../../components/Loader/Loader";
 import Product from "../../components/Product/Product";
 import {FaShoppingBag} from "react-icons/fa";
 import { SlUserFollow } from "react-icons/sl";

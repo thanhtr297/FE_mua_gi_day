@@ -71,9 +71,7 @@ const Bill = () => {
             const productPrice = cart.product.price - (cart.product.price * cart.product.promotion / 100);
             return productPrice * cart.quantity;
         };
-
         const sumPrice = cartDetails.map((cart) => singleSumPrice(cart));
-
         let totalPrice = 0;
         for (let i = 0; i < sumPrice.length; i++) {
             totalPrice += sumPrice[i];
@@ -85,13 +83,12 @@ const Bill = () => {
 
 
     const saveBills = () => {
-        if(user.address !== "" && user.phone !== "") {
+        if(user.address !== null && user.phone !== null) {
             saveBill(idAccount, cartDetails, navigate).then()
         } else {
             toast.error("Vui lòng nhập thông tin địa chỉ nhận hàng")
             navigate(("/user-management/profile"))
         }
-
     }
     function changeAddress() {
         navigate(("/user-management/profile"))
