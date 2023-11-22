@@ -32,6 +32,8 @@ a {
 }
 .dropdown-menu.m-0.noti {
     transform: translate3d(-220px, 39.2px, 0px) !important;
-    width : 400px ;
+    width : 350px ;
+    height: 500px;
+    overflow: auto;
 }
 

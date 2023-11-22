@@ -6,4 +6,7 @@ const notificationShop = (id) => {
 const notificationUser = (id) => {
     return axios.get("http://localhost:8080/api/notification/user/" + id );
 }
-export {notificationShop ,notificationUser}
+const notificationAcc = (id) => {
+    return axios.get("http://localhost:8080/api/notification/" + id );
+}
+export {notificationShop ,notificationUser ,notificationAcc}
