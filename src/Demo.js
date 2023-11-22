@@ -1,57 +1,78 @@
-import {useState} from "react";
+import React, { Component } from "react";
+import Slider from "react-slick";
 
-const CommentItem = ({ comment }) => (
-    <div className="comment-item">
-        <strong>{comment.user.username}</strong>: {comment.content}
-        <div className="timestamp">{comment.timestamp}</div>
-        {comment.replies && comment.replies.length > 0 && (
-            <div className="replies">
-                {comment.replies.map(reply => (
-                    <CommentItem key={reply.id} comment={reply} />
-                ))}
-            </div>
-        )}
-    </div>
-);
-
-// Component chính hiển thị danh sách bình luận
-const CommentList = ({ comments }) => (
-    <div className="comment-list">
-        {comments.map(comment => (
-            <CommentItem key={comment.id} comment={comment} />
-        ))}
-    </div>
-);
-
-// Component chính cho ứng dụng React
-export default function Demo() {
-    const [comments, setComments] = useState([
-        {
-            id: 1,
-            content: 'Great product!',
-            user: { userId: 1, username: 'User1' },
-            isShopOwnerComment: false,
-            parentId: null,
-            timestamp: '2023-11-19T12:30:00',
-            replies: [
-                {
-                    id: 2,
-                    content: 'Thank you for your feedback!',
-                    user: { userId: 2, username: 'ShopOwner' },
-                    isShopOwnerComment: true,
-                    parentId: 1,
-                    timestamp: '2023-11-19T12:35:00',
-                    replies: [],
-                },
-            ],
-        },
-        // ...more comments
-    ]);
-
+function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
     return (
-        <div className="App">
-            <h1>Product Reviews and Comments</h1>
-            <CommentList comments={comments} />
-        </div>
+        <div
+            className={className}
+            style={{ ...style, display: "block", background: "red" }}
+            onClick={onClick}
+        />
     );
-};
+}
+
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, display: "block", background: "green" }}
+            onClick={onClick}
+        />
+    );
+}
+
+export default class Demo extends Component {
+    render() {
+        const settings = {
+            dots: true,
+            infinite: true,
+            slidesToShow: 5,
+            slidesToScroll: 5,
+            nextArrow: <SampleNextArrow />,
+            prevArrow: <SamplePrevArrow />
+        };
+        return (
+            <div style={{width:'800px',height:'800px',margin:'10% 5%'}}>
+                <h2>Custom Arrows</h2>
+                <Slider {...settings}>
+                    <div>
+                        <h3>1</h3>
+                    </div>
+                    <div>
+                        <h3>2</h3>
+                    </div>
+                    <div>
+                        <h3>3</h3>
+                    </div>
+                    <div>
+                        <h3>4</h3>
+                    </div>
+                    <div>
+                        <h3>5</h3>
+                    </div>
+                    <div>
+                        <h3>6</h3>
+                    </div>
+                    <div>
+                        <h3>7</h3>
+                    </div>
+                    <div>
+                        <h3>8</h3>
+                    </div>
+                    <div>
+                        <h3>9</h3>
+                    </div>
+                    <div>
+                        <h3>10</h3>
+                    </div>
+                    <div>
+                        <h3>11</h3>
+                    </div>
+
+                </Slider>
+            </div>
+        );
+    }
+}
