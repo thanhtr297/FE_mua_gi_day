@@ -31,6 +31,9 @@ const HomePage = () => {
                 randomIndex = Math.floor(Math.random() * products.length);
             }
             tempProducts[i] = products[randomIndex];
+            if (tempProducts > 10) {
+                return
+            }
         }
     }
     const productByCategory = new Array(categories.length).fill(0);
@@ -55,7 +58,6 @@ const HomePage = () => {
                     <div>
                         <Filter/>
                     </div>
-
 
                     <div className='categories py-5'>
                         <div className='categories-item'>

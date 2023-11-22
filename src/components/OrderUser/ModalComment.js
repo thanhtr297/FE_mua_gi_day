@@ -56,10 +56,10 @@ import {toast} from "react-toastify";
                         if (comment !=='') {
                         handleClose()
                         saveComment(comment).then(()=>{
-                            toast.success("Thêm thành công!")
+                            toast.success("Thêm thành công!",{autoClose:700})
                         })
                     } else {
-                            toast.error("Vui lòng nhập đánh giá!")
+                            toast.error("Vui lòng nhập đánh giá!",{autoClose:700})
                         }
                     }}>
                         Lưu
