@@ -26,8 +26,11 @@ a {
     color: black !important;
     font-size: 14px;
 }
+.dropdown {
+    color: #212529 !important;
+}
 .dropdown-toggle::after {
-    color : #ecf0f1;
+    //color : #ecf0f1;
     margin: -300px;
 }
 .dropdown-menu.m-0.noti {

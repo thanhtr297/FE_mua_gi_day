@@ -33,15 +33,18 @@ const Header = (props) => {
             })
             notificationShop(acc).then((res) => {
                 setNotiShop(res.data)
-            }).catch( () => {})
+            }).catch(() => {
+            })
             notificationUser(acc).then((res) => {
                 setNotiUser(res.data)
-            }).catch( () => {})
+            }).catch(() => {
+            })
         }
     }, [isFlag, checkLogin]);
-    const listNoti = [...notiShop , ...notiUser] ;
+    const listNoti = [...notiShop, ...notiUser];
 
-    listNoti.sort((a, b) => b.id - a.id); ;
+    listNoti.sort((a, b) => b.id - a.id);
+    ;
 
     return (
         <header className='header1 text-white'>
@@ -114,13 +117,67 @@ const Header = (props) => {
                                     </a>
                                     {listNoti.length > 0 ?
 
-                                        <div className="dropdown-menu m-0 noti">
-                                           {listNoti.map((item) => (
-                                               // {item.title === 'Thông báo shop'  }
-                                                <Link to={'/user-management'} className="dropdown-item">
-                                                    <div> {item.id}</div><Dropdown.Divider/>
-                                                </Link>
-                                            ) )}
+                                        <div className="dropdown-menu m-0 noti ">
+                                            {listNoti.map((item) => (
+                                                <React.Fragment key={item.id}>
+                                                    {item.title === 'Thông báo shop' ? (
+                                                        <>
+                                                            <Link to={'/user-management'} className="dropdown-item"  style={item.status === null ? {backgroundColor : "#f5f5f8" ,height : '100px'} : {backgroundColor : "white" ,height : '100px'}}>
+                                                                 <div style={{fontWeight :'bold' ,paddingTop : '1%'}}>Shop của bạn {item.id}</div>
+                                                                {item.content === 'Đơn hàng đã được đặt' ? (
+                                                                <div  className="dropdown" style={{display :'flex' ,paddingTop : '1%'}}>
+                                                                    <div>
+                                                                        {item?.avatar !== null ?
+                                                                        <img src={item?.avatar} style={{width : '40px' ,height : '40px' ,borderRadius : '50%'}} alt=""/>
+                                                                        : <i className="fa-regular fa-bell"
+                                                                             style={{color: '#e7ebf4'}}/>
+                                                                        }
+                                                                    </div>
+                                                                    <div style={{ marginLeft : '3%', width: '250px', color: 'black', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                                        <span style={{ display: 'block', width: '100%', whiteSpace: 'normal' }}>
+                                                                            {item?.account?.username} đã mua hàng, vui lòng xác nhận đơn
+                                                                        </span>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            ) : item.content === 'Đơn hàng bị hủy' ? (
+                                                                    <div  className="dropdown" style={{display :'flex' ,paddingTop : '1%'}}>
+                                                                        <div>
+                                                                            {item?.avatar !== null ?
+                                                                                <img src={item?.avatar} style={{width : '40px' ,height : '40px' ,borderRadius : '50%'}} alt=""/>
+                                                                                : <i className="fa-regular fa-bell"
+                                                                                     style={{color: '#e7ebf4'}}/>
+                                                                            }
+                                                                        </div>
+                                                                        <div style={{ marginLeft : '3%', width: '250px', color: 'black', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                                        <span style={{ display: 'block', width: '100%', whiteSpace: 'normal' }}>
+                                                                            {item?.account?.username} đã hủy đơn
+                                                                        </span>
+                                                                        </div>
+                                                                    </div>
+                                                            ) : item.content === 'Đơn hàng đã được giao' ? (
+                                                                <Link to={'/user-management'}>
+                                                                    <div><img src={item?.avatar} style={{width : '20px' ,height : '20px'}} alt=""/></div>
+                                                                    <div>{item?.account?.username} đã mua hàng, vui lòng xác nhận đơn</div>
+
+                                                                </Link>
+                                                            ) : (
+                                                                <Link to={'/user-management'}>
+                                                                    <div><img src={item?.avatar} style={{width : '20px' ,height : '20px'}} alt=""/></div>
+                                                                    <div>{item?.account?.username} đã mua hàng, vui lòng xác nhận đơn</div>
+                                                                    <Dropdown.Divider/>
+                                                                </Link>
+                                                            )}
+
+                                                            </Link>
+                                                        </>
+                                                    ) : (
+                                                        <div className="dropdown-item">Thông báo </div>
+                                                    )}
+                                                </React.Fragment>
+                                            ))}
+
 
                                         </div> :
                                         <div className="dropdown-menu m-0">
