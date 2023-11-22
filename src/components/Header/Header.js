@@ -69,6 +69,23 @@ const Header = (props) => {
                             <ul className='top-links flex align-center'>
                                 <li style={checkLogin
                                     ? {display: 'none'} : {}}>
+                                    <a href="#" className=" nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                                       style={{marginLeft: '-130%', marginBottom: '-53%', display: "flex"}}>
+                                        <div style={{
+                                            fontSize: '15px', color: 'white',
+                                            fontFamily: 'Font Awesome 6 Free',marginRight : '2%'
+                                        }}>Thông báo
+                                        </div>
+
+                                        <div style={{marginRight : '2%'}}><i className="fa-regular fa-bell" style={{color: '#e7ebf4'}}></i></div>
+                                        <div style={{marginTop : '-1%'}}><span style={{
+                                            color: 'white',
+                                            fontSize: '16px',
+                                            fontWeight: 'bold',
+                                            margin: '0px 7px 100px 7px'
+                                        }}>|</span></div>
+
+                                    </a>
                                     <div style={{display : 'flex' , marginTop : '-15px' , marginBottom : '-20px' ,marginRight : '-25px'}}>
                                         {username !== null ?  <div style={{marginTop : '20px' ,fontSize : '15px' ,fontFamily :'Font Awesome 6 Free' }}>{username}</div> : ''}
 
