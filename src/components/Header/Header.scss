@@ -28,5 +28,10 @@ a {
 }
 .dropdown-toggle::after {
     color : #ecf0f1;
-    margin: -500px;
+    margin: -300px;
 }
+.dropdown-menu.m-0.noti {
+    transform: translate3d(-220px, 39.2px, 0px) !important;
+    width : 400px ;
+}
+

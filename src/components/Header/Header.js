@@ -7,6 +7,7 @@ import {AppContext} from "../../Context/AppContext";
 import {findAccountById} from "../../service/UserService";
 import {findUserByAccount} from "../../pages/UserManagement/Service/UserService";
 import {toast} from "react-toastify";
+import {notificationShop} from "../../service/NotificationService";
 
 
 const Header = (props) => {
@@ -16,19 +17,28 @@ const Header = (props) => {
     const{isFlag}  = useContext(AppContext) ;
     const [username , setUsername] = useState(null) ;
     const [avatar , setAvatar] = useState(null) ;
+    const [notiShop , setNotiShop] = useState(null) ;
+    const [notiUser , setNotiUser] = useState(null) ;
     let acc = localStorage.getItem('account');
     useEffect(() => {
         if (acc !== null) {
         findAccountById(acc).then((res) => {
             setUsername(res.data.username) ;
         }).catch( () =>{
-            navigate('/')
+            navigate('/login')
         })
         findUserByAccount(acc).then((res) => {
             setAvatar(res.avatar)
         }).catch( () =>{
-            navigate('/')
-        }) }
+            navigate('/login')
+        })
+        notificationShop(acc).then((res) => {
+            if(res?.data?.length >3) {
+                for (let i = 0; i < 3; i++) {
+                    
+                }
+            }
+        })}
     }, [isFlag ,checkLogin]);
     return (
         <header className='header1 text-white'>
@@ -86,6 +96,24 @@ const Header = (props) => {
                                         }}>|</span></div>
 
                                     </a>
+                                    {acc !== null ?
+                                    <div className="dropdown-menu m-0 noti" >
+                                        <Link to={'/user-management'} className="dropdown-item">thông báo 1</Link>
+                                        <Dropdown.Divider/>
+                                        <Link to={'/user-management'} className="dropdown-item">thông báo 2</Link>
+                                        <Dropdown.Divider/>
+                                        <Link to={'/user-management'} className="dropdown-item">thông báo 3</Link>
+                                        <Dropdown.Divider/>
+                                        <Link to={'/user-management'} className="dropdown-item">thông báo 4</Link>
+                                        <Dropdown.Divider/>
+
+                                    </div> :
+                                    <div className="dropdown-menu m-0">
+                                        <Link to={'/login'} className="dropdown-item" onClick={() => {
+                                            logout()
+                                        }}>Đăng nhập</Link>
+                                    </div>
+                                }
                                     <div style={{display : 'flex' , marginTop : '-15px' , marginBottom : '-20px' ,marginRight : '-25px'}}>
                                         {username !== null ?  <div style={{marginTop : '20px' ,fontSize : '15px' ,fontFamily :'Font Awesome 6 Free' }}>{username}</div> : ''}
 
