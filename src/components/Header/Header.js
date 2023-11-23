@@ -8,6 +8,8 @@ import {findAccountById} from "../../service/UserService";
 import {findUserByAccount} from "../../pages/UserManagement/Service/UserService";
 import {toast} from "react-toastify";
 import {notificationShop, notificationUser, setStatus} from "../../service/NotificationService";
+import moment from "moment";
+import {FormatTime} from "../Format/FormatTime";
 
 const Header = (props) => {
     const navigate = useNavigate();
@@ -45,8 +47,6 @@ const Header = (props) => {
     const listNoti = [...notiShop, ...notiUser];
 
     listNoti.sort((a, b) => b.id - a.id);
-    ;
-
     return (
         <header className='header1 text-white'>
             <div className='containerr'>
@@ -99,7 +99,9 @@ const Header = (props) => {
                                 <li style={checkLogin
                                     ? {display: 'none'} : {}}>
                                     <a href="#" className=" nav-link dropdown-toggle" data-bs-toggle="dropdown"
-                                       style={{width : '120px' , marginLeft: '-90%', marginBottom: '-53%', display: "flex"}}>
+                                       style={{width : '120px' , marginLeft: '-90%', marginBottom: '-53%', display: "flex"}} onClick={()=> {
+                                           toggleFlag()
+                                    }}>
                                         <div style={{marginRight: '2%'}}><i className="fa-regular fa-bell"
                                                                             style={{color: '#e7ebf4'}}></i></div> <div style={{
                                             fontSize: '15px', color: 'white',
@@ -138,7 +140,7 @@ const Header = (props) => {
                                                                     <div style={{
                                                                         fontWeight: 'bold',
                                                                         paddingTop: '1%'
-                                                                    }}>Shop của bạn {item.id}</div>
+                                                                    }}>Shop của bạn  </div>
                                                                     <div className="dropdown"
                                                                          style={{display: 'flex', paddingTop: '1%'}}>
                                                                         <div>
@@ -171,6 +173,7 @@ const Header = (props) => {
                                                                             {item?.account?.username} đã mua hàng, vui lòng xác nhận đơn
                                                                         </span>
                                                                         </div>
+                                                                        <div style={{marginTop : '10%'}}>{FormatTime(item.createAt)}</div>
                                                                     </div>
                                                                 </Link>
                                                             ) : item.content === 'Đơn hàng bị hủy' ? (
@@ -221,6 +224,7 @@ const Header = (props) => {
                                                                             Đơn hàng 2903VDC02{item?.bill?.id} đã bị hủy bởi {item?.account?.username}
                                                                         </span>
                                                                         </div>
+                                                                        <div style={{marginTop : '10%'}}>{FormatTime(item.createAt)}</div>
                                                                     </div>
                                                                 </Link>
                                                             ) : item.content === 'Đơn hàng đã được giao' ? (
@@ -271,6 +275,7 @@ const Header = (props) => {
                                                                             Đơn hàng 2903VDC02{item?.bill?.id} đã được giao thành công
                                                                         </span>
                                                                         </div>
+                                                                        <div style={{marginTop : '10%'}}>{FormatTime(item.createAt)}</div>
                                                                     </div>
                                                                 </Link>
                                                             ) : (
@@ -321,6 +326,7 @@ const Header = (props) => {
                                                                             {item?.account?.username} đã đánh giá về sản phẩm của bạn
                                                                         </span>
                                                                         </div>
+                                                                        <div style={{marginTop : '10%'}}>{FormatTime(item.createAt)}</div>
                                                                     </div>
                                                                 </Link>
                                                             )}
@@ -361,6 +367,7 @@ const Header = (props) => {
                                                                                         Đơn hàng 2903VDC02{item?.bill?.id} của bạn đã được xác nhận
                                                                                  </span>
                                                                         </div>
+                                                                        <div style={{marginTop : '10%'}}>{FormatTime(item.createAt)}</div>
                                                                     </div>
                                                                 </Link>
                                                             ) : item?.content === 'Đơn hàng bị từ chối' ? (
@@ -395,6 +402,7 @@ const Header = (props) => {
                                                                                         Đơn hàng 2903VDC02{item?.bill?.id} đã bị từ chối vì lý do {item?.bill?.reason}
                                                                                  </span>
                                                                         </div>
+                                                                        <div style={{marginTop : '10%'}}>{FormatTime(item.createAt)}</div>
                                                                     </div>
                                                                 </Link>
                                                             ) : (
@@ -429,6 +437,7 @@ const Header = (props) => {
                                                                                       {item?.shop?.name} Đã phản hồi đánh giá của bạn
                                                                                  </span>
                                                                         </div>
+                                                                        <div style={{marginTop : '10%'}}>{FormatTime(item.createAt)}</div>
                                                                     </div>
                                                                 </Link>
                                                             )}
@@ -550,6 +559,7 @@ const Header = (props) => {
             </div>
         </header>
     )
+
 }
 
 export default Header

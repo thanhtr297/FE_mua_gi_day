@@ -32,6 +32,7 @@ a {
 .dropdown-toggle::after {
     //color : #ecf0f1;
     margin: -300px;
+    display: none !important;
 }
 .dropdown-menu.m-0.noti {
     transform: translate3d(905px, 41.2px ,0px) !important;

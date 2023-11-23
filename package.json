@@ -22,6 +22,7 @@
     "formik": "^2.4.5",
     "google-map-react": "^2.2.1",
     "mdb-react-ui-kit": "^6.3.0",
+    "moment": "^2.29.4",
     "moon": "^1.0.0-beta.7",
     "notistack": "^3.0.1",
     "nouislider-react": "^3.4.1",
