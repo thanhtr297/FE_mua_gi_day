@@ -127,13 +127,12 @@ const ProductSinglePage = () => {
 
                                 <div className='info flex align-center flex-wrap fs-14'>
                                     <div className='rating'>
-
-                    <span className='mx-1'>
-                      {/*{product?.rating}*/}
-                        5 *
-                    </span>
                                         <span className='text-orange fw-5'
-                                              style={{marginRight: '20px'}}>Đánh giá </span>
+                                              style={{marginRight: '20px'}}>Đánh giá: </span>
+                                        <span className='mx-1'>
+                      {/*{product?.rating}*/}5 *
+                    </span>
+
                                     </div>
                                     <div className='vert-line'></div>
                                     {/*<div className='brand'>*/}
@@ -142,10 +141,10 @@ const ProductSinglePage = () => {
                                     {/*</div>*/}
                                     <div className='vert-line'></div>
                                     <div className='brand'>
-
-                    <span className='mx-1 text-capitalize'>
+                                        <span className='text-orange fw-5'>Đã bán: </span>
+                                        <span className='mx-1 text-capitalize'>
                       {product?.count}
-                    </span><span className='text-orange fw-5'>Đã bán</span>
+                    </span>
                                     </div>
                                     <div>
                                         <p className='para fw-3 fs-15'
@@ -256,11 +255,14 @@ const ProductSinglePage = () => {
                 <div className='comment-single'>
                     <div className='comment-single'>
                         <div className='containerr'>
-                            <h1 style={{marginBottom: '20px', fontSize: '24px'}}>Đánh giá: &nbsp; <FaStar style={{color:'F5E932'}} /><FaStar style={{color:'F5E932'}}/><FaStar style={{color:'F5E932'}} /><FaStar style={{color:'F5E932'}} /><FaStar  />  </h1>
+                            <h1 style={{marginBottom: '20px', fontSize: '24px'}}>Đánh giá: &nbsp; <FaStar
+                                style={{color: 'F5E932'}}/><FaStar style={{color: 'F5E932'}}/><FaStar
+                                style={{color: 'F5E932'}}/><FaStar style={{color: 'F5E932'}}/><FaStar/></h1>
                             <div className=' bg-white grid' style={{paddingTop: '3%'}}>
                                 {comments.map((c) => (
                                     <>
-                                        <div className="comment-container" style={{marginLeft: '10%',marginRight:'10%'}}>
+                                        <div className="comment-container"
+                                             style={{marginLeft: '10%', marginRight: '10%'}}>
                                             <div style={{display: 'flex'}}>
                                                 <div className="avatar-container">
                                                     <img
@@ -273,10 +275,10 @@ const ProductSinglePage = () => {
                                                     style={{fontWeight: 'bold', padding: '10px 0px', fontSize: '14px'}}>
                                                     Người dùng: {c?.account?.username}
                                                 </div>
-                                                <div style={{ padding: '10px 0px', fontSize: '12px'}}>
+                                                <div style={{padding: '10px 0px', fontSize: '12px'}}>
                                                     &nbsp;&nbsp; &nbsp;&nbsp; Loại: {c?.product?.category?.name}
                                                 </div>
-                                                <div style={{ padding: '10px 0px', fontSize: '12px'}}>
+                                                <div style={{padding: '10px 0px', fontSize: '12px'}}>
                                                     &nbsp;&nbsp; &nbsp;&nbsp; Hãng: {c?.product?.brand?.name}
                                                 </div>
                                             </div>
@@ -287,8 +289,8 @@ const ProductSinglePage = () => {
                                                     maxWidth: '900px',
                                                     marginLeft: '60px'
                                                 }}>Nội dung: {c?.content}</div>
-                                                <div style={{marginBottom: '5px', marginLeft: '60px'}}>Thời
-                                                    gian: {c?.createAt}</div>
+                                                <div style={{marginBottom: '5px', marginLeft: '60px'}}>
+                                                    Thời gian: {displayTime(c?.createAt)}</div>
 
                                                 {/*hien thi nut sua comment cua user*/}
                                                 {/*{(c.account.id===idAccount) ?*/}
@@ -315,7 +317,11 @@ const ProductSinglePage = () => {
 
                                                 {/*Hien thi phan hoi cua shop*/}
                                                 {c?.reply !== null ? (
-                                                    <div style={{marginLeft: '100px',fontWeight: 'bold',color:"2A2727"}} className="shop-reply">Shop phản
+                                                    <div style={{
+                                                        marginLeft: '100px',
+                                                        fontWeight: 'bold',
+                                                        color: "2A2727"
+                                                    }} className="shop-reply">Shop phản
                                                         hồi: {c?.reply}</div>
                                                 ) : ''}
 
@@ -378,6 +384,10 @@ const ProductSinglePage = () => {
 
     function handleComment(e) {
 
+    }
+
+    function displayTime(time) {
+        return time.split("T")
     }
 }
 

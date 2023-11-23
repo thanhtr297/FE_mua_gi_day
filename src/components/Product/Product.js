@@ -5,8 +5,9 @@ import "./Product.scss";
 
 const Product = ({product}) => {
   return (
-    <Link to = {`/product/${product?.id}`} key = {product?.id}>
-      <div className='product-item bg-white'>
+
+    <Link to = {`/product/${product?.id}`} key = {product?.id} >
+      <div className='product-item bg-white' >
         <div className='category'>- {product?.promotion} %</div>
         <div className='product-item-img'>
           <img  className='img-cover' src = {product?.image[0]?.name} alt = {product.name}  style={{width : '200px',height : '200px' ,marginLeft: '16px', marginTop : '40px' }}/>
