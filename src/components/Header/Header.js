@@ -7,13 +7,14 @@ import {AppContext} from "../../Context/AppContext";
 import {findAccountById} from "../../service/UserService";
 import {findUserByAccount} from "../../pages/UserManagement/Service/UserService";
 import {toast} from "react-toastify";
-import {notificationShop, notificationUser} from "../../service/NotificationService";
+import {notificationShop, notificationUser, setStatus} from "../../service/NotificationService";
 
 const Header = (props) => {
     const navigate = useNavigate();
     const {checkLogin} = useContext(AppContext);
     const {logout} = useContext(AppContext);
     const {isFlag} = useContext(AppContext);
+    const {toggleFlag} = useContext(AppContext);
     const [username, setUsername] = useState(null);
     const [avatar, setAvatar] = useState(null);
     const [notiShop, setNotiShop] = useState([]);
@@ -98,15 +99,15 @@ const Header = (props) => {
                                 <li style={checkLogin
                                     ? {display: 'none'} : {}}>
                                     <a href="#" className=" nav-link dropdown-toggle" data-bs-toggle="dropdown"
-                                       style={{marginLeft: '-130%', marginBottom: '-53%', display: "flex"}}>
-                                        <div style={{
+                                       style={{width : '120px' , marginLeft: '-90%', marginBottom: '-53%', display: "flex"}}>
+                                        <div style={{marginRight: '2%'}}><i className="fa-regular fa-bell"
+                                                                            style={{color: '#e7ebf4'}}></i></div> <div style={{
                                             fontSize: '15px', color: 'white',
                                             fontFamily: 'Font Awesome 6 Free', marginRight: '2%'
                                         }}>Thông báo
                                         </div>
 
-                                        <div style={{marginRight: '2%'}}><i className="fa-regular fa-bell"
-                                                                            style={{color: '#e7ebf4'}}></i></div>
+
                                         <div style={{marginTop: '-1%'}}><span style={{
                                             color: 'white',
                                             fontSize: '16px',
@@ -122,81 +123,335 @@ const Header = (props) => {
                                                 <React.Fragment key={item.id}>
                                                     {item.title === 'Thông báo shop' ? (
                                                         <>
-                                                            <Link to={'/user-management'} className="dropdown-item"  style={item.status === null ? {backgroundColor : "#f5f5f8" ,height : '100px'} : {backgroundColor : "white" ,height : '100px'}}>
-                                                                 <div style={{fontWeight :'bold' ,paddingTop : '1%'}}>Shop của bạn {item.id}</div>
-                                                                {item.content === 'Đơn hàng đã được đặt' ? (
-                                                                <div  className="dropdown" style={{display :'flex' ,paddingTop : '1%'}}>
-                                                                    <div>
-                                                                        {item?.avatar !== null ?
-                                                                        <img src={item?.avatar} style={{width : '40px' ,height : '40px' ,borderRadius : '50%'}} alt=""/>
-                                                                        : <i className="fa-regular fa-bell"
-                                                                             style={{color: '#e7ebf4'}}/>
-                                                                        }
-                                                                    </div>
-                                                                    <div style={{ marginLeft : '3%', width: '250px', color: 'black', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                                        <span style={{ display: 'block', width: '100%', whiteSpace: 'normal' }}>
-                                                                            {item?.account?.username} đã mua hàng, vui lòng xác nhận đơn
-                                                                        </span>
-                                                                    </div>
-
-
-                                                                </div>
-                                                            ) : item.content === 'Đơn hàng bị hủy' ? (
-                                                                    <div  className="dropdown" style={{display :'flex' ,paddingTop : '1%'}}>
+                                                            {item.content === 'Đơn hàng đã được đặt' ? (
+                                                                <Link to={'/shop-management/order-management/confirm'}
+                                                                      className="dropdown-item"
+                                                                      style={item.status === null ? {
+                                                                          backgroundColor: "#f5f5f8",
+                                                                          height: '100px'
+                                                                      } : {backgroundColor: "white", height: '100px'}}
+                                                                      onClick={() => {
+                                                                          setStatus(item.id).then((res) => {
+                                                                              toggleFlag()
+                                                                          })
+                                                                      }}>
+                                                                    <div style={{
+                                                                        fontWeight: 'bold',
+                                                                        paddingTop: '1%'
+                                                                    }}>Shop của bạn {item.id}</div>
+                                                                    <div className="dropdown"
+                                                                         style={{display: 'flex', paddingTop: '1%'}}>
                                                                         <div>
                                                                             {item?.avatar !== null ?
-                                                                                <img src={item?.avatar} style={{width : '40px' ,height : '40px' ,borderRadius : '50%'}} alt=""/>
-                                                                                : <i className="fa-regular fa-bell"
-                                                                                     style={{color: '#e7ebf4'}}/>
+                                                                                <img src={item?.avatar} style={{
+                                                                                    width: '40px',
+                                                                                    height: '40px',
+                                                                                    borderRadius: '50%'
+                                                                                }} alt=""/>
+                                                                                : <i className="fa-solid fa-user" style={{ width: '40px',
+                                                                                    height: '40px',
+                                                                                    borderRadius: '50%',color: '#c6c7cb' , fontSize : '30px'
+                                                                                    ,textAlign:'center' ,marginTop : '8%'
+                                                                                }}></i>
                                                                             }
                                                                         </div>
-                                                                        <div style={{ marginLeft : '3%', width: '250px', color: 'black', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                                        <span style={{ display: 'block', width: '100%', whiteSpace: 'normal' }}>
-                                                                            {item?.account?.username} đã hủy đơn
+                                                                        <div style={{
+                                                                            marginLeft: '3%',
+                                                                            width: '250px',
+                                                                            color: 'black',
+                                                                            whiteSpace: 'nowrap',
+                                                                            overflow: 'hidden',
+                                                                            textOverflow: 'ellipsis'
+                                                                        }}>
+                                                                        <span style={{
+                                                                            display: 'block',
+                                                                            width: '100%',
+                                                                            whiteSpace: 'normal'
+                                                                        }}>
+                                                                            {item?.account?.username} đã mua hàng, vui lòng xác nhận đơn
                                                                         </span>
                                                                         </div>
                                                                     </div>
+                                                                </Link>
+                                                            ) : item.content === 'Đơn hàng bị hủy' ? (
+                                                                <Link to={'/shop-management/order-management/cancel'}
+                                                                      className="dropdown-item"
+                                                                      style={item.status === null ? {
+                                                                          backgroundColor: "#f5f5f8",
+                                                                          height: '100px'
+                                                                      } : {backgroundColor: "white", height: '100px'}}
+                                                                      onClick={() => {
+                                                                          setStatus(item.id).then((res) => {
+                                                                              toggleFlag()
+                                                                          })
+                                                                      }}>
+                                                                    <div style={{
+                                                                        fontWeight: 'bold',
+                                                                        paddingTop: '1%'
+                                                                    }}>Shop của bạn {item.id}</div>
+                                                                    <div className="dropdown"
+                                                                         style={{display: 'flex', paddingTop: '1%'}}>
+                                                                        <div>
+                                                                            {item?.avatar !== null ?
+                                                                                <img src={item?.avatar} style={{
+                                                                                    width: '40px',
+                                                                                    height: '40px',
+                                                                                    borderRadius: '50%'
+                                                                                }} alt=""/>
+                                                                                : <i className="fa-solid fa-user" style={{ width: '40px',
+                                                                                    height: '40px',
+                                                                                    borderRadius: '50%',color: '#c6c7cb' , fontSize : '30px'
+                                                                                    ,textAlign:'center' ,marginTop : '8%'
+                                                                                }}></i>
+                                                                            }
+                                                                        </div>
+                                                                        <div style={{
+                                                                            marginLeft: '3%',
+                                                                            width: '250px',
+                                                                            color: 'black',
+                                                                            whiteSpace: 'nowrap',
+                                                                            overflow: 'hidden',
+                                                                            textOverflow: 'ellipsis'
+                                                                        }}>
+                                                                        <span style={{
+                                                                            display: 'block',
+                                                                            width: '100%',
+                                                                            whiteSpace: 'normal'
+                                                                        }}>
+                                                                            Đơn hàng 2903VDC02{item?.bill?.id} đã bị hủy bởi {item?.account?.username}
+                                                                        </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </Link>
                                                             ) : item.content === 'Đơn hàng đã được giao' ? (
-                                                                <Link to={'/user-management'}>
-                                                                    <div><img src={item?.avatar} style={{width : '20px' ,height : '20px'}} alt=""/></div>
-                                                                    <div>{item?.account?.username} đã mua hàng, vui lòng xác nhận đơn</div>
-
+                                                                <Link to={'/shop-management/order-management/done'}
+                                                                      className="dropdown-item"
+                                                                      style={item.status === null ? {
+                                                                          backgroundColor: "#f5f5f8",
+                                                                          height: '100px'
+                                                                      } : {backgroundColor: "white", height: '100px'}}
+                                                                      onClick={() => {
+                                                                          setStatus(item.id).then((res) => {
+                                                                              toggleFlag()
+                                                                          })
+                                                                      }}>
+                                                                    <div style={{
+                                                                        fontWeight: 'bold',
+                                                                        paddingTop: '1%'
+                                                                    }}>Shop của bạn {item.id}</div>
+                                                                    <div className="dropdown"
+                                                                         style={{display: 'flex', paddingTop: '1%'}}>
+                                                                        <div>
+                                                                            {item?.avatar !== null ?
+                                                                                <img src={item?.avatar} style={{
+                                                                                    width: '40px',
+                                                                                    height: '40px',
+                                                                                    borderRadius: '50%'
+                                                                                }} alt=""/>
+                                                                                : <i className="fa-solid fa-user" style={{ width: '40px',
+                                                                                    height: '40px',
+                                                                                    borderRadius: '50%',color: '#c6c7cb' , fontSize : '30px'
+                                                                                    ,textAlign:'center' ,marginTop : '8%'
+                                                                                }}></i>
+                                                                            }
+                                                                        </div>
+                                                                        <div style={{
+                                                                            marginLeft: '3%',
+                                                                            width: '250px',
+                                                                            color: 'black',
+                                                                            whiteSpace: 'nowrap',
+                                                                            overflow: 'hidden',
+                                                                            textOverflow: 'ellipsis'
+                                                                        }}>
+                                                                        <span style={{
+                                                                            display: 'block',
+                                                                            width: '100%',
+                                                                            whiteSpace: 'normal'
+                                                                        }}>
+                                                                            Đơn hàng 2903VDC02{item?.bill?.id} đã được giao thành công
+                                                                        </span>
+                                                                        </div>
+                                                                    </div>
                                                                 </Link>
                                                             ) : (
-                                                                <Link to={'/user-management'}>
-                                                                    <div><img src={item?.avatar} style={{width : '20px' ,height : '20px'}} alt=""/></div>
-                                                                    <div>{item?.account?.username} đã mua hàng, vui lòng xác nhận đơn</div>
-                                                                    <Dropdown.Divider/>
+                                                                <Link to={'/product/' + item?.product?.id}
+                                                                      className="dropdown-item"
+                                                                      style={item.status === null ? {
+                                                                          backgroundColor: "#f5f5f8",
+                                                                          height: '100px'
+                                                                      } : {backgroundColor: "white", height: '100px'}}
+                                                                      onClick={() => {
+                                                                          setStatus(item.id).then((res) => {
+                                                                              toggleFlag()
+                                                                          })
+                                                                      }}>
+                                                                    <div style={{
+                                                                        fontWeight: 'bold',
+                                                                        paddingTop: '1%'
+                                                                    }}>Shop của bạn {item.id}</div>
+                                                                    <div className="dropdown"
+                                                                         style={{display: 'flex', paddingTop: '1%'}}>
+                                                                        <div>
+                                                                            {item?.avatar !== null ?
+                                                                                <img src={item?.avatar} style={{
+                                                                                    width: '40px',
+                                                                                    height: '40px',
+                                                                                    borderRadius: '50%'
+                                                                                }} alt=""/>
+                                                                                : <i className="fa-solid fa-user" style={{ width: '40px',
+                                                                                    height: '40px',
+                                                                                    borderRadius: '50%',color: '#c6c7cb' , fontSize : '30px'
+                                                                                    ,textAlign:'center' ,marginTop : '8%'
+                                                                                }}></i>
+                                                                            }
+                                                                        </div>
+                                                                        <div style={{
+                                                                            marginLeft: '3%',
+                                                                            width: '250px',
+                                                                            color: 'black',
+                                                                            whiteSpace: 'nowrap',
+                                                                            overflow: 'hidden',
+                                                                            textOverflow: 'ellipsis'
+                                                                        }}>
+                                                                        <span style={{
+                                                                            display: 'block',
+                                                                            width: '100%',
+                                                                            whiteSpace: 'normal'
+                                                                        }}>
+                                                                            {item?.account?.username} đã đánh giá về sản phẩm của bạn
+                                                                        </span>
+                                                                        </div>
+                                                                    </div>
                                                                 </Link>
                                                             )}
 
-                                                            </Link>
+
                                                         </>
                                                     ) : (
-                                                        <div className="dropdown-item">Thông báo </div>
+                                                        <>
+                                                            {item?.content === 'Đơn hàng được xác nhận' ? (
+                                                                <Link
+                                                                    to={'/user-management/order/shipping'}
+                                                                    className="dropdown-item"
+                                                                    style={
+                                                                    item.status === null
+                                                                            ? {backgroundColor: "#f5f5f8", height: '80px'}
+                                                                            : {backgroundColor: "white", height: '80px'}
+                                                                    }
+                                                                    onClick={() => {
+                                                                        setStatus(item.id).then((res) => {
+                                                                            toggleFlag();
+                                                                        });
+                                                                    }}>
+                                                                    <div className="dropdown" style={{display: 'flex', paddingTop: '1%'}}>
+                                                                        <div>
+                                                                            {item?.avatar !== null ? (
+                                                                                <img src={item?.shop?.avatar} style={{width: '40px', height: '40px', borderRadius: '50%',}} alt=""/>
+                                                                            ) : (
+                                                                                <i className="fa-solid fa-user" style={{ width: '40px',
+                                                                                    height: '40px',
+                                                                                    borderRadius: '50%',color: '#c6c7cb' , fontSize : '30px'
+                                                                                    ,textAlign:'center' ,marginTop : '8%'
+                                                                                }}></i>
+                                                                            )}
+                                                                        </div>
+                                                                        <div
+                                                                            style={{marginLeft: '3%', width: '250px', color: 'black', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',}}>
+                                                                                 <span style={{display: 'block', width: '100%', whiteSpace: 'normal',}}>
+                                                                                        Đơn hàng 2903VDC02{item?.bill?.id} của bạn đã được xác nhận
+                                                                                 </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </Link>
+                                                            ) : item?.content === 'Đơn hàng bị từ chối' ? (
+                                                                <Link
+                                                                    to={'/user-management/order/cancelShop'}
+                                                                    className="dropdown-item"
+                                                                    style={
+                                                                        item.status === null
+                                                                            ? {backgroundColor: "#f5f5f8", height: '80px'}
+                                                                            : {backgroundColor: "white", height: '80px'}
+                                                                    }
+                                                                    onClick={() => {
+                                                                        setStatus(item.id).then((res) => {
+                                                                            toggleFlag();
+                                                                        });
+                                                                    }}>
+                                                                    <div className="dropdown" style={{display: 'flex', paddingTop: '1%'}}>
+                                                                        <div>
+                                                                            {item?.avatar !== null ? (
+                                                                                <img src={item?.shop?.avatar} style={{width: '40px', height: '40px', borderRadius: '50%',}} alt=""/>
+                                                                            ) : (
+                                                                                <i className="fa-solid fa-user" style={{ width: '40px',
+                                                                                    height: '40px',
+                                                                                    borderRadius: '50%',color: '#c6c7cb' , fontSize : '30px'
+                                                                                    ,textAlign:'center' ,marginTop : '8%'
+                                                                                }}></i>
+                                                                            )}
+                                                                        </div>
+                                                                        <div
+                                                                            style={{marginLeft: '3%', width: '250px', color: 'black', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',}}>
+                                                                                 <span style={{display: 'block', width: '100%', whiteSpace: 'normal',}}>
+                                                                                        Đơn hàng 2903VDC02{item?.bill?.id} đã bị từ chối vì lý do {item?.bill?.reason}
+                                                                                 </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </Link>
+                                                            ) : (
+                                                                <Link
+                                                                    to={'/product/' + item?.product?.id}
+                                                                    className="dropdown-item"
+                                                                    style={
+                                                                        item.status === null
+                                                                            ? {backgroundColor: "#f5f5f8", height: '80px'}
+                                                                            : {backgroundColor: "white", height: '80px'}
+                                                                    }
+                                                                    onClick={() => {
+                                                                        setStatus(item.id).then((res) => {
+                                                                            toggleFlag();
+                                                                        });
+                                                                    }}>
+                                                                    <div className="dropdown" style={{display: 'flex', paddingTop: '1%'}}>
+                                                                        <div>
+                                                                            {item?.avatar !== null ? (
+                                                                                <img src={item?.shop?.avatar} style={{width: '40px', height: '40px', borderRadius: '50%',}} alt=""/>
+                                                                            ) : (
+                                                                                <i className="fa-solid fa-user" style={{ width: '40px',
+                                                                                    height: '40px',
+                                                                                    borderRadius: '50%',color: '#c6c7cb' , fontSize : '30px'
+                                                                                    ,textAlign:'center' ,marginTop : '8%'
+                                                                                }}></i>
+                                                                            )}
+                                                                        </div>
+                                                                        <div
+                                                                            style={{marginLeft: '3%', width: '250px', color: 'black', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',}}>
+                                                                                 <span style={{display: 'block', width: '100%', whiteSpace: 'normal',}}>
+                                                                                      {item?.shop?.name} Đã phản hồi đánh giá của bạn
+                                                                                 </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </Link>
+                                                            )}
+                                                        </>
+
                                                     )}
                                                 </React.Fragment>
                                             ))}
 
 
                                         </div> :
-                                        <div className="dropdown-menu m-0">
-                                            <Link to={'/login'} className="dropdown-item" onClick={() => {
-                                                logout()
-                                            }}>Đăng nhập</Link>
+                                        <div className="dropdown-menu m-0 noti">
+                                            <div style={{textAlign : 'center' ,fontSize : '15px', marginTop : '60%'}}>Không có thông báo</div>
                                         </div>
                                     }
+                                    {/*User*/}
                                     <div style={{
                                         display: 'flex',
-                                        marginTop: '-15px',
-                                        marginBottom: '-20px',
-                                        marginRight: '-25px'
+                                        marginTop: '17%',
+                                        marginBottom: '-24%',
+
                                     }}>
-                                        {username !== null ? <div style={{
-                                            marginTop: '20px',
-                                            fontSize: '15px',
-                                            fontFamily: 'Font Awesome 6 Free'
-                                        }}>{username}</div> : ''}
+
 
                                         <div className="nav-item dropdown" style={{
                                             borderBottom: 'none',
@@ -204,7 +459,8 @@ const Header = (props) => {
                                             borderRadius: '50%',
                                             width: '30px',
                                             height: '30px',
-                                            marginLeft: '5px'
+                                            marginLeft: '5px' ,
+                                            marginRight : '5%'
                                         }}>
                                             <a href="#" className=" nav-link dropdown-toggle" data-bs-toggle="dropdown">
                                                 {avatar === null ?
@@ -244,6 +500,18 @@ const Header = (props) => {
                                                 </div>
                                             }
                                         </div>
+                                        {username !== null ? <div style={{
+                                            marginTop: '20px',
+                                            fontSize: '15px',
+                                            width : '80px' ,
+                                            fontFamily: 'Font Awesome 6 Free',
+                                            whiteSpace: 'nowrap',
+                                            overflow: 'hidden' ,
+                                            textOverflow: 'ellipsis' ,
+                                            maxWidth: '10ch' ,
+                                        }}>
+                                            {username}
+                                        </div> : ''}
                                     </div>
                                 </li>
                                 <li style={{marginBottom: '-14%'}}>
