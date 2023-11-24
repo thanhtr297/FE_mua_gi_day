@@ -9,7 +9,6 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Footer from "./components/Footer/Footer";
 import store from "./store/store";
 import {Provider} from "react-redux";
-// import Login from "./components/Login/Login";
 
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
@@ -52,8 +51,7 @@ import Demo from "./Demo";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CancelShop from "./components/OrderUser/CancelShop";
-import ChatComponent from "./components/chat/Chat";
-import ChatRoom from "./components/chat/Chat";
+import ChatRoom from "./components/chat/chatRoom";
 
 
 
