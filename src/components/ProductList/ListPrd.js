@@ -28,7 +28,6 @@ const ListPrd = ({categories}) => {
 
     return (
         <>
-            {console.log(productList)}
             <div className='product-lists grid bg-whitesmoke my-3'>
                 {
                     productList.map(product => {

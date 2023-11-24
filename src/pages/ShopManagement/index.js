@@ -14,7 +14,6 @@ function DashBoard() {
     const [idShop ,setIdShop] = useState(null) ;
     const {isFlag} = useContext(AppContext);
     useEffect(() => {
-        console.log(acc)
         if (acc !== null) {
             findShop(acc).then((res) => {
                 setIdShop(res.account.id) ;

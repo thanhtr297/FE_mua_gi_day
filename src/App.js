@@ -19,7 +19,7 @@ import DisplayAddress from "./components/Shop/address/DisplayAddress";
 import DashBoard from "./pages/ShopManagement";
 import ListProduct from "./pages/ShopManagement/ListProduct";
 import OrderManagement from "./pages/ShopManagement/OrderManagement";
-import Report from "./pages/ShopManagement/Report";
+import ReportWeek from "./pages/ShopManagement/ReportWeek";
 import Profile from "./pages/ShopManagement/Profile";
 import UpdateProduct from "./pages/ShopManagement/UpdateProduct";
 import Images from "./pages/ShopManagement/Images";
@@ -52,6 +52,7 @@ import Demo from "./Demo";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CancelShop from "./components/OrderUser/CancelShop";
+import ReportMonth from "./pages/ShopManagement/ReportMonth";
 
 
 
@@ -139,7 +140,8 @@ function App() {
                                 <Route path="/shop-management/order-management/reject" element={<Reject/>}/>
                                 <Route path="/shop-management/order-management/done" element={<Done/>}/>
                             </Route>
-                            <Route path="/shop-management/report" element={<Report/>}/>
+                            <Route path="/shop-management/report" element={<ReportWeek/>}/>
+                            <Route path="/shop-management/report/month" element={<ReportMonth/>}/>
                             <Route path="/shop-management/profile" element={<Profile/>}/>
                             <Route path="/shop-management/:id" element={<UpdateProduct/>}/>
 
