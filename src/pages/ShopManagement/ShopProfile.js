@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Product from "../../components/Product/Product";
 import {FaShoppingBag} from "react-icons/fa";
 import { SlUserFollow } from "react-icons/sl";
@@ -13,15 +13,12 @@ import FilterForShop from "../HomePage/FilterForShop";
 
 
 
-
-
-
-
 export default function ShopProfile() {
     let {id} = useParams()
     let [shop, setShop] = useState({});
     const [products, setProducts] = useState([]);
     const [product, setProduct] = useState([]);
+   const naviagte = useNavigate()
 
 
 
@@ -33,6 +30,7 @@ export default function ShopProfile() {
     useEffect(() => {
         axios.get("http://localhost:8080/api/shops/" + id).then((res) => {
             setShop(res.data)
+
         })
     }, [id])
     useEffect(() => {
@@ -40,9 +38,16 @@ export default function ShopProfile() {
             setProduct(res.data)
         })
     }, []);
+    const toChat = () => {
+        localStorage.setItem("idAccByShop", shop.account.id)
+        naviagte("/chat")
+
+    };
+
 
     return (
         <div style={{background:'rgb(232, 232, 232)'}}>
+
             <div >
                 <div className='product-single-r' style={{marginLeft:'100px',width:'86.6%'}}>
                     <div className='product-single'>
@@ -56,10 +61,20 @@ export default function ShopProfile() {
                                             {shop?.name}
                                         </h3>
                                         <div>
-                                            <button style={{padding: '10px', border: '1px solid white'}}
-                                                    type="button" className="comic-button">
+                                            <button
+                                                style={{ padding: '10px', border: '1px solid white' }}
+                                                type="button"
+                                                className="comic-button"
+                                                onClick={( () => {
+                                                    toChat()
+
+                                                })}
+
+                                            >
+
                                                 Chat ngay
                                             </button>
+
                                         </div>
                                     </div>
                                     <div style={{marginLeft:'80px',marginTop:'3px'}}>

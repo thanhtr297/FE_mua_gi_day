@@ -52,6 +52,8 @@ import Demo from "./Demo";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CancelShop from "./components/OrderUser/CancelShop";
+import ChatComponent from "./components/chat/Chat";
+import ChatRoom from "./components/chat/Chat";
 
 
 
@@ -90,6 +92,7 @@ function App() {
             <Route path = "/cart" element = {<Cart />} />
             <Route path = "/cart/info" element = {<Info/>} />
             <Route path = "/bill" element = {<Bill />} />
+            <Route path = "/chat" element = {<ChatRoom />} />
 
             {/* searched products */}
             <Route path = "/search/:searchTerm" element = {<Search />} />

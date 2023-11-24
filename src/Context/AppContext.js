@@ -7,6 +7,7 @@ const AppProvider = ({ children }) => {
     const [isFlag, setIsFlag] = useState(true);
     const [carts, setCarts] = useState([])
     const idAccount = localStorage.getItem("account")
+
     const toggleFlag = () => {
         setIsFlag((prevFlag) => !prevFlag);
     };
@@ -22,6 +23,7 @@ const AppProvider = ({ children }) => {
         showCart(idAccount).then((response) => {
             setCarts(response);
     })
+
     }
 
 

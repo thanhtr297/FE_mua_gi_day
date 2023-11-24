@@ -55,14 +55,14 @@ export default function Profile() {
                setShop(res)
            }
         })
-    }, [check])
+    }, [])
 
 
     const find = async () => {
-        setFullAddress(address +  ", " + nameWards + ", " + nameDistrict + ", " + nameCity)
+        setFullAddress(nameWards + ", " + nameDistrict + ", " + nameCity)
         console.log('address in find ', address + ", " + nameWards + ", " +nameDistrict + ", " + nameCity);
-        const result = await geocodeByAddress("Bến xe Giáp Bát")
         // const result = await geocodeByAddress(fullAddress)
+        const result = await geocodeByAddress('Bến xe Mỹ Đình')
         const latLng = await getLatLng(result[0])
         setCoords(latLng)
     }
@@ -162,7 +162,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                 <Icon
                                     lat={coords.lat}
                                     lng={coords.lng}
-                                    text={<IoLocationSharp color={"red"} size={24}/>}
+                                    text={<IoLocationSharp color={"red"} size={25}/>}
                                 />
                             </GoogleMapReact>
 

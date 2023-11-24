@@ -153,37 +153,42 @@ const CancelUser = () => {
                                                      margin: "0 0"
                                                  }}>
                                                 <div className='cart-cth shop-name'
-                                                     style={{fontSize: "16px", marginBottom: "10px"}}>
-                                                    <CiShop style={{transform: "scale(1.5)", marginRight: "13px"}}/>
-                                                    <Link
-                                                        to={"/shop-management/shop-profile/" + bill[0]?.product?.shop?.id}>
+                                                     style={{fontSize: "16px", maxHeight: "50px", display: "flex"}}>
+                                                    <div style={{width: "830px", marginTop: "5px"}}>
+                                                        <CiShop style={{transform: "scale(1.5)", marginRight: "13px"}}/>
+                                                        <Link
+                                                            to={"/shop-management/shop-profile/" + bill[0]?.product?.shop?.id}>
                                                         <span style={{
                                                             color: "#BB0F53",
                                                             marginRight: "7px"
                                                         }}>{bill[0]?.product?.shop?.name}</span>
-                                                    </Link>
-                                                    <BsArrowThroughHeart style={{
-                                                        transform: "scale(1.3)",
-                                                        marginRight: "10px",
-                                                        color: "E70B21"
-                                                    }}/>
-                                                    <span style={{
-                                                        color: "#BB0F53",
-                                                        marginLeft: "700px"
-                                                    }}>Ngày hủy: {bill[0]?.bill?.date}</span>
+                                                        </Link>
+                                                        <BsArrowThroughHeart style={{
+                                                            transform: "scale(1.3)",
+                                                            marginRight: "10px",
+                                                            color: "E70B21"
+                                                        }}/>
+                                                    </div>
+                                                    <div style={{width: "300px"}}>
+                                                      <span style={{
+                                                          color: "#BB0F53"
+                                                      }}>Ngày hủy: {bill[0]?.bill?.date}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className='cart-ctr fw-8 font-manrope fs-16'
                                                  style={{padding: "14px 15px", display: "flex", margin: "0 0",}}>
                                                 <div style={{height: '50px'}}>
-                                                    <div style={{padding: '10px'}}>
-                                                        <span>Mã đơn hàng: 2903VDC02{bill[0]?.bill?.id}</span>
-                                                        <span
-                                                            style={{marginLeft: "400px"}}>{sumQuantity(bill[0].bill.id)}</span>
-                                                        <span
-                                                            style={{marginLeft: "130px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
-                                                        <span style={{marginLeft: "110px"}}>{bill[0].bill.reason}
-                                                    </span>
+                                                    <div style={{padding: '10px', display: "flex"}}>
+                                                        <div style={{width: '615px'}}>
+                                                            <span>Mã đơn hàng: 2903VDC02{bill[0]?.bill?.id}</span></div>
+                                                        <div style={{width: '120px', marginLeft: '10px'}}>  <span
+                                                            >{sumQuantity(bill[0].bill.id)}</span>
+                                                        </div>
+                                                        <div style={{width: '150px'}}><span
+                                                            style={{marginLeft: "30px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
+                                                        </div>
+                                                        <div style={{width: '220px'}}><span style={{marginLeft:"25px"}}>{bill[0].bill.reason}</span></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -232,10 +237,16 @@ const CancelUser = () => {
 
                             <div className='cart-cfoot flex align-start justify-between py-3 bg-white'>
                                 <div className='cart-cfoot-r flex flex-column justify-end'>
-                                    <div style={{marginLeft: "900px"}}
-                                         className='total-txt flex align-center justify-end'>
+                                    <div
+                                        className='total-txt flex align-center justify-end'>
                                         <div className='font-manrope fw-10'
-                                             style={{fontSize: "15px", fontStyle: "normal", marginTop: "5px"}}>Tổng
+                                             style={{
+                                                 fontSize: "15px",
+                                                 fontStyle: "normal",
+                                                 marginTop: "5px",
+                                                 textAlign: "right",
+                                                 width: "910px"
+                                             }}>Tổng
                                             tiền:
                                         </div>
                                         <span className='text-orange fs-22 mx-2 fw-6'>{formatPrice(totalPrice)}</span>
