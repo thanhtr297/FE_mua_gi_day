@@ -31,8 +31,11 @@ export default function DisplayAddress() {
 
     }, [])
 
+
+
+
     const find = async () => {
-        setFullAddress(address+", "+nameWards +", "+nameDistrict+", "+nameCity)
+        setFullAddress(nameWards +", "+nameDistrict+", "+nameCity)
         const result = await geocodeByAddress(fullAddress)
         const latLng = await getLatLng(result[0])
         setCoords(latLng)
@@ -100,7 +103,7 @@ export default function DisplayAddress() {
 
                 <div style={{width: "500px", height: "300px"}}>
                     <GoogleMapReact
-                        bootstrapURLKeys={{key: "AIzaSyC9k3LGHdI9M8fpvtJWwjXnFY3FV8nEpu4"}}
+                        bootstrapURLKeys={{key: "AIzaSyANfMk0RzEcsMhRQ4P0dssEkSuFY0CXizk"}}
                         defaultCenter={coords}
                         defaultZoom={15}
                         center={coords}

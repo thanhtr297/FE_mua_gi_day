@@ -270,10 +270,10 @@ const PendingUser = () => {
 
                             <div className='cart-cfoot flex align-start justify-between py-3 bg-white'>
                                 <div className='cart-cfoot-r flex flex-column justify-end'>
-                                    <div style={{marginLeft: "900px"}}
+                                    <div
                                          className='total-txt flex align-center justify-end'>
                                         <div className='font-manrope fw-10'
-                                             style={{fontSize: "15px", fontStyle: "normal", marginTop: "5px"}}>Tổng
+                                             style={{fontSize: "15px", fontStyle: "normal", marginTop: "5px", textAlign: "right", width: "910px"}}>Tổng
                                             tiền:
                                         </div>
                                         <span className='text-orange fs-22 mx-2 fw-6'>{formatPrice(totalPrice)}</span>

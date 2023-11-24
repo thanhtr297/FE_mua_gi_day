@@ -52,6 +52,7 @@ import Demo from "./Demo";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CancelShop from "./components/OrderUser/CancelShop";
+import ChatRoom from "./components/chat/chatRoom";
 import ReportMonth from "./pages/ShopManagement/ReportMonth";
 
 
@@ -91,6 +92,7 @@ function App() {
             <Route path = "/cart" element = {<Cart />} />
             <Route path = "/cart/info" element = {<Info/>} />
             <Route path = "/bill" element = {<Bill />} />
+            <Route path = "/chat" element = {<ChatRoom />} />
 
             {/* searched products */}
             <Route path = "/search/:searchTerm" element = {<Search />} />
@@ -140,8 +142,7 @@ function App() {
                                 <Route path="/shop-management/order-management/reject" element={<Reject/>}/>
                                 <Route path="/shop-management/order-management/done" element={<Done/>}/>
                             </Route>
-                            <Route path="/shop-management/report" element={<ReportWeek/>}/>
-                            <Route path="/shop-management/report/month" element={<ReportMonth/>}/>
+                            {/*<Route path="/shop-management/report" element={<Report/>}/>*/}
                             <Route path="/shop-management/profile" element={<Profile/>}/>
                             <Route path="/shop-management/:id" element={<UpdateProduct/>}/>
 

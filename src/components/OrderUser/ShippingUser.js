@@ -26,8 +26,7 @@ const PendingUser = () => {
     const [check, setCheck] = useState(true)
     const [bill1, setBill1] = useState([])
     const [listBillByBillDetail, setListBillByBillDetail] = useState([])
-    const {isFlag } = useContext(AppContext);
-
+    const {isFlag} = useContext(AppContext);
 
 
     useEffect(() => {
@@ -42,7 +41,7 @@ const PendingUser = () => {
             setBill1(checkBill);
             console.log(checkBill)
         })
-    }, [check ,isFlag])
+    }, [check, isFlag])
 
     useEffect(() => {
         const listBillByBillDetail = () => {
@@ -81,7 +80,7 @@ const PendingUser = () => {
 
     function cancelBillDetail(idBill) {
         cancelBill(idBill).then(() => {
-            toast.success("Hủy sản phẩm thành công!",{ autoClose: 700 })
+            toast.success("Hủy sản phẩm thành công!", {autoClose: 700})
         })
     }
 
@@ -187,46 +186,69 @@ const PendingUser = () => {
                                                      margin: "0 0"
                                                  }}>
                                                 <div className='cart-cth shop-name'
-                                                     style={{fontSize: "16px", marginBottom: "10px"}}>
-                                                    <CiShop style={{transform: "scale(1.5)", marginRight: "13px"}}/>
-                                                    <Link
-                                                        to={"/shop-management/shop-profile/" + bill[0]?.product?.shop?.id}>
+                                                     style={{fontSize: "16px", maxHeight: "50px", display: "flex"}}>
+                                                    <div style={{width: "920px", marginTop: "10px"}}>
+                                                        <CiShop style={{transform: "scale(1.5)", marginRight: "13px"}}/>
+                                                        <Link
+                                                            to={"/shop-management/shop-profile/" + bill[0]?.product?.shop?.id}>
                                                         <span style={{
                                                             color: "#BB0F53",
                                                             marginRight: "7px"
                                                         }}>{bill[0]?.product?.shop?.name}</span>
-                                                    </Link>
-                                                    <BsArrowThroughHeart style={{
-                                                        transform: "scale(1.3)",
-                                                        marginRight: "10px",
-                                                        color: "E70B21"
-                                                    }}/>
-                                                    <span style={{marginLeft: "825px"}}>
+                                                        </Link>
+                                                        <BsArrowThroughHeart style={{
+                                                            transform: "scale(1.3)",
+                                                            marginRight: "10px",
+                                                            color: "E70B21"
+                                                        }}/>
+                                                    </div>
+                                                    <div style={{width: "150px"}}>
+                                                    <span>
                                                           <button onClick={() => {
                                                               receiveItem(bill[0].bill.id)
-                                                          }} style={{fontWeight: 'bold' , color : 'green', marginRight:"5px"}}>Nhận hàng <i className="fa-solid fa-check" style={{color: '#17b563', scale:"1.3", marginLeft:"3px"}}></i></button>
+                                                          }} style={{
+                                                              fontWeight: 'bold',
+                                                              color: 'green',
+                                                              marginRight: "5px"
+                                                          }}>Nhận hàng <i className="fa-solid fa-check" style={{
+                                                              color: '#17b563',
+                                                              scale: "1.3",
+                                                              marginLeft: "3px"
+                                                          }}></i></button>
 
                                                         </span>
+                                                    </div>
                                                 </div>
                                             </div>
+
                                             <div className='cart-ctr fw-8 font-manrope fs-16'
-                                                 style={{padding: "14px 15px", display: "flex", margin: "0 0",}}>
+                                                 style={{padding: "14px 15px", display: "flex", margin: "0 0"}}>
                                                 <div style={{height: '50px'}}>
-                                                    <div style={{padding: '10px'}}>
-                                                        <span>Mã đơn hàng: 2903VDC02{bill[0]?.bill?.id}</span>
-                                                        <span
-                                                            style={{marginLeft: "450px"}}>{sumQuantity(bill[0].bill.id)}</span>
-                                                        <span
-                                                            style={{marginLeft: "115px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
-                                                        <span style={{marginLeft: "65px"}}>
+                                                    <div style={{padding: '10px', display: "flex"}}>
+                                                        <div style={{width: '650px'}}>
+                                                            <span>Mã đơn hàng: 2903VDC02{bill[0]?.bill?.id}</span></div>
+                                                        <div style={{width: '80px', marginLeft: '20px'}}>  <span
+                                                            style={{marginLeft: "0px"}}>{sumQuantity(bill[0].bill.id)}</span>
+                                                        </div>
+                                                        <div style={{width: '150px', marginLeft: '0px'}}><span
+                                                            style={{marginLeft: "30px"}}>{formatPrice(sumPrice(bill[0].bill.id))}</span>
+                                                        </div>
+                                                        <div style={{
+                                                            width: '180px',
+                                                            marginTop: '-1.2%'
+                                                        }}>
+                                                           <span style={{marginLeft: "25px"}}>
                                             <FaX style={{scale: "1.1", color: "D70018"}}/>
                                                             <Cancel a={m1} id={bill[0].bill.id}
                                                                     onCancelClick={() => cancelBillDetail(bill[0].bill.id)}/>
                                                     </span>
+                                                        </div>
 
                                                     </div>
                                                 </div>
                                             </div>
+
+
                                             <div className='cart-cbody bg-white'>
                                                 {bill.map((billDetail, index) => {
                                                     return <div className='cart-ctr py-5' key={billDetail?.id}>
@@ -272,10 +294,16 @@ const PendingUser = () => {
 
                             <div className='cart-cfoot flex align-start justify-between py-3 bg-white'>
                                 <div className='cart-cfoot-r flex flex-column justify-end'>
-                                    <div style={{marginLeft: "900px"}}
-                                         className='total-txt flex align-center justify-end'>
+                                    <div
+                                        className='total-txt flex align-center justify-end'>
                                         <div className='font-manrope fw-10'
-                                             style={{fontSize: "15px", fontStyle: "normal", marginTop: "5px"}}>Tổng
+                                             style={{
+                                                 fontSize: "15px",
+                                                 fontStyle: "normal",
+                                                 marginTop: "5px",
+                                                 textAlign: "right",
+                                                 width: "910px"
+                                             }}>Tổng
                                             tiền:
                                         </div>
                                         <span className='text-orange fs-22 mx-2 fw-6'>{formatPrice(totalPrice)}</span>
