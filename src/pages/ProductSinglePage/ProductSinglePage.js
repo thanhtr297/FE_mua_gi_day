@@ -130,8 +130,8 @@ const ProductSinglePage = () => {
                                         <span className='text-orange fw-5'
                                               style={{marginRight: '20px'}}>Đánh giá: </span>
                                         <span className='mx-1'>
-                      {/*{product?.rating}*/}5 *
-                    </span>
+                                    {/*{product?.rating}*/}5 *
+                                    </span>
 
                                     </div>
                                     <div className='vert-line'></div>
@@ -145,6 +145,14 @@ const ProductSinglePage = () => {
                                         <span className='mx-1 text-capitalize'>
                       {product?.count}
                     </span>
+                                        <span className='text-orange fw-5'>Option: </span>
+
+                      {product?.option?.map((o) => {
+                          return (
+                              <span className='mx-1 text-capitalize'> {o.content}</span>
+                          )
+                      })}
+
                                     </div>
                                     <div>
                                         <p className='para fw-3 fs-15'

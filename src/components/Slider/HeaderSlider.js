@@ -1,6 +1,5 @@
 import React from 'react';
 import "./HeaderSlider.scss";
-import { sliderImgs } from "../../utils/images";
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -23,11 +22,12 @@ const HeaderSlider = () => {
         <div className='slider-content overflow-x-hidden'>
           <Slider {...settings}>
             <div className='slider-item'>
-              <img src = {sliderImgs[0]} alt = "" />
+              <img src = "https://firebasestorage.googleapis.com/v0/b/students-2950f.appspot.com/o/image%2Fslide.png?alt=media&token=5306a9a2-d7e0-4940-95b4-9a67bf1b6b62" alt = "" />
             </div>
             <div className='slider-item'>
-              <img src = {sliderImgs[1]} alt = "" />
+              <img src = "https://firebasestorage.googleapis.com/v0/b/students-2950f.appspot.com/o/image%2Fslide3.png?alt=media&token=9d074151-263b-40fb-b5bd-d4a7923dff16" alt = "" />
             </div>
+
           </Slider>
         </div>
       </div>

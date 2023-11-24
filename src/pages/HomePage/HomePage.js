@@ -31,8 +31,8 @@ const HomePage = () => {
                 randomIndex = Math.floor(Math.random() * products.length);
             }
             tempProducts[i] = products[randomIndex];
-            if (tempProducts > 10) {
-                return
+            if (tempProducts.length >= 10) {
+                break
             }
         }
     }
