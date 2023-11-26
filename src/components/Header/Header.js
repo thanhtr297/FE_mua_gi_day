@@ -10,6 +10,7 @@ import {toast} from "react-toastify";
 import {notificationShop, notificationUser, setStatus} from "../../service/NotificationService";
 import moment from "moment";
 import {FormatTime} from "../Format/FormatTime";
+import {FaFacebookMessenger} from "react-icons/fa";
 
 const Header = (props) => {
     const navigate = useNavigate();
@@ -78,8 +79,11 @@ const Header = (props) => {
                                 </li>
 
                                 <li className='flex align-center'>
-                                    <span className='fs-13'>Kết nối</span>
+                                    <span className='fs-13'><Link to={"/chat"}>Chat</Link></span>
                                     <ul className='social-links flex align-center'>
+                                        <li className='mx-2' style={{marginBottom: "3px"}}>
+                                            <FaFacebookMessenger style={{scale: "1.2"}} />
+                                        </li>
                                         <li className='mx-2'>
                                             <a href="www.facebook.com" className='fs-15'>
                                                 <i className='fab fa-facebook'></i>
@@ -96,6 +100,7 @@ const Header = (props) => {
                         </div>
                         <div className='header1-cnt-top-r'>
                             <ul className='top-links flex align-center'>
+
                                 <li style={checkLogin
                                     ? {display: 'none'} : {}}>
                                     <a href="#" className=" nav-link dropdown-toggle" data-bs-toggle="dropdown"

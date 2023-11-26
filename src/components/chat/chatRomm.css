@@ -1,155 +1,200 @@
 
-.controls1{
-    margin-top: 120px;
-    height: 480px;
-    margin-bottom: 50px;
+.app-header {
+    background: #d92727;
+    padding: 5px;
     text-align: center;
-    /*background: #c79595 url("../../../public/background4.jpg") no-repeat;*/
-    background-size:cover ;
-}
-#img-reactjs{
-    transform: translateX(0px) translateY(-80px);
-}
-.transparent-background {
-    background: rgba(159, 25, 25, 0.15);
-    width: 1000px;
-    height: 600px;
-    border-radius: 10px;
-    transform: translateX(260px) translateY(-135px);
-    display: flex;
-}
-#nav-bar-left{
-    width: 300px;
-    height: 600px;
-    border: 1px solid #b2b2b2;
-    border-right: hidden;
-    border-radius: 10px;
-    text-align: left;
-    overflow-y: scroll;
-}
-#nav-bar-left::-webkit-scrollbar {
-    display: none;
-}
-.img-toUser{
-    width: 45px;
-    height: 45px;
-    border: hidden;
-    border-radius: 50%;
-}
-#div-right{
-    width: 700px;
-    height: 600px;
-    border: 1px solid #b2b2b2;
-    border-radius: 10px;
-}
-.flm-1{
-    width: 50px;
-    height: 50px;
-    display: flex;
-}
-.flm-time{
-    width: 200px;
     position: absolute;
-    transform: translateX(150px) translateY(0px);
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
 }
-.message-input-container{
-    height: 50px;
-    width: 100%;
+
+.app-title {
+    font-size: 20px;
+    margin-bottom: 10px;
     margin-top: 5px;
-    /*transform: translateX(0px) translateY(555px);*/
+    color: #e1d3d3;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
-.message-content-me{
-    transform: translateX(-10px) translateY(10px);
-    background: rgb(20, 222, 60);
-    padding-right: 10px;
-    padding-left: 10px;
-    float: right;
-    border-radius: 10px;
+
+
+.controls1 {
+    margin-left: 25%;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    display: flex;
+    height: 70%;
+    width: 60%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+
 }
-.message-content-you{
-    transform: translateX(10px) translateY(10px);
-    background: rgba(166, 166, 166, 0.65);
-    padding-left: 10px;
-    padding-right: 10px;
-    float: left;
-    border-radius: 10px;
+
+.transparent-background {
+    flex: 1;
+    background-color: rgba(250, 247, 247, 0.98);
+    display: flex;
+    justify-content: center;
 }
-.content-message-me{
-    width: 100%;
-    height: 40px;
-    /*border: 1px solid black;*/
-    float: right;
-    text-align: right;
+
+#nav-bar-left {
+    width: 300px;
+    padding: 20px;
+    margin-top: 27px;
+
 }
-.content-message-you{
-    width: 100%;
-    height: 40px;
-    /*border: 1px solid black;*/
-    float: left;
-    text-align: left;
+
+.friend-list-message {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
 }
-.img-message-you{
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    float: left;
-    margin-left: 10px;
+
+.friend-list-message:hover {
+    background-color: #e9e9e9;
 }
-.img-message-me{
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    transform: translateX(0px) translateY(-0px);
-    float: right;
+
+.flm-1 {
+    display: flex;
+    align-items: center;
     margin-right: 10px;
 }
-#send-message-input{
-    width: 500px;
+
+.img-toUser {
+    width: 40px;
     height: 40px;
-    border-radius: 17px;
-    padding-left: 30px;
-    border: hidden;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
 }
-#list-message-container{
+
+.flm-time {
+    font-size: 12px;
+    color: #888888;
+}
+
+.flm-2 {
+    flex: 1;
+}
+
+.p-user-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+    margin-top: 10px
+
+}
+.p-name {
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 4px;
+    color: #888888;
+
+}
+
+
+.p-content {
+    max-width: 100px; /* Điều chỉnh giá trị pixel theo nhu cầu của bạn */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+        color: #888888;
+        font-size: 12px;
+    margin-right: 10px;
+}
+
+#div-right {
+    flex: 1;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+
+    /*align-items: flex-start; !* Căn giữa theo chiều ngang bên trái *!*/
+}
+
+#list-message-container {
     width: 100%;
     height: 550px;
     border: 1px solid #fce8e8;
     border-radius: 10px;
     overflow-y: scroll;
+}
 
+.content-message-you,
+.content-message-me {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
-#logout-btn{
-    transform: translateX(210px) translateY(-200px);
-}
-#list-message-container::-webkit-scrollbar {
-    display: none;
-}
-#send-message-button{
-    width: 60px;
-    height: 40px;
-    margin-left: 10px;
-    border-radius: 18px;
-    border: hidden;
-    background-color: #d92727;
-    color: white;
-}
-.flm-2{
-    width: 249px;
-    height: 50px;
-}
-.p-user-name{
-    transform: translateX(50px) translateY(-50px);
-}
-.p-content{
-    transform: translateX(50px) translateY(-50px);
-    color: #e70b21;
 
+.img-message-you{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
 }
-.friend-list-message{
-    height: 50px;
-    width: 290px;
-    border: 1px solid grey;
-    margin-top: 5px;
-    background-color: #decb65;
-    border-radius: 20px;
+
+
+.message-content-you,
+.message-content-me {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 12px;
 }
+
+.message-content-you {
+    background-color: #e9e9e9;
+    margin-right: auto;
+}
+
+.message-content-me {
+    background-color: #2979ff;
+    color: #ffffff;
+    margin-left: auto;
+}
+
+.message-input-container {
+    font-size: 12px;
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#send-message-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    margin-right: 10px;
+}
+
+#send-message-button {
+    padding: 10px 20px;
+    background-color: #e70b21;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.p-content-time {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+
+

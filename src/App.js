@@ -19,7 +19,6 @@ import DisplayAddress from "./components/Shop/address/DisplayAddress";
 import DashBoard from "./pages/ShopManagement";
 import ListProduct from "./pages/ShopManagement/ListProduct";
 import OrderManagement from "./pages/ShopManagement/OrderManagement";
-import ReportWeek from "./pages/ShopManagement/ReportWeek";
 import Profile from "./pages/ShopManagement/Profile";
 import UpdateProduct from "./pages/ShopManagement/UpdateProduct";
 import Images from "./pages/ShopManagement/Images";
@@ -53,20 +52,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CancelShop from "./components/OrderUser/CancelShop";
 import ChatRoom from "./components/chat/chatRoom";
-import ReportMonth from "./pages/ShopManagement/ReportMonth";
 
 
 
 
 function App() {
-    // const [check, setCheck] = useState(true)
-    // const test = () => {
-    //     setCheck(false)
-    // }
-    // const test1 = () => {
-    //     setCheck(true)
-    // }
-
     return (
         <div className="App">
             <Provider store={store}>

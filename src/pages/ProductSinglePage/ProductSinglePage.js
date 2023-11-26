@@ -91,6 +91,12 @@ const ProductSinglePage = () => {
         navigate("/cart");
     }
 
+    const toChat = () => {
+        localStorage.setItem("idAccByShop", product.shop.account.id)
+        navigate("/chat")
+
+    };
+
     return (
         <main className='py-5 bg-whitesmoke'>
             <div className='product-single'>
@@ -235,8 +241,15 @@ const ProductSinglePage = () => {
                                         {product?.shop?.name}
                                     </h3>
                                     <div>
-                                        <button style={{padding: '10px', border: '1px solid #d70018'}}
-                                                type="button" className="comic-button">
+                                        <button
+                                            style={{ padding: '10px', border: '1px solid white' }}
+                                            type="button"
+                                            className="comic-button"
+                                            onClick={( () => {
+                                                toChat()
+
+                                            })}
+                                        >
                                             Chat ngay
                                         </button>
 

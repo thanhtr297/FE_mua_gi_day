@@ -18,7 +18,7 @@ export default function ShopProfile() {
     let [shop, setShop] = useState({});
     const [products, setProducts] = useState([]);
     const [product, setProduct] = useState([]);
-   const naviagte = useNavigate()
+   const navigate = useNavigate()
 
 
 
@@ -40,7 +40,7 @@ export default function ShopProfile() {
     }, []);
     const toChat = () => {
         localStorage.setItem("idAccByShop", shop.account.id)
-        naviagte("/chat")
+        navigate("/chat")
 
     };
 
