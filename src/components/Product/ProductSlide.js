@@ -18,10 +18,7 @@ const ProductSlide = ({product}) => {
                     {/*  <span></span>*/}
                     {/*  <span className='fw-7'>{product?.brand?.name}</span>*/}
                     {/*</div>*/}
-                    <div className='title py-2' style={{
-                        overflow: 'hidden',
-                        maxHeight: '3.8em'
-                    }}>
+                    <div className='nameP' >
                         {product?.name}
                     </div>
                     <div className=''>

@@ -15,7 +15,7 @@ const CancelUser = () => {
     const [bills, setBills] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
     const [user, setUser] = useState({})
-    const status = "Đơn hủy"
+    const status = "Đơn bị hủy"
     const [bill1, setBill1] = useState([])
     const [listBillByBillDetail, setListBillByBillDetail] = useState([])
 

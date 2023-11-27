@@ -35,6 +35,7 @@ const ProductSinglePage = () => {
     const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
     // getting single product
     useEffect(() => {
+        window.scrollTo(0, 0);
         findShop(idAccount).then((res) => {
             setIdShop(res.id);
         }).catch(() => {
@@ -152,7 +153,7 @@ const ProductSinglePage = () => {
                                         <span className='mx-1 text-capitalize'>
                       {product?.count}
                     </span>
-                                        <span className='text-orange fw-5'>Option: </span>
+
 
                       {product?.option?.map((o) => {
                           return (
@@ -161,10 +162,7 @@ const ProductSinglePage = () => {
                       })}
 
                                     </div>
-                                    <div>
-                                        <p className='para fw-3 fs-15'
-                                           style={{whiteSpace: 'pre-line'}}>{product?.description}</p>
-                                    </div>
+
                                 </div>
 
                                 <div className="price">
@@ -272,14 +270,30 @@ const ProductSinglePage = () => {
                     </div>
                 </div>
             </div>
-
             <div style={{marginTop: '50px'}}>
                 <div className='comment-single'>
                     <div className='comment-single'>
                         <div className='containerr'>
-                            <h1 style={{marginBottom: '20px', fontSize: '24px'}}>Đánh giá: &nbsp; <FaStar
+                            <h1>MÔ TẢ SẢN PHẨM</h1>
+                            <div className=' bg-white grid' >
+                                <div className={"container"} style={{padding:'4%'}}>
+                                    <p className='para fw-3 fs-15'
+                                       style={{whiteSpace: 'pre-line'}}>{product?.description}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style={{marginTop: '50px'}}>
+                <div className='comment-single'>
+                    <div className='comment-single'>
+                        <div className='containerr'>
+                            <h1 style={{marginBottom: '20px', fontSize: '24px'}}>ĐÁNH GIÁ SẢN PHẨM
+                                &nbsp; <FaStar
                                 style={{color: 'F5E932'}}/><FaStar style={{color: 'F5E932'}}/><FaStar
-                                style={{color: 'F5E932'}}/><FaStar style={{color: 'F5E932'}}/><FaStar/></h1>
+                                style={{color: 'F5E932'}}/><FaStar style={{color: 'F5E932'}}/><FaStar/>
+                            </h1>
                             <div className=' bg-white grid' style={{paddingTop: '3%'}}>
                                 {comments.map((c) => (
                                     <>

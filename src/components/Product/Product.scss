@@ -95,3 +95,13 @@
         box-shadow: rgba(50, 50, 93, 0.1) 0px 2px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 20px -1px;
     }
 }
+.nameP {
+    text-align: center;
+    max-width: 200px; /* Điều chỉnh giá trị pixel theo nhu cầu của bạn */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #141a1c;
+    font-size: 14px;
+    //margin-right: 10px;
+}

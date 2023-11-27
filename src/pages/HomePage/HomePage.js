@@ -7,6 +7,7 @@ import {STATUS} from '../../utils/status';
 import {displayAllCategory, displayProductStatus} from "../../service/ProductService";
 import Filter from "./Filter";
 import ListPrd from "../../components/ProductList/ListPrd";
+import ProductList2 from "../../components/ProductList/ProductList2";
 
 const HomePage = () => {
     const [products, setProducts] = useState([]);
@@ -65,7 +66,7 @@ const HomePage = () => {
                                 <h3>GỢI Ý HÔM NAY </h3>
 
                             </div>
-                            {products === STATUS.LOADING ? <Loader/> : <ProductList products={tempProducts}/>}
+                            {products === STATUS.LOADING ? <Loader/> : <ProductList2 products={tempProducts}/>}
                         </div>
                         {categories.map((item) => (
                             // (item.length > 0) ?
