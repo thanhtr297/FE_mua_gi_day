@@ -166,10 +166,6 @@ const ProductSinglePage = () => {
                       })}
 
                                     </div>
-                                    <div>
-                                        <p className='para fw-3 fs-15'
-                                           style={{whiteSpace: 'pre-line'}}>{product?.description}</p>
-                                    </div>
                                 </div>
 
                                 <div className="price">

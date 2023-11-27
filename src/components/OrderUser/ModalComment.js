@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import {saveComment} from "../../service/CommentService";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
  export  default function CommentUser(idP) {
     const [show, setShow] = useState(false);
@@ -11,6 +12,7 @@ import {toast} from "react-toastify";
     const handleShow = () => setShow(true);
     let [comment, setComment] = useState({});
      // console.log(idP.modalComment)
+     const navi = useNavigate();
 
     const handleComment = (event) => {
          comment = {
@@ -57,9 +59,11 @@ import {toast} from "react-toastify";
                         handleClose()
                         saveComment(comment).then(()=>{
                             toast.success("Thêm thành công!",{autoClose:700})
+                            navi("/product/"+idP.modalComment.id)
                         })
                     } else {
                             toast.error("Vui lòng nhập đánh giá!",{autoClose:700})
+
                         }
                     }}>
                         Lưu
