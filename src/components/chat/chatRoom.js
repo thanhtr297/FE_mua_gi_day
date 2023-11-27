@@ -20,6 +20,7 @@ const ChatRoom = () => {
 
 
     useEffect(() => {
+        window.scrollTo(0, 150);
         if (webSocket) {
             webSocket.subscribe('/chat/user/queue', async (message) => {
                 const msg = JSON.parse(message.body);
@@ -46,10 +47,11 @@ const ChatRoom = () => {
     }, [load]);
 
     useEffect(() => {
-        if(toUserId == null) {
-            toUserId = 0
-        }
-        UserService.messageAllFriend(id, toUserId)
+        // if(toUserId == null) {
+        //     toUserId = 0
+        // }
+        // UserService.messageAllFriend(id, toUserId)
+        UserService.messageAllFriend(id)
             .then((response) => {
                 response.data.sort((a, b) => {
                     return new Date(b.time) - new Date(a.time);
@@ -70,7 +72,7 @@ const ChatRoom = () => {
         }
         setIdToUser(toUserId)
         try {
-            const response = await UserService.messageAllInFriend(toUserId, principal);
+            const response = await UserService.messageAllInFriend(toUserId, principal );
             setListFriendInChat(response.data);
             setLoad(true)
         } catch (error) {

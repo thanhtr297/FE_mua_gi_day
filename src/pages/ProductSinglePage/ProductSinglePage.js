@@ -15,6 +15,7 @@ import {createReply, findCommentByIdP} from "../../service/CommentService";
 import {toast} from "react-toastify";
 import "./Comment.scss"
 import {FaStar} from "react-icons/fa";
+import UserService from "../../service/ChatService";
 import {FormatTime} from "../../components/Format/FormatTime";
 
 
@@ -32,6 +33,7 @@ const ProductSinglePage = () => {
     const [isFlag, setIsFlag] = useState(true);
     const [isShow, setIsShow] = useState(true);
     const [isShowUpdate, setIsShowUpdate] = useState(true);
+    let idUser = localStorage.getItem("account");
     const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
     // getting single product
     useEffect(() => {
@@ -93,9 +95,12 @@ const ProductSinglePage = () => {
         navigate("/cart");
     }
 
+
     const toChat = () => {
-        localStorage.setItem("idAccByShop", product.shop.account.id)
-        navigate("/chat")
+        UserService.createMessage(idUser, product.shop.account.id)
+            .then(() => {
+                navigate("/chat")
+            })
 
     };
 
@@ -154,7 +159,6 @@ const ProductSinglePage = () => {
                       {product?.count}
                     </span>
 
-
                       {product?.option?.map((o) => {
                           return (
                               <span className='mx-1 text-capitalize'> {o.content}</span>
@@ -162,7 +166,10 @@ const ProductSinglePage = () => {
                       })}
 
                                     </div>
-
+                                    <div>
+                                        <p className='para fw-3 fs-15'
+                                           style={{whiteSpace: 'pre-line'}}>{product?.description}</p>
+                                    </div>
                                 </div>
 
                                 <div className="price">
@@ -285,6 +292,7 @@ const ProductSinglePage = () => {
                     </div>
                 </div>
             </div>
+
             <div style={{marginTop: '50px'}}>
                 <div className='comment-single'>
                     <div className='comment-single'>
