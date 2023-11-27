@@ -7,6 +7,7 @@ import {findAllBrand} from "./service/BrandService";
 import {storage} from "./fireBase";
 import uploadImage from "./service/Upload";
 import {LoadingButton} from "./LoadingButton";
+import {toast} from "react-toastify";
 
 export default function UpdateProduct() {
     const [loading, setLoading] = useState(false);
@@ -47,7 +48,7 @@ export default function UpdateProduct() {
         product.image = path;
         axios.post("http://localhost:8080/api/products", product)
             .then(() => {
-                alert("Thành công !")
+                toast.success("Cập nhật thành công!", {autoClose: 700})
                 return navigate("/shop-management/list-product")
             })
     }

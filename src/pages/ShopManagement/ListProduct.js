@@ -1,15 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import {MDBTable, MDBTableHead, MDBTableBody} from 'mdb-react-ui-kit';
+import {MDBTable, MDBTableBody, MDBTableHead} from 'mdb-react-ui-kit';
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
-import {deleteById, save} from "./service/ProductService";
-import {MdDeleteOutline} from "react-icons/md";
+import {deleteById} from "./service/ProductService";
+import {MdCreateNewFolder, MdDeleteOutline} from "react-icons/md";
 import {CiEdit} from "react-icons/ci";
-import {MdCreateNewFolder} from "react-icons/md";
 import ReactPaginate from "react-paginate";
 import './styles.scss';
 import {AppContext} from "../../Context/AppContext";
+import {toast} from "react-toastify";
+import swal from "sweetalert";
 
 
 function ListProduct() {
@@ -35,7 +36,7 @@ function ListProduct() {
             setTotalPages(Math.ceil(allProducts.length / perPage));
         };
 
-        fetchData();
+        fetchData().then();
     }, [page, perPage, isFlag]);
     const handlePageClick = (selectedPage) => {
         setPage(selectedPage.selected);
@@ -45,16 +46,27 @@ function ListProduct() {
         return navigate("/shop-management/" + id)
     }
 
+
     function deleteP(id) {
-        if (window.confirm("Bạn có muốn xóa sản phẩm này không?")) {
-            deleteById(id)
-                .then(() => {
-                        setCheckDelete(!checkDelete)
-                        toggleFlag()
-                        alert("Xóa thành công!")
-                    }
-                )
-        }
+        swal({
+            text: "Bạn có muốn xóa sản phẩm này không?",
+            icon: "info",
+            buttons: {
+                cancel: true,
+                confirm: true
+            },
+        }).then(r => {
+            if(r) {
+                deleteById(id)
+                    .then(() => {
+                            setCheckDelete(!checkDelete)
+                            toggleFlag()
+
+                            toast.success("Xóa thành công!", {autoClose: 700})
+                        }
+                    )
+            }
+        })
     }
 
     return (

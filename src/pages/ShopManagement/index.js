@@ -1,10 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { Link, Outlet} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import './index.scss';
-import {findAccountById} from "../../service/UserService";
-import {findUserByAccount} from "../UserManagement/Service/UserService";
 import {findShop} from "./service/ProfileService";
-import {red} from "@mui/material/colors";
 import {AppContext} from "../../Context/AppContext";
 import {toast} from "react-toastify";
 

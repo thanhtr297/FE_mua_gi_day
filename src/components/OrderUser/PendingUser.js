@@ -10,6 +10,7 @@ import {BsArrowThroughHeart} from "react-icons/bs";
 import {IoLocationOutline} from "react-icons/io5";
 import {FaX} from "react-icons/fa6";
 import {toast} from "react-toastify";
+import swal from 'sweetalert';
 
 
 const PendingUser = () => {
@@ -22,6 +23,7 @@ const PendingUser = () => {
     const [check, setCheck] = useState(true)
     const [bill1, setBill1] = useState([])
     const [listBillByBillDetail, setListBillByBillDetail] = useState([])
+
 
 
     useEffect(() => {
@@ -72,15 +74,24 @@ const PendingUser = () => {
         })
     }, [])
 
-    function cancelBillDetail(idBill) {
-        if (window.confirm("Bạn có muốn hủy đơn hàng này không ?")) {
-            cancelBill(idBill).then(() => {
-                setCheck(!check);
-                toast.success("Hủy sản phẩm thành công!",{ autoClose: 700 })
-            })
-        }
-    }
 
+    function cancelBillDetail(idBill) {
+        swal({
+            text: "Bạn có muốn hủy đơn hàng này không ?",
+            icon: "info",
+            buttons: {
+                cancel: true,
+                confirm: true
+            },
+        }).then(r => {
+            if(r) {
+                cancelBill(idBill).then(() => {
+                                setCheck(!check);
+                                toast.success("Hủy sản phẩm thành công!",{ autoClose: 700 })
+                            })
+            }
+        })
+    }
 
     function changeAddress() {
         navigate(("/user-management/profile"))

@@ -14,8 +14,6 @@ import {findShop, saveShop} from "./service/ProfileService";
 import {useNavigate} from "react-router-dom";
 import {AppContext} from "../../Context/AppContext";
 import {toast} from "react-toastify";
-import GoogleMapReact from "google-map-react";
-import {IoLocationSharp} from "react-icons/io5";
 
 
 export default function Profile() {
@@ -37,13 +35,14 @@ export default function Profile() {
     const [shop, setShop] = useState({})
     const [check, setCheck] = useState(true)
     const {toggleFlag} = useContext(AppContext);
+    const [showCity,setShowCity] = useState(false)
     const Icon = ({text}) => <div>{text}</div>;
 
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
-            setCoords({lat: latitude, lng: longitude})
-        })
+        // navigator.geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
+        //     setCoords({lat: latitude, lng: longitude})
+        // })
         findAllCity().then((result) => {
             setCities(result);
         })
@@ -51,6 +50,7 @@ export default function Profile() {
         findShop(idAcc).then((res) => {
            if (res ===''){
                setShop({})
+
            } else {
                setShop(res)
            }
@@ -118,7 +118,7 @@ export default function Profile() {
             toast.success("Lưu thành công!")
             setCheck(true)
             toggleFlag()
-            find().then()
+            // find().then()
         }).catch( () => {
             toast.warning("Lưu thất bại !")
         })
@@ -150,25 +150,25 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                         <input type="file" id="imageUpload" style={{display: 'none'}}
                                onChange={(e) => handledImage(e.target.files[0])}/>
                     </div>
-                    <div className={'col-md-2'}>
-                        <div style={{color: "red", scale: "2"}}>{nameCity}</div>
-                        <div style={{width: "500px", height: "200px", marginLeft:"55px"}}>
-                            <GoogleMapReact
-                                bootstrapURLKeys={{key: 'AIzaSyDRqtWVwZAl8sB2Au23S10L_V5GgC_3Cls'}}
-                                defaultCenter={coords}
-                                defaultZoom={15}
-                                center={coords}
-                            >
-                                <Icon
-                                    lat={coords.lat}
-                                    lng={coords.lng}
-                                    text={<IoLocationSharp color={"red"} size={25}/>}
-                                />
-                            </GoogleMapReact>
+                    {/*<div className={'col-md-2'}>*/}
+                    {/*    <div style={{color: "red", scale: "2"}}>{nameCity}</div>*/}
+                        {/*<div style={{width: "500px", height: "200px", marginLeft:"55px"}}>*/}
+                        {/*    <GoogleMapReact*/}
+                        {/*        bootstrapURLKeys={{key: 'AIzaSyDRqtWVwZAl8sB2Au23S10L_V5GgC_3Cls'}}*/}
+                        {/*        defaultCenter={coords}*/}
+                        {/*        defaultZoom={15}*/}
+                        {/*        center={coords}*/}
+                        {/*    >*/}
+                        {/*        <Icon*/}
+                        {/*            lat={coords.lat}*/}
+                        {/*            lng={coords.lng}*/}
+                        {/*            text={<IoLocationSharp color={"red"} size={25}/>}*/}
+                        {/*        />*/}
+                        {/*    </GoogleMapReact>*/}
 
-                        </div>
+                        {/*</div>*/}
 
-                    </div>
+                    {/*</div>*/}
                     <div className={'col-md-6'}>
 
                     </div>
@@ -212,8 +212,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                             displayDistrictByIdCity(textCity.split("-")[0])
                                             setIdCity(textCity.split("-")[0])
                                         }} className={"form-select"}>
-                                            {/*<option >--Chọn thành phố--</option>*/}
-                                            <option >{shop?.wards?.district?.city?.name}</option>
+                                            {!check ?  <option>--Chọn Thành phố--</option> : <option >{shop?.wards?.district?.city?.name}</option>}
                                             {cities.map((c) => {
                                                 return (
                                                     <option value={c.id + "-" + c.name}>{c.name}</option>
@@ -229,9 +228,9 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                             setNameDistrict(textDistrict.split("-")[1])
                                             displayWardsByIdDistrict(textDistrict.split("-")[0])
                                             setIdDistrict(textDistrict.split("-")[0])
-                                        }}className={"form-select"}>
-                                            {/*<option>--Chọn Quận/Huyện--</option>*/}
-                                            <option>{shop?.wards?.district?.name}</option>
+                                        }} className={"form-select"}>
+
+                                            {!check ?  <option>--Chọn Quận/Huyện--</option> : <option>{shop?.wards?.district?.name}</option>}
                                             {districts.map((d) => {
                                                 return (
                                                     <option value={d.id + "-" + d.name}>{d.name}</option>
@@ -242,8 +241,8 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                     <div className="mb-3" style={{fontSize: '16px'}}>
                                         <label htmlFor={'wards'} className="form-label">Phường/xã</label>
                                         <select style={{fontSize: '16px'}} disabled={check} name={'address.wards.id'} onChange={(e) => onWardChange(e)} className={"form-select"}>
-                                            {/*<option >--Chọn xã/phường--</option>*/}
-                                            <option >{shop?.wards?.name}</option>
+
+                                            {!check ? <option >--Chọn xã/phường--</option> : <option >{shop?.wards?.name}</option>}
                                             {wards.map((w) => {
                                                 return (
                                                     <option value={w.id}>{w.name}</option>

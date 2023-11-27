@@ -118,7 +118,7 @@ export default function ProfileUser() {
                                 {user?.wards ? (<option >{user?.wards?.district?.city?.name}</option>):(<option >--Chọn thành phố--</option>)}
                                 {cities.map((c) => {
                                     return (
-                                        <option value={c.id + "-" + c.name}>{c.name}</option>
+                                        <option key={c.id} value={c.id + "-" + c.name}>{c.name}</option>
                                     )
                                 })}
                             </select>
@@ -133,7 +133,7 @@ export default function ProfileUser() {
                                 {user?.wards ? (<option>{user?.wards?.district?.name}</option>):(<option>--Chọn Quận/Huyện--</option>)}
                                 {districts.map((d) => {
                                     return (
-                                        <option value={d.id + "-" + d.name}>{d.name}</option>
+                                        <option key={d.id} value={d.id + "-" + d.name}>{d.name}</option>
                                     )
                                 })}
                             </select>
@@ -147,7 +147,7 @@ export default function ProfileUser() {
                                 {user?.wards ? ( <option >{user?.wards?.name}</option>):(<option >--Chọn xã/phường--</option>)}
                                 {wards.map((w) => {
                                     return (
-                                        <option value={w.id + "-" + w.name}>{w.name}</option>
+                                        <option key={w.id} value={w.id + "-" + w.name}>{w.name}</option>
                                     )
                                 })}
                             </select>

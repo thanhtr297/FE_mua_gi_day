@@ -1,8 +1,8 @@
 import './App.scss';
 // react router v6
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 // pages
-import {Home, CategoryProduct, ProductSingle, Cart, Search} from "./pages/index";
+import {Cart, CategoryProduct, Home, ProductSingle, Search} from "./pages/index";
 // components
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
@@ -10,7 +10,6 @@ import Footer from "./components/Footer/Footer";
 import store from "./store/store";
 import {Provider} from "react-redux";
 // import Login from "./components/Login/Login";
-
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
 import React from "react";
@@ -19,7 +18,6 @@ import DisplayAddress from "./components/Shop/address/DisplayAddress";
 import DashBoard from "./pages/ShopManagement";
 import ListProduct from "./pages/ShopManagement/ListProduct";
 import OrderManagement from "./pages/ShopManagement/OrderManagement";
-import ReportWeek from "./pages/ShopManagement/ReportWeek";
 import Profile from "./pages/ShopManagement/Profile";
 import UpdateProduct from "./pages/ShopManagement/UpdateProduct";
 import Images from "./pages/ShopManagement/Images";
@@ -48,16 +46,12 @@ import {ForgotPass} from "./pages/UserManagement/ForgotPass";
 import {PasswordNew} from "./pages/UserManagement/PasswordNew";
 import ShopProfile from "./pages/ShopManagement/ShopProfile";
 import Comment from "./pages/CommentPage/Comment";
-import Demo from "./Demo";
-import { ToastContainer } from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CancelShop from "./components/OrderUser/CancelShop";
 import ChatRoom from "./components/chat/chatRoom";
-import ReportMonth from "./pages/ShopManagement/ReportMonth";
 import TotalWeek from "./pages/ShopManagement/TotalWeek";
 import TotalMonth from "./pages/ShopManagement/TotalMonth";
-
-
 
 
 function App() {
@@ -108,7 +102,6 @@ function App() {
                         <Route path={"/login"} element={<Login/>}/>
                         <Route path={"/register"} element={<Register/>}/>
                         <Route path="/profile" element={<Profile/>}/>
-                        <Route path={"/demo"} element={<Demo/>}/>
                         <Route path={"/comment"} element={<Comment/>}/>
                         <Route path="/user-management" element={<UserManagement/>}>
                             <Route index element={<ProfileUser/>}/>

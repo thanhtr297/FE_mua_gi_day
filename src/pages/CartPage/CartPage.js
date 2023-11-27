@@ -6,8 +6,8 @@ import {formatPrice} from '../../utils/helpers';
 import {deleteAllProductFromCart, deleteProductFromCart, showCart, updateQuantity} from "../../service/CartService";
 import {CiShop} from "react-icons/ci";
 import {BsArrowThroughHeart} from "react-icons/bs";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { pink } from '@mui/material/colors';
+import {RiDeleteBin6Line} from "react-icons/ri";
+import {pink} from '@mui/material/colors';
 import Checkbox from '@mui/material/Checkbox';
 import {toast} from "react-toastify";
 import {AppContext} from "../../Context/AppContext";
@@ -27,7 +27,6 @@ const CartPage = () => {
     const [listCartByShop, setListCartByShop] = useState([])
     const {toggleFlag } = useContext(AppContext);
     const {isFlag } = useContext(AppContext);
-    let toastId = null;
 
 
     useEffect(() => {
@@ -40,9 +39,8 @@ const CartPage = () => {
                 }
             });
             setShops(checkShop);
-            // localStorage.setItem('carts', JSON.stringify(response));
         });
-    }, [check, idAccount ,isFlag]);
+    }, [check, idAccount,isFlag]);
 
 
     useEffect(() => {
@@ -135,7 +133,7 @@ const CartPage = () => {
 
     function deleteAll(idCart) {
         swal({
-            text: "Bạn có chắc chắn muốn xóa sản phẩm này không?",
+            text: "Bạn có chắc chắn muốn xóa hết sản phẩm không?",
             icon: "info",
             buttons: {
                 cancel: true,
