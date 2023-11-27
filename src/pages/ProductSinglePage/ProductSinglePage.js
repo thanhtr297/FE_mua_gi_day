@@ -17,6 +17,7 @@ import "./Comment.scss"
 import {FaStar} from "react-icons/fa";
 import UserService from "../../service/ChatService";
 import {FormatTime} from "../../components/Format/FormatTime";
+import {AppContext} from "../../Context/AppContext";
 
 
 const ProductSinglePage = () => {
@@ -34,6 +35,7 @@ const ProductSinglePage = () => {
     const [isShow, setIsShow] = useState(true);
     const [isShowUpdate, setIsShowUpdate] = useState(true);
     let idUser = localStorage.getItem("account");
+    const {toggleFlag } = useContext(AppContext);
     const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
     // getting single product
     useEffect(() => {
@@ -82,7 +84,9 @@ const ProductSinglePage = () => {
             },
             quantity: quantity
         }
-        addToCart(cart, idAccount).then()
+        addToCart(cart, idAccount).then( ()=> {
+            toggleFlag()
+        })
 
     }
 

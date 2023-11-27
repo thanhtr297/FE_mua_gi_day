@@ -157,7 +157,7 @@ export default function Filter() {
                 enableReinitialize={true}>
                 <Form>
                     <div style={{display: 'flex'}}>
-                        <div style={{width: "35%", fontSize: "16px", marginLeft: '40px', marginTop: '20px'}}>
+                        <div style={{width: "401px", fontSize: "16px", marginLeft: '40px', marginTop: '20px'}}>
                             Từ {formatPrice(range[0])} đến {formatPrice(range[1])}
                             <Slider style={{color: "rgb(215, 0, 24)", fontSize: "5px", marginTop: '10px'}} value={range}
                                     onChange={(e) => handleChanges(e)} valueLabelDisplay="auto"
@@ -167,8 +167,8 @@ export default function Filter() {
 
 
                         </div>
-                        <div style={{fontSize: '16px', width: "20%"}}>
-                            <div className={'col-md-6'} style={{marginLeft: '40px', marginTop: "18px"}}>
+                        <div style={{fontSize: '16px',marginLeft: '15px', width: "20%"}}>
+                            <div className={'col-md-6'} style={{ marginTop: "18px"}}>
                                 <label htmlFor={'category'} className="form-label">Mặt hàng</label>
                                 <div style={{fontSize: '16px', width: '220px'}}>
                                     <Select placeholder={"Chọn mặt hàng"} onChange={(e) => {
@@ -183,8 +183,8 @@ export default function Filter() {
                             </div>
                         </div>
 
-                        <div style={{fontSize: '16px', width: "20%"}}>
-                            <div className={'col-md-6'} style={{marginLeft: '45px', marginTop: "18px"}}>
+                        <div style={{ marginLeft: '20px',fontSize: '16px', width: "20%"}}>
+                            <div className={'col-md-6'} style={{marginLeft: '0px', marginTop: "18px"}}>
                                 <label htmlFor={'brand'} className="form-label">Thương hiệu</label>
                                 <div style={{fontSize: '16px', width: '220px'}}>
                                     <Select placeholder={"Chọn thương hiệu"} onChange={(e) => {
@@ -199,7 +199,7 @@ export default function Filter() {
                             </div>
                         </div>
 
-                        <div className={'col-md-6'} style={{width: '15%', marginLeft: '150px', marginTop: "18px"}}>
+                        <div className={'col-md-6'} style={{width: '15%', marginLeft: '120px', marginTop: "18px"}}>
                             <div className="mb-3" style={{fontSize: '16px', marginLeft: '-100px'}}>
                                 <label htmlFor={'city'} className="form-label">Khu vực</label>
                                 <div style={{fontSize: '16px', width: '220px'}}>

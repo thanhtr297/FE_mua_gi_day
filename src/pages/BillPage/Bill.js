@@ -87,6 +87,7 @@ const Bill = () => {
             saveBill(idAccount, cartDetails, navigate).then()
         } else {
             toast.error("Vui lòng nhập thông tin địa chỉ nhận hàng",{ autoClose: 700 })
+            toast.isActive()
             navigate(("/user-management/profile"))
         }
     }
