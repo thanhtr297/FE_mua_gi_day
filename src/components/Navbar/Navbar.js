@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import "./Navbar.scss";
 import {Link} from "react-router-dom";
 import { useSelector, useDispatch} from 'react-redux';
@@ -7,11 +7,11 @@ import { getAllCategories } from '../../store/categorySlice';
 import { getAllCarts, getCartItemsCount, getCartTotal } from '../../store/cartSlice';
 import CartModal from "../CartModal/CartModal";
 import {showCart} from "../../service/CartService";
+import {AppContext} from "../../Context/AppContext";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const categories = useSelector(getAllCategories);
-  const itemsCount = useSelector(getCartItemsCount);
+  const {isFlag } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [carts, setCarts] = useState([]);
   const idAccount = localStorage.getItem("account");
@@ -19,7 +19,7 @@ const Navbar = () => {
     showCart(idAccount).then((response) => {
       setCarts(response)
     })
-  },[idAccount])
+  },[idAccount , isFlag])
 
   const handleSearchTerm = (e) => {
     e.preventDefault();

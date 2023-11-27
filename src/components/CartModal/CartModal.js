@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import "./CartModal.scss";
 import { shopping_cart } from '../../utils/images';
 import { formatPrice } from '../../utils/helpers';
 import {showCart} from "../../service/CartService";
+import {AppContext} from "../../Context/AppContext";
 
 const CartModal = () => {
     const [carts, setCarts] = useState([]);
     const idAccount = localStorage.getItem("account");
+    const {isFlag } = useContext(AppContext);
+
     // const cats = JSON.parse(localStorage.getItem("cart"))
 
 
@@ -16,7 +19,7 @@ const CartModal = () => {
         })
 
 
-    },[idAccount])
+    },[idAccount ,isFlag])
   return (
     <div className='cart-modal'>
       <h5 className='cart-modal-title fw-5 fs-15 font-manrope text-center'>Sản phẩm đã thêm gần đây</h5>
