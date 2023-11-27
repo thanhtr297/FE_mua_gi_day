@@ -36,6 +36,7 @@ const ProductSinglePage = () => {
     const [isShowUpdate, setIsShowUpdate] = useState(true);
     let idUser = localStorage.getItem("account");
     const {toggleFlag } = useContext(AppContext);
+    const [imageSrc, setImageSrc] = useState('')
     const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
     // getting single product
     useEffect(() => {
@@ -47,6 +48,7 @@ const ProductSinglePage = () => {
         })
         getProductById(id).then((res) => {
             setProduct(res.data);
+            setImageSrc(res?.data?.image[0]?.name)
         })
         findCommentByIdP(id).then((res) => {
             setComments(res.data);
@@ -57,6 +59,10 @@ const ProductSinglePage = () => {
     if (productSingleStatus === STATUS.LOADING) {
         return <Loader/>
     }
+    const changeImage = (img) => {
+        // Kiểm tra xem ảnh hiện tại là ảnh nào và cập nhật state
+        setImageSrc(img);
+    };
 
     const increaseQty = () => {
         setQuantity((prevQty) => {
@@ -122,13 +128,15 @@ const ProductSinglePage = () => {
                                         marginLeft: '100px',
                                         marginTop: '10px'
                                     }}
-                                         src={product?.image === undefined ? '' : product?.image[0]?.name} alt=""
+                                         src={product?.image === undefined ? '' : imageSrc} alt=""
                                          className='img-cover'/>
                                 </div>
                                 <div className='product-img-thumbs flex align-center my-2'>
                                     {product?.image?.map(p => {
                                         return (
-                                            <div className='thumb-item'>
+                                            <div className='thumb-item' onClick={() => {
+                                                changeImage(p?.name)
+                                            }}>
                                                 <img src={p?.name} alt="" className='img-cover'/>
                                             </div>
                                         )
