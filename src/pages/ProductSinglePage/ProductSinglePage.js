@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./ProductSinglePage.scss";
 import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -60,6 +60,7 @@ const ProductSinglePage = () => {
         setQuantity((prevQty) => {
             let tempQty = prevQty + 1;
             if (tempQty > product?.quantity) {
+                toast.error("Số lượng sản phẩm bạn muốn mua đã hết hàng", { autoClose: 700 })
                 tempQty = product?.quantity;
             }
             return tempQty;
@@ -70,20 +71,25 @@ const ProductSinglePage = () => {
         setQuantity((prevQty) => {
             let tempQty = prevQty - 1;
             if (tempQty < 1) {
+                toast.error("Số lượng sản phẩm phải lớn hơn 0", { autoClose: 700 })
                 tempQty = 1;
             }
             return tempQty;
         })
     }
     const addToCartHandler = (product) => {
-        const cart = {
-            product: {
-                id: product.id
-            },
-            quantity: quantity
-        }
-        addToCart(cart, idAccount).then()
+        if (idUser != null) {
+            const cart = {
+                product: {
+                    id: product.id
+                },
+                quantity: quantity
+            }
 
+            addToCart(cart, idAccount).then()
+        } else {
+            toast.error("Bạn cần đăng nhập để mua sản phẩm", {autoClose: 700})
+        }
     }
 
     function shopProfile(id) {
@@ -91,8 +97,18 @@ const ProductSinglePage = () => {
     }
 
     function saveToBill() {
-        addToCartHandler(product)
-        navigate("/cart");
+        if (idUser != null) {
+            if (quantity > product?.quantity) {
+                toast.error("Số lượng sản phẩm bạn muốn mua đã hết hàng", {autoClose: 700})
+
+            } else {
+
+                addToCartHandler(product)
+                navigate("/cart");
+            }
+        } else {
+            toast.error("Bạn cần đăng nhập để mua sản phẩm", {autoClose: 700})
+        }
     }
 
 

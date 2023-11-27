@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import "./CartPage.scss";
 import {shopping_cart} from '../../utils/images';
 import {Link, useNavigate} from 'react-router-dom';
@@ -6,10 +6,12 @@ import {formatPrice} from '../../utils/helpers';
 import {deleteAllProductFromCart, deleteProductFromCart, showCart, updateQuantity} from "../../service/CartService";
 import {CiShop} from "react-icons/ci";
 import {BsArrowThroughHeart} from "react-icons/bs";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { pink } from '@mui/material/colors';
+import {RiDeleteBin6Line} from "react-icons/ri";
+import {pink} from '@mui/material/colors';
 import Checkbox from '@mui/material/Checkbox';
 import {toast} from "react-toastify";
+import {AppContext} from "../../Context/AppContext";
+import swal from 'sweetalert';
 
 
 const CartPage = () => {
@@ -23,6 +25,10 @@ const CartPage = () => {
     const [check, setCheck] = useState(false)
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     const [listCartByShop, setListCartByShop] = useState([])
+    const {toggleFlag } = useContext(AppContext);
+    const {isFlag } = useContext(AppContext);
+
+
     useEffect(() => {
         showCart(idAccount).then((response) => {
             setCarts(response);
@@ -33,9 +39,8 @@ const CartPage = () => {
                 }
             });
             setShops(checkShop);
-            // localStorage.setItem('carts', JSON.stringify(response));
         });
-    }, [check, idAccount]);
+    }, [check, idAccount,isFlag]);
 
 
     useEffect(() => {
@@ -108,21 +113,41 @@ const CartPage = () => {
     }
 
     function deleteProduct(idCartDetail) {
-        if (window.confirm("Bạn có muốn xóa sản phẩm này không?")) {
-            deleteProductFromCart(idCartDetail).then(() => {
-                setCheck(!check);
-                toast.success("Xóa sản phẩm thành công",{ autoClose: 700 })
-            })
-        }
+        swal({
+            text: "Bạn có chắc chắn muốn xóa sản phẩm này không?",
+            icon: "info",
+            buttons: {
+                cancel: true,
+                confirm: true
+            },
+        }).then(r => {
+            if(r) {
+                deleteProductFromCart(idCartDetail).then(() => {
+                    setCheck(!check);
+                    toast.success("Xóa sản phẩm thành công",{ autoClose: 700 })
+                    toggleFlag()
+                })
+            }
+        })
     }
 
     function deleteAll(idCart) {
-        if (window.confirm("Bạn có muốn xóa tất cả sản phẩm không trong giỏ hàng không?")) {
-            deleteAllProductFromCart(idCart).then(() => {
-                setCheck(!check);
-                toast.success("Xóa sản phẩm thành công!", { autoClose: 700 })
-            })
-        }
+        swal({
+            text: "Bạn có chắc chắn muốn xóa hết sản phẩm không?",
+            icon: "info",
+            buttons: {
+                cancel: true,
+                confirm: true
+            },
+        }).then(r => {
+            if(r) {
+                deleteAllProductFromCart(idCart).then(() => {
+                    setCheck(!check);
+                    toast.success("Xóa toàn bộ sản phẩm thành công!", { autoClose: 700 })
+                    toggleFlag()
+                })
+            }
+        })
     }
 
     const saveToBill = () => {
@@ -150,7 +175,6 @@ const CartPage = () => {
 
     return (
         <>
-
             {checkEmpty(listCartByShop) ?
                 <div className='cart bg-whitesmoke'>
                     <div className='containerr'>

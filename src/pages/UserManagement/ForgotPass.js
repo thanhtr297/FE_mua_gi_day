@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {emailCheck, findAccountByEmail, sendMailForgetPass} from "../../service/UserService";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 export function ForgotPass() {
     const navigate = useNavigate()
@@ -47,7 +48,7 @@ export function ForgotPass() {
             email: email
         }
         sendMailForgetPass(user).then(()=>{
-            alert("Vui lòng kiểm tra hộp thư trong email của bạn!")
+            toast.success("Vui lòng kiểm tra hộp thư trong email của bạn!", {autoClose: 1000})
             localStorage.setItem('acc',account.id)
             navigate("/")
         })

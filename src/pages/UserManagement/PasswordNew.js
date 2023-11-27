@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {findAccountById, savePass} from "../../service/UserService";
 import {useNavigate, useParams} from "react-router-dom";
 import "./changePass.scss"
+import {toast} from "react-toastify";
 export function PasswordNew() {
     const [passwordNew, setPasswordNew] = useState("");
     const [passwordError,setPasswordError] = useState("");
@@ -54,7 +55,7 @@ export function PasswordNew() {
             password: passwordNew
         }
         savePass(user).then(()=>{
-            alert("Đổi mật khẩu thành công, vui lòng đăng nhập lại!")
+            toast.success("Đổi mật khẩu thành công, vui lòng đăng nhập lại!", {autoClose: 700})
             navigate("/login")
         })
     }

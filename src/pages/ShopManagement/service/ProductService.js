@@ -1,4 +1,5 @@
 import axios from "axios";
+import {toast} from "react-toastify";
 
 export const findAllProduct = () => {
     return new Promise((resolve) => {
@@ -29,10 +30,10 @@ export const save = (product, navigate) => {
         resolve(
             axios.post("http://localhost:8080/api/products", product)
                 .then(() => {
-                    alert("Thành công !")
+                    toast.success("Thành công!", {autoClose: 700})
                     return navigate("/shop-management/list-product")
                 }).catch(() => {
-                alert("Thất bại !")
+                toast.error("Thất bại !", {autoClose: 700})
                 return navigate ("/shop-management/list-product")
             })
         )
