@@ -167,8 +167,8 @@ export default function Filter() {
 
 
                         </div>
-                        <div style={{fontSize: '16px', width: "20%"}}>
-                            <div className={'col-md-6'} style={{marginLeft: '0px', marginTop: "18px"}}>
+                        <div style={{fontSize: '16px',marginLeft: '15px', width: "20%"}}>
+                            <div className={'col-md-6'} style={{ marginTop: "18px"}}>
                                 <label htmlFor={'category'} className="form-label">Mặt hàng</label>
                                 <div style={{fontSize: '16px', width: '220px'}}>
                                     <Select placeholder={"Chọn mặt hàng"} onChange={(e) => {
@@ -183,7 +183,7 @@ export default function Filter() {
                             </div>
                         </div>
 
-                        <div style={{fontSize: '16px', width: "20%"}}>
+                        <div style={{ marginLeft: '20px',fontSize: '16px', width: "20%"}}>
                             <div className={'col-md-6'} style={{marginLeft: '0px', marginTop: "18px"}}>
                                 <label htmlFor={'brand'} className="form-label">Thương hiệu</label>
                                 <div style={{fontSize: '16px', width: '220px'}}>
@@ -199,7 +199,7 @@ export default function Filter() {
                             </div>
                         </div>
 
-                        <div className={'col-md-6'} style={{width: '15%', marginLeft: '100px', marginTop: "18px"}}>
+                        <div className={'col-md-6'} style={{width: '15%', marginLeft: '120px', marginTop: "18px"}}>
                             <div className="mb-3" style={{fontSize: '16px', marginLeft: '-100px'}}>
                                 <label htmlFor={'city'} className="form-label">Khu vực</label>
                                 <div style={{fontSize: '16px', width: '220px'}}>
