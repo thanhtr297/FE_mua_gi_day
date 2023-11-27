@@ -53,6 +53,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CancelShop from "./components/OrderUser/CancelShop";
 import ReportMonth from "./pages/ShopManagement/ReportMonth";
+import TotalWeek from "./pages/ShopManagement/TotalWeek";
+import TotalMonth from "./pages/ShopManagement/TotalMonth";
 
 
 
@@ -140,8 +142,8 @@ function App() {
                                 <Route path="/shop-management/order-management/reject" element={<Reject/>}/>
                                 <Route path="/shop-management/order-management/done" element={<Done/>}/>
                             </Route>
-                            <Route path="/shop-management/report" element={<ReportWeek/>}/>
-                            <Route path="/shop-management/report/month" element={<ReportMonth/>}/>
+                            <Route path="/shop-management/report" element={<TotalWeek/>}/>
+                            <Route path="/shop-management/report/month" element={<TotalMonth/>}/>
                             <Route path="/shop-management/profile" element={<Profile/>}/>
                             <Route path="/shop-management/:id" element={<UpdateProduct/>}/>
 
