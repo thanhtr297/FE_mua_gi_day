@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import "./ProductSinglePage.scss";
 import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -189,10 +189,6 @@ const ProductSinglePage = () => {
                           )
                       })}
 
-                                    </div>
-                                    <div>
-                                        <p className='para fw-3 fs-15'
-                                           style={{whiteSpace: 'pre-line'}}>{product?.description}</p>
                                     </div>
                                 </div>
 
