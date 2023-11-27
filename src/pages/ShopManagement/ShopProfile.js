@@ -10,6 +10,7 @@ import { MdStarBorder } from "react-icons/md";
 import { SlUserFollowing } from "react-icons/sl";
 import { MdJoinInner } from "react-icons/md";
 import FilterForShop from "../HomePage/FilterForShop";
+import UserService from "../../service/ChatService";
 
 
 
@@ -19,6 +20,7 @@ export default function ShopProfile() {
     const [products, setProducts] = useState([]);
     const [product, setProduct] = useState([]);
    const navigate = useNavigate()
+    let idUser = localStorage.getItem("account");
 
 
 
@@ -39,8 +41,10 @@ export default function ShopProfile() {
         })
     }, []);
     const toChat = () => {
-        localStorage.setItem("idAccByShop", shop.account.id)
-        navigate("/chat")
+        UserService.createMessage(idUser, shop.account.id)
+            .then(() => {
+                navigate("/chat")
+            })
 
     };
 
@@ -71,7 +75,6 @@ export default function ShopProfile() {
                                                 })}
 
                                             >
-
                                                 Chat ngay
                                             </button>
 

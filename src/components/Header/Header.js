@@ -561,6 +561,13 @@ const Header = (props) => {
                         <Navbar/>
                     </div>
                 </div>
+
+                <div className="chat-icon">
+                    <Link to="/chat">
+                        <i className="fab fa-facebook-messenger"></i>
+                    </Link>
+
+                </div>
             </div>
         </header>
     )

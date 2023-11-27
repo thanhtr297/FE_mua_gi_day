@@ -41,3 +41,26 @@ a {
     overflow: auto;
 }
 
+.chat-icon {
+    position: fixed;
+    bottom: 15px;
+    right: 10px;
+    z-index: 9999;
+    scale: 1.1;
+}
+
+.chat-icon a {
+    display: flex;
+    align-items: center;
+    background-color: #d70018;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 50px;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.chat-icon i {
+    margin-right: 7px;
+    margin-left: 7px;
+}

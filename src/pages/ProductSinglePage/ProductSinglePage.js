@@ -15,6 +15,7 @@ import {createReply, findCommentByIdP} from "../../service/CommentService";
 import {toast} from "react-toastify";
 import "./Comment.scss"
 import {FaStar} from "react-icons/fa";
+import UserService from "../../service/ChatService";
 
 
 const ProductSinglePage = () => {
@@ -31,6 +32,7 @@ const ProductSinglePage = () => {
     const [isFlag, setIsFlag] = useState(true);
     const [isShow, setIsShow] = useState(true);
     const [isShowUpdate, setIsShowUpdate] = useState(true);
+    let idUser = localStorage.getItem("account");
     const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
     // getting single product
     useEffect(() => {
@@ -91,9 +93,12 @@ const ProductSinglePage = () => {
         navigate("/cart");
     }
 
+
     const toChat = () => {
-        localStorage.setItem("idAccByShop", product.shop.account.id)
-        navigate("/chat")
+        UserService.createMessage(idUser, product.shop.account.id)
+            .then(() => {
+                navigate("/chat")
+            })
 
     };
 
