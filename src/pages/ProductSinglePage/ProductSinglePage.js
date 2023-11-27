@@ -15,6 +15,7 @@ import {createReply, findCommentByIdP} from "../../service/CommentService";
 import {toast} from "react-toastify";
 import "./Comment.scss"
 import {FaStar} from "react-icons/fa";
+import {FormatTime} from "../../components/Format/FormatTime";
 
 
 const ProductSinglePage = () => {
@@ -311,7 +312,7 @@ const ProductSinglePage = () => {
                                                     marginLeft: '60px'
                                                 }}>Nội dung: {c?.content}</div>
                                                 <div style={{marginBottom: '5px', marginLeft: '60px'}}>
-                                                    Thời gian: {displayTime(c?.createAt)}</div>
+                                                    Thời gian: {FormatTime(c?.createAt)}</div>
 
                                                 {/*hien thi nut sua comment cua user*/}
                                                 {/*{(c.account.id===idAccount) ?*/}
