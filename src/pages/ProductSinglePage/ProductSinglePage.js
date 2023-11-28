@@ -18,11 +18,13 @@ import {FaStar} from "react-icons/fa";
 import UserService from "../../service/ChatService";
 import {FormatTime} from "../../components/Format/FormatTime";
 import {AppContext} from "../../Context/AppContext";
+import axios from "axios";
 
 
 const ProductSinglePage = () => {
     const {id} = useParams();
     const [product, setProduct] = useState({});
+    const [cartDetail, setCartDetail] = useState({});
     const productSingleStatus = useSelector(getSingleProductStatus);
     const [quantity, setQuantity] = useState(1);
     const cartMessageStatus = useSelector(getCartMessageStatus);
@@ -35,7 +37,7 @@ const ProductSinglePage = () => {
     const [isShow, setIsShow] = useState(true);
     const [isShowUpdate, setIsShowUpdate] = useState(true);
     let idUser = localStorage.getItem("account");
-    const {toggleFlag } = useContext(AppContext);
+    const {toggleFlag} = useContext(AppContext);
     const [imageSrc, setImageSrc] = useState('')
     const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
     // getting single product
@@ -54,6 +56,12 @@ const ProductSinglePage = () => {
             setComments(res.data);
         })
     }, [cartMessageStatus, isFlag]);
+    useEffect(() => {
+        axios.get("http://localhost:8080/api/cartDetails/"+id+"/"+idUser).then((res) => {
+            setCartDetail(res.data)
+            console.log("aaaaaa",res.data)
+        })
+    },[])
 
     let discountedPrice = (product?.price) - (product?.price * (product?.promotion / 100));
     if (productSingleStatus === STATUS.LOADING) {
@@ -68,7 +76,7 @@ const ProductSinglePage = () => {
         setQuantity((prevQty) => {
             let tempQty = prevQty + 1;
             if (tempQty > product?.quantity) {
-                toast.error("Số lượng sản phẩm bạn muốn mua đã hết hàng", { autoClose: 700 })
+                toast.error("Số lượng sản phẩm bạn muốn mua đã hết hàng", {autoClose: 700})
                 tempQty = product?.quantity;
             }
             return tempQty;
@@ -79,7 +87,7 @@ const ProductSinglePage = () => {
         setQuantity((prevQty) => {
             let tempQty = prevQty - 1;
             if (tempQty < 1) {
-                toast.error("Số lượng sản phẩm phải lớn hơn 0", { autoClose: 700 })
+                toast.error("Số lượng sản phẩm phải lớn hơn 0", {autoClose: 700})
                 tempQty = 1;
             }
             return tempQty;
@@ -93,10 +101,13 @@ const ProductSinglePage = () => {
                 },
                 quantity: quantity
             }
-
-            addToCart(cart, idAccount).then(()=>{
-                toggleFlag()
-            })
+            if (cartDetail.quantity < product.quantity ) {
+                addToCart(cart, idAccount).then(() => {
+                    toggleFlag()
+                })
+            } else {
+                toast.error("Số lượng sản phẩm bạn muốn mua đã hết hàng", {autoClose: 700})
+            }
         } else {
             toast.error("Bạn cần đăng nhập để mua sản phẩm", {autoClose: 700})
         }
@@ -108,7 +119,7 @@ const ProductSinglePage = () => {
 
     function saveToBill() {
         if (idUser != null) {
-            if (quantity > product?.quantity) {
+            if (quantity > product?.quantity || product?.quantity === 0) {
                 toast.error("Số lượng sản phẩm bạn muốn mua đã hết hàng", {autoClose: 700})
 
             } else {
@@ -151,7 +162,9 @@ const ProductSinglePage = () => {
                                     {product?.image?.map(p => {
                                         return (
                                             <div className='thumb-item'
-                                            onClick={()=>{changeImage(p?.name)}}>
+                                                 onClick={() => {
+                                                     changeImage(p?.name)
+                                                 }}>
                                                 <img src={p?.name} alt="" className='img-cover'/>
                                             </div>
                                         )
@@ -186,11 +199,11 @@ const ProductSinglePage = () => {
                       {product?.count}
                     </span>
 
-                      {product?.option?.map((o) => {
-                          return (
-                              <span className='mx-1 text-capitalize'> {o.content}</span>
-                          )
-                      })}
+                                        {product?.option?.map((o) => {
+                                            return (
+                                                <span className='mx-1 text-capitalize'> {o.content}</span>
+                                            )
+                                        })}
 
                                     </div>
                                 </div>
@@ -271,10 +284,10 @@ const ProductSinglePage = () => {
                                     </h3>
                                     <div>
                                         <button
-                                            style={{ padding: '10px', border: '1px solid white' }}
+                                            style={{padding: '10px', border: '1px solid white'}}
                                             type="button"
                                             className="comic-button"
-                                            onClick={( () => {
+                                            onClick={(() => {
                                                 toChat()
 
                                             })}
@@ -305,8 +318,8 @@ const ProductSinglePage = () => {
                     <div className='comment-single'>
                         <div className='containerr'>
                             <h1>MÔ TẢ SẢN PHẨM</h1>
-                            <div className=' bg-white grid' >
-                                <div className={"container"} style={{padding:'4%'}}>
+                            <div className=' bg-white grid'>
+                                <div className={"container"} style={{padding: '4%'}}>
                                     <p className='para fw-3 fs-15'
                                        style={{whiteSpace: 'pre-line'}}>{product?.description}</p>
                                 </div>
@@ -322,8 +335,8 @@ const ProductSinglePage = () => {
                         <div className='containerr'>
                             <h1 style={{marginBottom: '20px', fontSize: '24px'}}>ĐÁNH GIÁ SẢN PHẨM
                                 &nbsp; <FaStar
-                                style={{color: 'F5E932'}}/><FaStar style={{color: 'F5E932'}}/><FaStar
-                                style={{color: 'F5E932'}}/><FaStar style={{color: 'F5E932'}}/><FaStar/>
+                                    style={{color: 'F5E932'}}/><FaStar style={{color: 'F5E932'}}/><FaStar
+                                    style={{color: 'F5E932'}}/><FaStar style={{color: 'F5E932'}}/><FaStar/>
                             </h1>
                             <div className=' bg-white grid' style={{paddingTop: '3%'}}>
                                 {comments.map((c) => (
@@ -405,6 +418,7 @@ const ProductSinglePage = () => {
                                                         disabled={isShow}
                                                         className="reply-textarea"
                                                         onChange={handleReply}
+                                                        value={reply}
                                                         placeholder="Nhập phản hồi của bạn..."
                                                     />
                                                             <button className="reply-button"
@@ -437,6 +451,7 @@ const ProductSinglePage = () => {
                 setIsFlag(!isFlag)
                 setIsShow(!isShow)
                 setReply('')
+
             })
         } else {
             toast.error("Thêm không thành công!")
