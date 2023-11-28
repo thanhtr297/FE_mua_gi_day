@@ -35,7 +35,7 @@ const ProductSlide = ({product}) => {
                                 <span>Đánh giá : 1</span>
                             </div>
                             <div style={{}}>
-                            <span style={{marginLeft: '59px'}}>
+                            <span style={{marginLeft: '50px'}}>
                             Đã bán : {formatNumberToK(product?.count)}
                                 </span>
                             </div>
