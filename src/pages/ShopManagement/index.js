@@ -4,9 +4,9 @@ import './index.scss';
 import {findShop} from "./service/ProfileService";
 import {AppContext} from "../../Context/AppContext";
 import {toast} from "react-toastify";
+import Swal from "sweetalert2";
 
 function DashBoard() {
-    const dataOrder = "Thanh"
     let acc = localStorage.getItem('account');
     const [idShop ,setIdShop] = useState(null) ;
     const {isFlag} = useContext(AppContext);
@@ -16,10 +16,16 @@ function DashBoard() {
                 setIdShop(res.account.id) ;
 
             }).catch( () =>{
-                toast.warning("Bạn chưa có shop vui lòng cập nhật  thông tin shop để tiếp tục")
+                Swal.fire({
+                    title: 'Thông báo!',
+                    text: 'Bạn chưa có shop vui long đăng kí để xác nhận',
+                    icon: 'warning', // success, error, warning, info, question
+                    confirmButtonText: 'Đăng ký ngay',
+                })
             })
             }
     }, [isFlag]);
+
     return (
 
     <div className="dashboard">
@@ -34,7 +40,7 @@ function DashBoard() {
                         <ul className="nav__list">
 
                 <li className="nav__item">
-                    <Link  className={'cekkon'} to="/shop-management/order-management" state ={{dataOrder}}>Quản lý đơn hàng</Link>
+                    <Link  className={'cekkon'} to="/shop-management/order-management" >Quản lý đơn hàng</Link>
                 </li>
                 <li className="nav__item">
                     <Link  className={'cekkon'} to="/shop-management/list-product">Danh sách Sản phẩm</Link>
