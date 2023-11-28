@@ -66,7 +66,7 @@ export function ForgotPass() {
 
                 </div>
                 <div style={{color:"red"}}> {emailError && <div className="error-message">{emailError.email}</div>}</div>
-                <div style={{marginLeft:'15%'}}>
+                <div style={{marginLeft:'10%'}}>
                     <button className={check ? "active":""}
                             disabled={!check}
                             onClick={submitEmail}

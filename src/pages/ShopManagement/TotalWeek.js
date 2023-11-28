@@ -9,6 +9,7 @@ export default function TotalWeek() {
     const idAcc = localStorage.getItem('account')
 
     useEffect(()=> {
+        window.scroll(0,150)
         findShop(idAcc).then((shop) => {
             const idShop = shop.id;
             const currentDate = new Date();

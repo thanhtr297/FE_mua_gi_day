@@ -16,6 +16,7 @@ export default function ReportMonth(prop){
     let [revenue,setRevenue] = useState(0);
     let [count,setCount] = useState(0);
     useEffect(() => {
+        window.scroll(0,150)
         findShop(idAcc).then((shop) => {
             const idShop = shop.id;
             const totalRevenueS = [];

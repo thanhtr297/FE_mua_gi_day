@@ -157,7 +157,7 @@ export default function Filter() {
                 enableReinitialize={true}>
                 <Form>
                     <div style={{display: 'flex'}}>
-                        <div style={{width: "401px", fontSize: "16px", marginLeft: '40px', marginTop: '20px'}}>
+                        <div style={{width: "410px", fontSize: "16px", marginLeft: '40px', marginTop: '20px'}}>
                             Từ {formatPrice(range[0])} đến {formatPrice(range[1])}
                             <Slider style={{color: "rgb(215, 0, 24)", fontSize: "5px", marginTop: '10px'}} value={range}
                                     onChange={(e) => handleChanges(e)} valueLabelDisplay="auto"

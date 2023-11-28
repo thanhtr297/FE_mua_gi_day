@@ -58,7 +58,10 @@ const ProductSinglePage = () => {
         })
     }, [cartMessageStatus, isFlagg]);
     useEffect(() => {
-        axios.get("http://localhost:8080/api/cartDetails/"+id+"/"+idUser).then((res) => {
+        if(idUser == null){
+            idUser = 0
+
+        }        axios.get("http://localhost:8080/api/cartDetails/"+id+"/"+idUser).then((res) => {
             setCartDetail(res.data)
         })
     },[idUser,isFlag])

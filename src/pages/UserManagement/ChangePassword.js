@@ -9,7 +9,7 @@ export default function ChangePassword() {
     const [otpCheck, setOtpCheck] = useState('1');
     const [countdown, setCountdown] = useState(3);
     const navigate = useNavigate();
-    const [otp, setOtp] = useState('');
+    const [otp, setOtp] = useState('duyen');
     const [user, setUser] = useState({});
     const [isShowPassword, setIsShowPassword] = useState(false)
     const [password, setPassword] = useState("");
@@ -160,10 +160,11 @@ export default function ChangePassword() {
                                    onChange={(event) => setOtpCheck(event.target.value)}/>
                         </div>
                     </div>
-                    <button style={{paddingTop: '5%'}} className={'button-send-email'} disabled={isButtonDisabled}
-                            type={'button'} onClick={onSubmit}>
+                    <div style={{marginTop: '26px' ,height : '46.4px' , border :'1px solid red' ,borderRadius : '5%'}}> <button style={{marginTop  : '0px' , marginLeft : '0px'}} className={'button-send-email'} disabled={isButtonDisabled}
+                                  type={'button'} onClick={onSubmit}>
                         {isButtonDisabled ? `Gửi lại ( ${countdown} s)` : "Gửi mã"}
-                    </button>
+                    </button></div>
+
                 </div>
                 <div>
                     <button style={{border: '1px solid red', width: '150px'}}
