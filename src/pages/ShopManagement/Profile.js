@@ -14,6 +14,7 @@ import {findShop, saveShop} from "./service/ProfileService";
 import {useNavigate} from "react-router-dom";
 import {AppContext} from "../../Context/AppContext";
 import {toast} from "react-toastify";
+import {findUserByAccount} from "../UserManagement/Service/UserService";
 
 
 export default function Profile() {
@@ -48,14 +49,25 @@ export default function Profile() {
         })
         const idAcc = localStorage.getItem("account")
         findShop(idAcc).then((res) => {
-           if (res ===''){
-               setShop({})
+       setShop(res)
+            console.log(res)
+            if (res.wards === undefined) {
+                findAllDistrictByIdCity(1).then((result) => {
+                    setDistricts(result);
+                    findAllWardsByIdDistrict(result[0].id).then((result) => {
+                        setWards(result)
+                    })
+                })
+            } else {
+                displayDistrictByIdCity(res.wards?.district?.city?.id)
+                displayWardsByIdDistrict(res.wards?.district?.id)
+            }
 
-           } else {
-               setShop(res)
-           }
         })
     }, [])
+
+
+
 
 
     const find = async () => {
@@ -212,7 +224,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                             displayDistrictByIdCity(textCity.split("-")[0])
                                             setIdCity(textCity.split("-")[0])
                                         }} className={"form-select"}>
-                                            {!check ?  <option>--Chọn Thành phố--</option> : <option >{shop?.wards?.district?.city?.name}</option>}
+                                            {/*{!check ?  <option>--Chọn Thành phố--</option> : <option >{shop?.wards?.district?.city?.name}</option>}*/}
                                             {cities.map((c) => {
                                                 return (
                                                     <option value={c.id + "-" + c.name}>{c.name}</option>
@@ -230,7 +242,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                             setIdDistrict(textDistrict.split("-")[0])
                                         }} className={"form-select"}>
 
-                                            {!check ?  <option>--Chọn Quận/Huyện--</option> : <option>{shop?.wards?.district?.name}</option>}
+                                            {/*{!check ?  <option>--Chọn Quận/Huyện--</option> : <option>{shop?.wards?.district?.name}</option>}*/}
                                             {districts.map((d) => {
                                                 return (
                                                     <option value={d.id + "-" + d.name}>{d.name}</option>
@@ -242,7 +254,7 @@ const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh
                                         <label htmlFor={'wards'} className="form-label">Phường/xã</label>
                                         <select style={{fontSize: '16px'}} disabled={check} name={'address.wards.id'} onChange={(e) => onWardChange(e)} className={"form-select"}>
 
-                                            {!check ? <option >--Chọn xã/phường--</option> : <option >{shop?.wards?.name}</option>}
+                                            {/*{!check ? <option >--Chọn xã/phường--</option> : <option >{shop?.wards?.name}</option>}*/}
                                             {wards.map((w) => {
                                                 return (
                                                     <option value={w.id}>{w.name}</option>

@@ -287,7 +287,7 @@ const CartPage = () => {
                                                                                    textAlign: "center"
                                                                                }}
                                                                                type="text"
-                                                                               value={cartDetail.quantity}
+                                                                               value={(cartDetail.quantity >= cartDetail?.product?.quantity) ? (cartDetail?.product?.quantity) : cartDetail.quantity }
                                                                             // onChange={(e) => {
                                                                             //     const newQty = parseInt(e.target.value);
                                                                             //     setQuantitys[idx](newQty)
