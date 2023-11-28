@@ -33,11 +33,12 @@ const ProductSinglePage = () => {
     let [comments, setComments] = useState([]);
     const [idShop, setIdShop] = useState(0);
     const [reply, setReply] = useState('')
-    const [isFlag, setIsFlag] = useState(true);
+    const [isFlagg, setIsFlag] = useState(true);
     const [isShow, setIsShow] = useState(true);
     const [isShowUpdate, setIsShowUpdate] = useState(true);
     let idUser = localStorage.getItem("account");
     const {toggleFlag} = useContext(AppContext);
+    const {isFlag} = useContext(AppContext);
     const [imageSrc, setImageSrc] = useState('')
     const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";
     // getting single product
@@ -55,13 +56,12 @@ const ProductSinglePage = () => {
         findCommentByIdP(id).then((res) => {
             setComments(res.data);
         })
-    }, [cartMessageStatus, isFlag]);
+    }, [cartMessageStatus, isFlagg]);
     useEffect(() => {
         axios.get("http://localhost:8080/api/cartDetails/"+id+"/"+idUser).then((res) => {
             setCartDetail(res.data)
-            console.log("aaaaaa",res.data)
         })
-    },[])
+    },[idUser,isFlag])
 
     let discountedPrice = (product?.price) - (product?.price * (product?.promotion / 100));
     if (productSingleStatus === STATUS.LOADING) {
@@ -101,7 +101,7 @@ const ProductSinglePage = () => {
                 },
                 quantity: quantity
             }
-            if (cartDetail.quantity < product.quantity ) {
+            if (cartDetail === "" ||cartDetail.quantity < product.quantity ) {
                 addToCart(cart, idAccount).then(() => {
                     toggleFlag()
                 })
@@ -119,7 +119,7 @@ const ProductSinglePage = () => {
 
     function saveToBill() {
         if (idUser != null) {
-            if (quantity > product?.quantity || product?.quantity === 0) {
+            if (cartDetail !== "" ||cartDetail.quantity >= product.quantity ) {
                 toast.error("Số lượng sản phẩm bạn muốn mua đã hết hàng", {autoClose: 700})
 
             } else {
@@ -448,7 +448,7 @@ const ProductSinglePage = () => {
         if (reply !== '') {
             createReply(id, reply).then(() => {
                 toast.success("Thêm thành công!")
-                setIsFlag(!isFlag)
+                setIsFlag(!isFlagg)
                 setIsShow(!isShow)
                 setReply('')
 
