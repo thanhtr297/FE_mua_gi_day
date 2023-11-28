@@ -27,7 +27,8 @@ const BillDetails = (props) => {
         acceptOrder(props.bill).then((res) => {
             toast.success('Xác nhận thành công', {autoClose : 700})
             toggleFlag()
-
+        }).catch(() => {
+            toast.error('Hết hàng rồi', {autoClose : 700})
         })
     }
     return (
