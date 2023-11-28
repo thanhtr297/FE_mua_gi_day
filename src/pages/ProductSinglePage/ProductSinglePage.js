@@ -94,7 +94,9 @@ const ProductSinglePage = () => {
                 quantity: quantity
             }
 
-            addToCart(cart, idAccount).then()
+            addToCart(cart, idAccount).then(()=>{
+                toggleFlag()
+            })
         } else {
             toast.error("Bạn cần đăng nhập để mua sản phẩm", {autoClose: 700})
         }
@@ -142,13 +144,14 @@ const ProductSinglePage = () => {
                                         marginLeft: '100px',
                                         marginTop: '10px'
                                     }}
-                                         src={product?.image === undefined ? '' : product?.image[0]?.name} alt=""
+                                         src={product?.image === undefined ? '' : imageSrc} alt=""
                                          className='img-cover'/>
                                 </div>
                                 <div className='product-img-thumbs flex align-center my-2'>
                                     {product?.image?.map(p => {
                                         return (
-                                            <div className='thumb-item'>
+                                            <div className='thumb-item'
+                                            onClick={()=>{changeImage(p?.name)}}>
                                                 <img src={p?.name} alt="" className='img-cover'/>
                                             </div>
                                         )
