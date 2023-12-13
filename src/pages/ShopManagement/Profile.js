@@ -14,7 +14,6 @@ import {findShop, saveShop} from "./service/ProfileService";
 import {useNavigate} from "react-router-dom";
 import {AppContext} from "../../Context/AppContext";
 import {toast} from "react-toastify";
-import {findUserByAccount} from "../UserManagement/Service/UserService";
 
 
 export default function Profile() {
@@ -49,19 +48,20 @@ export default function Profile() {
         })
         const idAcc = localStorage.getItem("account")
         findShop(idAcc).then((res) => {
-       setShop(res)
-            console.log(res)
-            if (res.wards === undefined) {
-                findAllDistrictByIdCity(1).then((result) => {
-                    setDistricts(result);
-                    findAllWardsByIdDistrict(result[0].id).then((result) => {
-                        setWards(result)
+            if(res === "") {
+                setShop({})
+                if (res.wards === undefined) {
+                    findAllDistrictByIdCity(1).then((result) => {
+                        setDistricts(result);
+                        findAllWardsByIdDistrict(result[0].id).then((result) => {
+                            setWards(result)
+                        })
                     })
-                })
-            } else {
+            }else {
+                setShop(res)
                 displayDistrictByIdCity(res.wards?.district?.city?.id)
                 displayWardsByIdDistrict(res.wards?.district?.id)
-            }
+            }}
 
         })
     }, [])
@@ -106,7 +106,6 @@ export default function Profile() {
 
 
     function save(e) {
-        setAddress(e.address)
         const idAcc = localStorage.getItem("account")
         const request = {
             ...e,
@@ -126,13 +125,13 @@ export default function Profile() {
             }
         }
 
-        saveShop(request, navigate).then(async () => {
-            toast.success("Lưu thành công!")
+        saveShop(request, navigate).then( () => {
+            toast.success("Lưu thành công!",{autoClose : 800})
             setCheck(true)
             toggleFlag()
             // find().then()
         }).catch( () => {
-            toast.warning("Lưu thất bại !")
+            toast.warning("Lưu thất bại !",{autoClose : 800})
         })
     }
 const defaultImageUrl = "https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg";

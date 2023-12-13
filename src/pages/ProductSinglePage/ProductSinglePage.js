@@ -112,7 +112,7 @@ const ProductSinglePage = () => {
                 toast.error("Số lượng sản phẩm bạn muốn mua đã hết hàng", {autoClose: 700})
             }
         } else {
-            toast.error("Bạn cần đăng nhập để mua sản phẩm", {autoClose: 700})
+            toast.error("Bạn cần đăng nhập để mua sản phẩm")
         }
     }
 

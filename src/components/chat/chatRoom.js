@@ -20,7 +20,7 @@ const ChatRoom = () => {
 
 
     useEffect(() => {
-        window.scrollTo(0, 150);
+        window.scrollTo(0, 1);
         if (webSocket) {
             webSocket.subscribe('/chat/user/queue', async (message) => {
                 const msg = JSON.parse(message.body);

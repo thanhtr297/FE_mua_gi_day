@@ -22,7 +22,7 @@ const SearchPage = () => {
         minHeight: "70vh"
       }}>
         <div className='fw-5 text-danger py-5'>
-          <h3>Not Products found.</h3>
+          <h3>Không tim thấy sản phẩm.</h3>
         </div>
       </div>
     )
@@ -34,7 +34,7 @@ const SearchPage = () => {
         <div className='containerr'>
           <div className='py-5'>
             <div className='title-md'>
-              <h3>Search results:</h3>
+              <h3>Kết quả tìm kiếm:</h3>
             </div>
             <br />
             {
